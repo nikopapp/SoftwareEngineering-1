@@ -16,5 +16,5 @@ clean:
 run: all
 	./$(TARGET)
 push:
-	git commit -a -m $$(date +%Y%m%d%H%M%S)
+	git commit -a -m $$(date +%d-%m-%Y)
 	git push "https://github.com/nikopapp/SoftwareEngineering"
