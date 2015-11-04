@@ -3,25 +3,37 @@
 
 #define H 3
 #define W 3
-#define ENTITIES 5
+#define ENTITIES 5 /* max num of entities per cell */
 
 typedef enum direction { LEFT, RIGHT, UP, DOWN } direction;
 
 typedef struct entity {
-  int ispassable;
-  char type;
+  int ispassable; /* walls cannot be walked through - floors can */
+  char type; /* for display when printing grid to terminal */
+  char* name; /* name of entity - maybe unneeded */
 } entity;
 
 typedef struct cell {
-  entity *elist[ENTITIES];
-  int listmax; /*  */
+  entity *elist[ENTITIES]; /* a list of all the entities in a cell */
+  int listmax; /* the current amount of entities in a cell */
 } cell;
 
 void directionsTrans(direction dir, int * x, int * y);
+
+/* returns a pointer to the neighbouring cell in direction dir */
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W]);
+
+/* sets listmax to zero in all cells - i.e. makes them empty */
 void initGrid(cell grid[H][W]);
+
+/* call this to create a new entity.  uses malloc and needs a free() still */
 entity *newEntity(int ispassable, char type);
+
+/* placeholder function to fill grid with floor entities */
 void fillGrid(cell grid[H][W]);
+
+/* placeholder function to print grid to terminal.
+only prints one layer of the grid */
 void printGrid(cell grid[H][W], int layer);
 
 int main(void)
@@ -86,16 +98,18 @@ void fillGrid(cell grid[H][W]){
 
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 {
-  int *px, *py;
+  int px, py;
+  cell *c;
 
-  *px = x;
-  *py = y;
+  px = x;
+  py = y;
+  directionsTrans(dir, &px, &py);
+  c = &grid[py][px];
 
-  directionsTrans(dir, px, py);
-  return *grid[*py][*px];
+  return c;
 }
 
-void directionsTrans(direction dir, int * x, int * y){
+void directionsTrans(direction dir, int *x, int *y){
   switch(dir){
     case LEFT: x--;
     case RIGHT: x++;
