@@ -24,7 +24,7 @@ int binaryGame(void)
      for(i=0;i<8;i++){
      printf("%d ",byte[i]);
      }
-     printf("\n");
+     printf("\n\n");
      printf("result %d\n",result(byte) );
    }
    printf("you win\n");
