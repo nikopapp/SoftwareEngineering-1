@@ -4,10 +4,12 @@ int result(int byte[8]);
 
 int binaryGame(void)
 {
-   /*int byte[8];*/
+   int goal;
    int byte[8] = {1,0,1,0,0,0,1,0};
-   
-   printf("%d\n", result(byte) );
+   srand((unsigned) time(&t));
+   goal =rand()%255;
+   printf("try summing %d\n", goal );
+   printf("result%d\n", result(byte) );
    return(1);
 }
 int result(int byte[8])
