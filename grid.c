@@ -14,11 +14,11 @@ typedef struct entity {
 
 typedef struct cell {
   entity *elist[ENTITIES];
-  int listmax;
+  int listmax; /*  */
 } cell;
 
 void directionsTrans(direction dir, int * x, int * y);
-cell getNeighbour(int x, int y, direction dir,  cell grid[H][W]);
+cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W]);
 void initGrid(cell grid[H][W]);
 entity *newEntity(int ispassable, char type);
 void fillGrid(cell grid[H][W]);
@@ -27,14 +27,16 @@ void printGrid(cell grid[H][W], int layer);
 int main(void)
 {
   cell grid[H][W];
+
   initGrid(grid);
   fillGrid(grid);
+
   grid[1][1].elist[grid[1][1].listmax] = newEntity(0,'r');
   grid[1][1].listmax++;
+
   printGrid(grid,0);
   printf("\n");
   printGrid(grid,1);
-
 
   return 0;
 }
@@ -82,7 +84,7 @@ void fillGrid(cell grid[H][W]){
   }
 }
 
-cell getNeighbour(int x, int y, direction dir,  cell grid[H][W])
+cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 {
   int *px, *py;
 
@@ -90,7 +92,7 @@ cell getNeighbour(int x, int y, direction dir,  cell grid[H][W])
   *py = y;
 
   directionsTrans(dir, px, py);
-  return grid[*py][*px];
+  return *grid[*py][*px];
 }
 
 void directionsTrans(direction dir, int * x, int * y){
