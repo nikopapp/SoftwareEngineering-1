@@ -21,3 +21,5 @@ int result(int byte[8])
    }
    return((int)result);
 }
+pull:
+	git pull "https://github.com/ProjectElves/SoftwareEngineering" master
