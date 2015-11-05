@@ -5,7 +5,11 @@
 
 int main(void)
 {
+
   if(binaryGame()==1){printf("everything OK\n");}
+else{printf("ERROR \n");}
+
+  if(encryprion()==1){printf("everything OK\n");}
 else{printf("ERROR \n");}
 
 printf("\n\n");

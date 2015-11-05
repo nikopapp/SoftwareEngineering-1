@@ -18,6 +18,6 @@ run: all
 
 push:
 	git commit -a -m $$(date +%d-%m-%Y/%H:%M)
-	git push "https://github.com/ProjectElves/SoftwareEngineering"
+	git push "https://github.com/ProjectElves/SoftwareEngineering" master
 pull:
-	git pull "https://github.com/ProjectElves/SoftwareEngineering"
+	git pull "https://github.com/ProjectElves/SoftwareEngineering" master

@@ -4,3 +4,7 @@
 #include <stdlib.h>
 
 time_t t;
+
+
+/*++ dificulty exact moves or
+4-11-15*/

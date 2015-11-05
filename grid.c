@@ -14,12 +14,21 @@ typedef struct entity {
   entity *pointsto; /* this allows for connections between entities - such as from a switch to a lightbulb */
   int ison; /* 1 is on, 0 is off - for switches, lightbulbs */
 } entity;
+<<<<<<< HEAD
 /* this and other entity-related stuff could probably be moved
 to an entity.c file */
 
 typedef struct cell {
   /* i have simplified the cells of the grid to just contain 2 possible
   entities - one at the front and one at the back.
+=======
+/* this and other entity-related stuff could probably be moved 
+to an entity.c file */
+
+typedef struct cell {
+  /* i have simplified the cells of the grid to just contain 2 possible 
+  entities - one at the front and one at the back.  
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
   this should make it much simpler to add a new object*/
   entity *foreground; /*this is the foreground object - eg, the player, walls */
   entity *background; /*this is the background object - eg, the floor, a switch, a lightbulb, a wire */
@@ -52,12 +61,21 @@ int main(void)
 
   initGrid(grid);
   fillGrid(grid);
+<<<<<<< HEAD
 
   printf("1\n");
 
   /* foreground layer test */
   grid[6][6].foreground = newEntity(passable,'r');
 
+=======
+  
+  printf("1\n");
+  
+  /* foreground layer test */
+  grid[6][6].foreground = newEntity(passable,'r');
+  
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
   /* lightbulbs */
   grid[1][2].background = newEntity(passable,'1');
   grid[1][3].background = newEntity(passable,'0');
@@ -67,7 +85,11 @@ int main(void)
   grid[1][7].background = newEntity(passable,'1');
   grid[1][8].background = newEntity(passable,'0');
   grid[1][9].background = newEntity(passable,'0');
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
     /* switches */
   grid[4][2].background = newEntity(passable,'\\');
   grid[4][3].background = newEntity(passable,'/');
@@ -77,8 +99,13 @@ int main(void)
   grid[4][7].background = newEntity(passable,'\\');
   grid[4][8].background = newEntity(passable,'/');
   grid[4][9].background = newEntity(passable,'/');
+<<<<<<< HEAD
 
   printf("2\n");
+=======
+  
+  printf("2\n"); 
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
   printGrid(grid, background);
   printf("\n");
   printGrid(grid, foreground);
@@ -136,6 +163,7 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 void directionsTrans(direction dir, int *x, int *y)
 {
   switch(dir){
+<<<<<<< HEAD
     case LEFT:
       x--;
     case RIGHT:
@@ -143,6 +171,15 @@ void directionsTrans(direction dir, int *x, int *y)
     case UP:
       y++;
     case DOWN:
+=======
+    case LEFT: 
+      x--;
+    case RIGHT: 
+      x++;
+    case UP: 
+      y++;
+    case DOWN: 
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
       y--;
   }
 }
@@ -152,11 +189,19 @@ void printGrid(cell grid[H][W], layer layer)
   int HCnt, WCnt;
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
+<<<<<<< HEAD
       if (layer == background
       && grid[HCnt][WCnt].background != NULL) {
         printf("%c", grid[HCnt][WCnt].background->type);
       }
       if (layer == foreground
+=======
+      if (layer == background 
+      && grid[HCnt][WCnt].background != NULL) {
+        printf("%c", grid[HCnt][WCnt].background->type);
+      }
+      if (layer == foreground 
+>>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
       && grid[HCnt][WCnt].foreground != NULL) {
         printf("%c", grid[HCnt][WCnt].foreground->type);
       }
