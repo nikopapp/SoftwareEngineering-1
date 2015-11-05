@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "encryption.h"
 #define FALSE 0
 #define TRUE 1
 #define LENGTH 30
