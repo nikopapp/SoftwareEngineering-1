@@ -11,6 +11,8 @@ typedef enum ispassable { passable, impassable } layer;
 typedef struct entity {
   int ispassable; /* walls cannot be walked through - floors can */
   char type; /* for display when printing grid to terminal */
+  entity *pointsto; /* this allows for connections between entities - such as from a switch to a lightbulb */
+  int ison; /* 1 is on, 0 is off - for switches, lightbulbs */
 } entity;
 /* this and other entity-related stuff could probably be moved 
 to an entity.c file */
