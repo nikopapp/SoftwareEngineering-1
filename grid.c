@@ -78,7 +78,7 @@ int main(void)
   
   printf("2\n"); 
   printGrid(grid, background);
-  printf("\n");
+  printf("\n\n");
   printGrid(grid, foreground);
 
   return 0;
