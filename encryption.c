@@ -1,13 +1,11 @@
 #include "encryption.h"
-<<<<<<< HEAD
-=======
+
 #define FALSE 0
 #define TRUE 1
 #define LENGTH 30
 #define LIST_SIZE 7
 #define ALPHABET 26
 
->>>>>>> 9d96279aa3a26eb05561bdb73fb0e80074465e89
 void shufle(char word[LENGTH], int size);
 int isvowel(char c);
 char vowel();
@@ -16,12 +14,8 @@ void changeRow(char word[LENGTH], int size);
 void change(char word[LENGTH], int size, int game);
 
 
-
-
-
 int encryption(void)
 {
-
 
   char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
   char rand_word[LENGTH], shuffle_word[LENGTH];
