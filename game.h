@@ -1,4 +1,5 @@
 #include "binaryGame.h"
+#include "encryption.h"
 
 int binaryGame(void);
-int encryprion(void);
+int encryption(void);

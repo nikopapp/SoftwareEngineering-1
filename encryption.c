@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define FALSE 0
-#define TRUE 1
-#define LENGTH 30
-#define LIST_SIZE 7
-#define ALPHABET 26
-
+#include "encryption.h"
 void shufle(char word[LENGTH], int size);
 int isvowel(char c);
 char vowel();
