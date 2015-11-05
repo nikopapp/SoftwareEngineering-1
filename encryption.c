@@ -20,7 +20,7 @@ void change(char word[LENGTH], int size, int game);
 
 
 
-int main(void)
+int encryption(void)
 {
 
 
