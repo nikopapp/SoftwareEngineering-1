@@ -25,11 +25,6 @@ switch (sw) {
      break;
 }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 9d96279aa3a26eb05561bdb73fb0e80074465e89
 printf("\n\n");
 return(0);
 }
