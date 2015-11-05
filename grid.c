@@ -21,7 +21,6 @@ to an entity.c file */
 typedef struct cell {
   /* i have simplified the cells of the grid to just contain 2 possible
   entities - one at the front and one at the back.
->>>>>>> d587fe7007b1fff151c40063a35f2e06417b06f8
   this should make it much simpler to add a new object*/
   entity *foreground; /*this is the foreground object - eg, the player, walls */
   entity *background; /*this is the background object - eg, the floor, a switch, a lightbulb, a wire */
