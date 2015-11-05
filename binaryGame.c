@@ -4,14 +4,14 @@ int result(int byte[8]);
 
 int binaryGame(void)
 {
-   int goal,i;
+   int goal,res,i;
    int swich;
    int byte[8] = {0,0,0,0,0,0,0,0};
    srand((unsigned) time(&t));
    goal =rand()%255;
    printf("try summing %d\n", goal );
    printf("result: %d\n", result(byte) );
-   while(scanf("%d", &swich)==1 && result(byte)!=goal){
+   while(scanf("%d", &swich)==1){
      switch ( byte[swich]) {
        case 0:
           byte[swich]=1;
@@ -25,7 +25,11 @@ int binaryGame(void)
      printf("%d ",byte[i]);
      }
      printf("\n\n");
-     printf("result %d\n",result(byte) );
+     res=result(byte);
+     printf("result %d\n",res );
+     if(res==goal){
+       break;
+     }
    }
    printf("you win\n");
    return(1);
