@@ -1,10 +1,5 @@
+// test tets
 #include "encryption.h"
-
-#define FALSE 0
-#define TRUE 1
-#define LENGTH 30
-#define LIST_SIZE 7
-#define ALPHABET 26
 
 void shufle(char word[LENGTH], int size);
 int isvowel(char c);
@@ -86,7 +81,7 @@ void change(char word[LENGTH], int size, int game)
       }
     }
     else if (game == 1 ){
-      letter = rand()%size; /* same here */
+      letter = rand()%size; /* same here  */
       if(isvowel(word[letter]) == 0){
         if((c=constant()) != word[letter]){
           for (i=0; i<size; i++){
@@ -100,6 +95,7 @@ void change(char word[LENGTH], int size, int game)
     }
   } while (condition);
 }
+
 void changeRow(char word[LENGTH], int size)
 {
   int shift, i;
@@ -114,8 +110,8 @@ void changeRow(char word[LENGTH], int size)
 }
 int isvowel(char c)
 {
-  if ((c=='a') || (c=='A') ||(c=='e') || (c=='E') || (c=='u') || (c=='U') || (c=='o') || (c=='O')
-      || (c=='i') || (c=='I')){
+  c=tolower(c);
+  if ((c=='a') || (c=='e') || (c=='u') || (c=='o') || (c=='i')){
 	return 1;
   }
   else{
