@@ -11,6 +11,7 @@ int binaryGame(void)
    goal =rand()%255;
    printf("try summing %d\n", goal );
    printf("result: %d\n", result(byte) );
+   /*Light switch ON/OFF*/
    while(scanf("%d", &swich)==1){
      switch ( byte[swich]) {
        case 0:
