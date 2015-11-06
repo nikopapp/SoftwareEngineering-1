@@ -1,4 +1,7 @@
-// test tets
+/*next steps
+1. implemnet the grid
+2. implement key presses with SDL
+3. test if everything works*/
 #include "encryption.h"
 
 void shufle(char word[LENGTH], int size);
