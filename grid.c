@@ -4,7 +4,7 @@
 
 #define H 12
 #define W 12
-
+/*commit this*/
 typedef enum direction { LEFT, RIGHT, UP, DOWN } direction;
 typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
