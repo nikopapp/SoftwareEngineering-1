@@ -36,6 +36,9 @@ void changeEntity(entity *e, char newtype);
 /* returns a pointer to the neighbouring cell in direction dir */
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W]);
 
+/* moves the foreground entity in direction dir */
+void move(cell *c, int x, int y, direction dir, cell grid[H][W]);
+
 /* sets listmax to zero in all cells - i.e. makes them empty */
 void initGrid(cell grid[H][W]);
 
@@ -106,7 +109,7 @@ void newBulb(cell grid[H][W], int x, int y)
   grid[y+3][x].background->pointsto = grid[y][x].background;
 }
 
-cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
+cell *getNeighbour(int x, int y, direction dir, cell grid[H][W])
 {
   int px, py;
   cell *c;
@@ -118,10 +121,6 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
   c = &grid[py][px];
 
   return c;
-}
-
-void move() {
-  
 }
 
 void directionsTrans(direction dir, int *x, int *y)
@@ -167,6 +166,13 @@ void updateEntities(cell grid[H][W])
       }
     }
   }
+}
+
+void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
+  cell *cnew = getNeighbour(x,y,dir,grid);
+
+  cnew->foreground = c->foreground;
+  c->foreground = NULL;
 }
 
 void testGrid() {
@@ -218,12 +224,18 @@ void testGrid() {
     printGrid(grid, background);
   }
 
-  /*foreground test */
+  /*foreground test and move test */
+  printGrid(grid, foreground);
+  move(&grid[6][6],6,6,LEFT,grid);
+  move(&grid[6][5],5,6,LEFT,grid);
+  move(&grid[6][4],4,6,LEFT,grid);
   printGrid(grid, foreground);
 
   /*getNeighbour test */
-  tmp = getNeighbour(5,6,RIGHT,grid);
-  printf("\n\nCHAR:%c\n\n",tmp->foreground->type);
+  tmp = getNeighbour(2,6,RIGHT,grid);
+  if (tmp->foreground != NULL) {
+    printf("\n\nCHAR:%c\n\n",tmp->foreground->type);
+  }
 
   freeEntityMem(grid);
 }
