@@ -4,12 +4,15 @@
 3. test if everything works*/
 #include "encryption.h"
 
+#define gridSize 10
+
 void shufle(char word[LENGTH], int size);
 int isvowel(char c);
 char vowel();
 char constant();
 void changeRow(char word[LENGTH], int size);
 void change(char word[LENGTH], int size, int game);
+void printGrid(char grid[gridSize][gridSize]);
 
 
 int encryption(void)
@@ -18,6 +21,7 @@ int encryption(void)
   char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
   char rand_word[LENGTH], shuffle_word[LENGTH];
   int i, word_size;
+  char grid[gridSize][gridSize];
 
   srand(time(NULL));
 
@@ -34,13 +38,34 @@ int encryption(void)
   printf("\nThe initial word is %s and ", shuffle_word);
   shufle(shuffle_word, word_size);
   printf("%s\n", shuffle_word);
-
-
+  printGrid(grid);
 
   /*if (strcmp(given_word,list_word1) == 0){
     condition = FALSE;
   }*/
   return 0;
+}
+
+void printGrid(char grid[gridSize][gridSize]){
+  int cntW, cntH;
+  for (cntH=0; cntH<gridSize; cntH++){
+    for (cntW=0; cntW<gridSize; cntW++){
+      if ((cntH == 0) || (cntH == (gridSize-1))){
+          grid[cntH][cntW] = '_';
+      }
+      else if ((cntW==0) || (cntW == (gridSize-1))){
+        grid[cntH][cntW] = '|';
+      }
+      else{
+          grid[cntH][cntW]=' ';
+      }
+      printf("%c", grid[cntH][cntW]);
+      if(grid[cntH][cntW]=='\0'){
+        printf("0");
+      }
+    }
+    printf("\n");
+  }
 }
 
 void shufle(char word[LENGTH], int size)
@@ -111,6 +136,7 @@ void changeRow(char word[LENGTH], int size)
     }
   }
 }
+
 int isvowel(char c)
 {
   c=tolower(c);
@@ -121,11 +147,13 @@ int isvowel(char c)
     return 0;
   }
 }
+
 char vowel()
 {
   char letter[] = {'a','e','i','o','u'};
   return letter[rand()%5];
 }
+
 char constant()
 {
   char letter[] = {'b','c','d','f','g','h','j','k','l','m','n','p','q',
