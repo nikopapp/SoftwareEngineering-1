@@ -64,26 +64,26 @@ int Nikos_SDL_Events(SDL_Simplewin *sw, int *p)
                case SDLK_LEFT:
                   *p=1;
                   printf("%d\n",*p);
-                  sw->finished=1;
+
                   return(1);
                   break;
                case SDLK_RIGHT:
                   *p=2;
                   printf("%d\n",*p);
-                  sw->finished=1;
+
                   return(2);
                   break;
                case SDLK_UP:
                   *p=3;
                   printf("%d\n",*p);
-                  sw->finished=1;
+
                   return(3);
                   break;
                case SDLK_DOWN:
       //   printf("Interaction\n");
                   *p=4;
                   printf("%d\n",*p);
-                  sw->finished=1;
+
                   return(4);
                   break;
                case SDLK_ESCAPE:

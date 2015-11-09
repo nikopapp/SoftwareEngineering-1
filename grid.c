@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "input.h"
 
 #define H 12
 #define W 12
@@ -225,12 +226,10 @@ void testGrid() {
   }
 
   /*foreground test and move test */
-  printGrid(grid, foreground);
-  move(&grid[6][6],6,6,LEFT,grid);
-  move(&grid[6][5],5,6,LEFT,grid);
-  move(&grid[6][4],4,6,LEFT,grid);
-  printGrid(grid, foreground);
-
+  while(1) {
+    printGrid(grid, foreground);
+    move(&grid[6][6],6,6,input(),grid);
+  }
   /*getNeighbour test */
   tmp = getNeighbour(2,6,RIGHT,grid);
   if (tmp->foreground != NULL) {
