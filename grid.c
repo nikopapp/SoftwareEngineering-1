@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "input.h"
+#include "game.h"
 
 #define H 12
 #define W 12
@@ -11,6 +11,7 @@ typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
 
 typedef struct entity {
+  int x, y;
   int ispassable; /* walls cannot be walked through - floors can */
   char type; /* for display when printing grid to terminal */
   struct entity *pointsto; /* this allows for connections between entities -
@@ -43,8 +44,8 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]);
 /* sets listmax to zero in all cells - i.e. makes them empty */
 void initGrid(cell grid[H][W]);
 
-/* call this to create a new entity.  uses malloc and needs a free() still */
-entity *newEntity(int ispassable, char type);
+/* call this to create a new entity.  uses malloc */
+entity *newEntity(int ispassable, char type, int x, int y);
 
 /* creates a new bulb-switch pair */
 void newBulb(cell grid[H][W], int x, int y);
@@ -94,10 +95,11 @@ void freeEntityMem(cell grid[H][W])
   initGrid(grid);
 }
 
-entity *newEntity(int ispassable, char type)
+entity *newEntity(int ispassable, char type, int x, int y)
 {
   entity *e = malloc(sizeof(entity));
-
+  e-> x = x;
+  e-> y = y;
   e->type = type;
   e->ispassable = ispassable;
   return e;
@@ -105,8 +107,8 @@ entity *newEntity(int ispassable, char type)
 
 void newBulb(cell grid[H][W], int x, int y)
 {
-  grid[y][x].background = newEntity(passable,'0');
-  grid[y+3][x].background = newEntity(passable,'-');
+  grid[y][x].background = newEntity(passable,'0',x,y);
+  grid[y+3][x].background = newEntity(passable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
 }
 
@@ -171,15 +173,25 @@ void updateEntities(cell grid[H][W])
 
 void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
   cell *cnew = getNeighbour(x,y,dir,grid);
+  int px, py;
+
+  px = x;
+  py = y;
+
+  directionsTrans(dir,&px,&py);
+  c->foreground->x = px;
+  c->foreground->y = py;
 
   cnew->foreground = c->foreground;
   c->foreground = NULL;
 }
 
+
 void testGrid() {
   /* these vars are only for the tests */
-  int i, rc, rp;
+  int i, in, rc, rp;
   cell *tmp;
+  entity *player;
 
   /* this is the grid */
   cell grid[H][W];
@@ -187,7 +199,7 @@ void testGrid() {
   initGrid(grid);
 
   /* foreground layer test */
-  grid[6][6].foreground = newEntity(passable,'r');
+  player = grid[6][6].foreground = newEntity(passable,'r',6,6);
 
   /* lightbulbs and switches */
   newBulb(grid, 2, 1);
@@ -226,10 +238,14 @@ void testGrid() {
   }
 
   /*foreground test and move test */
-  while(1) {
+
+  for(i = 0; i < 10; i++){
+    in = input();
+    printf("INPUT RECIEVED (GRID): %d",in);
+    move(&grid[player->y][player->x],player->x,player->y,in,grid);
     printGrid(grid, foreground);
-    move(&grid[6][6],6,6,input(),grid);
   }
+
   /*getNeighbour test */
   tmp = getNeighbour(2,6,RIGHT,grid);
   if (tmp->foreground != NULL) {
@@ -267,7 +283,7 @@ void fillGrid(cell grid[H][W])
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       if (grid[HCnt][WCnt].background == NULL) {
-        grid[HCnt][WCnt].background = newEntity(0,'.');
+        grid[HCnt][WCnt].background = newEntity(0,'.',WCnt,HCnt);
       }
     }
   }
