@@ -15,8 +15,9 @@ void enc_change(char word[LENGTH], int size, int game);
 void enc_printGrid(char grid[gridSize][gridSize]);
 void enc_gridInit(char grid[gridSize][gridSize]);
 void enc_wordInsert(char grid[gridSize][gridSize], char word[LENGTH],
-   int size, int row);
+                    int size, int row, char avatar);
 void enc_compare(char word[LENGTH]);
+void enc_play(char grid[gridSize][gridSize], char avatar);
 
 int encryption(void)
 {
@@ -24,7 +25,7 @@ int encryption(void)
   char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
   char rand_word[LENGTH], shuffle_word[LENGTH];
   int i, word_size;
-  char grid[gridSize][gridSize];
+  char grid[gridSize][gridSize], avatar = '@';
 
   srand(time(NULL));
 
@@ -41,19 +42,53 @@ int encryption(void)
   printf("\nThe initial word is %s and ", shuffle_word);
   enc_gridInit(grid);
   enc_shufle(shuffle_word, word_size);
-  enc_wordInsert(grid, shuffle_word, word_size, 2);
+  enc_wordInsert(grid, shuffle_word, word_size, 2, avatar);
   printf("%s\n", shuffle_word);
   enc_printGrid(grid);
+  enc_play(grid, avatar);
   enc_compare(rand_word);
-
-  /*if (strcmp(given_word,list_word1) == 0){
-    condition = FALSE;
-  }*/
   return 0;
 }
 
-void enc_compare(char word[LENGTH])
-{
+void enc_play(char grid[gridSize][gridSize], char avatar){
+
+  char move, newchar;
+  int x_ava=5, y_ava=5;
+
+  while(scanf("%c %c",&move, &newchar)==1){
+    switch (move) {
+      case 'i': // move up
+        grid[y_ava][x_ava] = ' ';
+        y_ava--;
+        grid[y_ava][x_ava] = newchar;
+        break;
+      case 'j': // move left
+        grid[y_ava][x_ava] = ' ';
+        x_ava--;
+        grid[y_ava][x_ava] = newchar;
+        break;
+      case 'l' : // move right
+        grid[y_ava][x_ava] = ' ';
+        x_ava++;
+        grid[y_ava][x_ava] = newchar;
+        break;
+      case 'k': // move down
+        grid[y_ava][x_ava] = ' ';
+        y_ava++;
+        grid[y_ava][x_ava] = newchar;
+        break;
+      }
+      enc_printGrid(grid);
+    }
+
+    /*res=BinResult(byte);
+    printf("result %d\n",res );
+    if(res==goal){
+      break;
+    }*/
+}
+
+void enc_compare(char word[LENGTH]){
   char user_word[LENGTH];
   int condition = FALSE;
   while(condition == FALSE){
@@ -66,10 +101,10 @@ void enc_compare(char word[LENGTH])
   }
 }
 
-
 void enc_wordInsert(char grid[gridSize][gridSize], char word[LENGTH],
- int size, int row){
+                    int size, int row, char avatar){
   int cnt;
+  grid[5][5] = avatar;
   for(cnt=0; cnt<size; cnt++){
     grid[row][cnt+1]=word[cnt];
   }
@@ -102,9 +137,7 @@ void enc_printGrid(char grid[gridSize][gridSize]){
     }
 }
 
-
-void enc_shufle(char word[LENGTH], int size)
-{
+void enc_shufle(char word[LENGTH], int size){
   int game ;
 
   game = rand()%3;
@@ -124,8 +157,7 @@ void enc_shufle(char word[LENGTH], int size)
   }
 }
 
-void enc_change(char word[LENGTH], int size, int game)
-{
+void enc_change(char word[LENGTH], int size, int game){
   int condition=TRUE, letter, i;
   char c;
 
@@ -159,8 +191,7 @@ void enc_change(char word[LENGTH], int size, int game)
   } while (condition);
 }
 
-void enc_changeRow(char word[LENGTH], int size)
-{
+void enc_changeRow(char word[LENGTH], int size){
   int shift, i;
 
   shift = rand()%ALPHABET;
@@ -172,8 +203,7 @@ void enc_changeRow(char word[LENGTH], int size)
   }
 }
 
-int enc_isenc_vowel(char c)
-{
+int enc_isenc_vowel(char c){
   c=tolower(c);
   if ((c=='a') || (c=='e') || (c=='u') || (c=='o') || (c=='i')){
 	return 1;
@@ -183,14 +213,12 @@ int enc_isenc_vowel(char c)
   }
 }
 
-char enc_vowel()
-{
+char enc_vowel(){
   char letter[] = {'a','e','i','o','u'};
   return letter[rand()%5];
 }
 
-char enc_constant()
-{
+char enc_constant(){
   char letter[] = {'b','c','d','f','g','h','j','k','l','m','n','p','q',
                     'r','s','t','v','w','x','y','z'};
   return letter[rand()%21];
