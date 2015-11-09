@@ -21,3 +21,7 @@ push:
 	git push "https://github.com/ProjectElves/SoftwareEngineering" master
 pull:
 	git pull "https://github.com/ProjectElves/SoftwareEngineering" master
+keypress: Gsdl2.h
+	$(CC) binkeypress.c -o keypress $(CFLAGS) $(LIBS)
+runkeypress:
+	./keypress

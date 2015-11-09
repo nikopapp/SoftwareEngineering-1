@@ -1,14 +1,18 @@
 #include "binaryGame.h"
 
+void printArray(int array[8]);
 int result(int byte[8]);
 
 int binaryGame(void)
 {
-   int goal,res,i;
+   int goal,res;
    int swich;
+   int lights[8] = {0,1,2,3,4,5,6,7};
    int byte[8] = {0,0,0,0,0,0,0,0};
+   int player[8] = {0,0,0,0,0,0,0,1};
    srand((unsigned) time(&t));
    goal =rand()%255;
+
    printf("try summing %d\n", goal );
    printf("result: %d\n", result(byte) );
    /*Light switch ON/OFF*/
@@ -21,11 +25,10 @@ int binaryGame(void)
           byte[swich]=0;
           break;
      }
-     printf("0 1 2 3 4 5 6 7\n");
-     for(i=0;i<8;i++){
-     printf("%d ",byte[i]);
-     }
-     printf("\n\n");
+     printArray(lights);
+     printArray(byte);
+     printArray(player);
+
      res=result(byte);
      printf("result %d\n",res );
      if(res==goal){
@@ -40,6 +43,7 @@ int result(int byte[8])
    int i;
    float result=0.0;
    for(i=0;i<8;i++){
+     /*Exception for first bit 0=0*/
      if(i==0 && byte[0]==0){
        result=0;
      }
@@ -48,4 +52,12 @@ int result(int byte[8])
      }
    }
    return((int)result);
+}
+printArray(int array[8])
+{
+  int i;
+  for(i=0;i<8;i++){
+    printf("%3d",array[i]);
+  }
+  printf("\n");
 }
