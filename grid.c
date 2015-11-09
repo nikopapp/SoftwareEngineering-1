@@ -4,8 +4,8 @@
 
 #define H 12
 #define W 12
-
-typedef enum direction { LEFT, RIGHT, UP, DOWN } direction;
+/*commit this*/
+typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4 } direction;
 typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
 
@@ -42,6 +42,9 @@ void initGrid(cell grid[H][W]);
 /* call this to create a new entity.  uses malloc and needs a free() still */
 entity *newEntity(int ispassable, char type);
 
+/* creates a new bulb-switch pair */
+void newBulb(cell grid[H][W], int x, int y);
+
 /* placeholder function to fill grid with floor entities */
 void fillGrid(cell grid[H][W]);
 
@@ -54,7 +57,7 @@ void freeEntityMem(cell grid[H][W]);
 
 void testGrid();
 
-int main(void)
+int grid(void)
 {
   srand(time(NULL));
   testGrid();
@@ -96,6 +99,13 @@ entity *newEntity(int ispassable, char type)
   return e;
 }
 
+void newBulb(cell grid[H][W], int x, int y)
+{
+  grid[y][x].background = newEntity(passable,'0');
+  grid[y+3][x].background = newEntity(passable,'-');
+  grid[y+3][x].background->pointsto = grid[y][x].background;
+}
+
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 {
   int px, py;
@@ -108,6 +118,10 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
   c = &grid[py][px];
 
   return c;
+}
+
+void move() {
+  
 }
 
 void directionsTrans(direction dir, int *x, int *y)
@@ -168,25 +182,15 @@ void testGrid() {
   /* foreground layer test */
   grid[6][6].foreground = newEntity(passable,'r');
 
-  /* lightbulbs */
-  grid[1][2].background = newEntity(passable,'0');
-  grid[1][3].background = newEntity(passable,'0');
-  grid[1][4].background = newEntity(passable,'0');
-  grid[1][5].background = newEntity(passable,'0');
-  grid[1][6].background = newEntity(passable,'0');
-  grid[1][7].background = newEntity(passable,'0');
-  grid[1][8].background = newEntity(passable,'0');
-  grid[1][9].background = newEntity(passable,'0');
-
-  /* switches */
-  grid[4][2].background = newEntity(passable,'-'); /* off switches - '+' is on*/
-  grid[4][3].background = newEntity(passable,'-');
-  grid[4][4].background = newEntity(passable,'-');
-  grid[4][5].background = newEntity(passable,'-');
-  grid[4][6].background = newEntity(passable,'-');
-  grid[4][7].background = newEntity(passable,'-');
-  grid[4][8].background = newEntity(passable,'-');
-  grid[4][9].background = newEntity(passable,'-');
+  /* lightbulbs and switches */
+  newBulb(grid, 2, 1);
+  newBulb(grid, 3, 1);
+  newBulb(grid, 4, 1);
+  newBulb(grid, 5, 1);
+  newBulb(grid, 6, 1);
+  newBulb(grid, 7, 1);
+  newBulb(grid, 8, 1);
+  newBulb(grid, 9, 1);
 
   fillGrid(grid);
 
@@ -251,7 +255,7 @@ void fillGrid(cell grid[H][W])
   int HCnt, WCnt;
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
-      if (grid[HCnt][WCnt].background != NULL) {
+      if (grid[HCnt][WCnt].background == NULL) {
         grid[HCnt][WCnt].background = newEntity(0,'.');
       }
     }
