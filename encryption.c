@@ -6,14 +6,13 @@
 
 #define gridSize 10
 
-void shufle(char word[LENGTH], int size);
-int isvowel(char c);
-char vowel();
-char constant();
-void changeRow(char word[LENGTH], int size);
-void change(char word[LENGTH], int size, int game);
-void printGrid(char grid[gridSize][gridSize]);
-
+void enc_shufle(char word[LENGTH], int size);
+int enc_isenc_vowel(char c);
+char enc_vowel();
+char enc_constant();
+void enc_changeRow(char word[LENGTH], int size);
+void enc_change(char word[LENGTH], int size, int game);
+void enc_printGrid(char grid[gridSize][gridSize]);
 
 int encryption(void)
 {
@@ -36,9 +35,9 @@ int encryption(void)
   shuffle_word[word_size] = '\0';
 
   printf("\nThe initial word is %s and ", shuffle_word);
-  shufle(shuffle_word, word_size);
+  enc_shufle(shuffle_word, word_size);
   printf("%s\n", shuffle_word);
-  printGrid(grid);
+  enc_printGrid(grid);
 
   /*if (strcmp(given_word,list_word1) == 0){
     condition = FALSE;
@@ -46,7 +45,7 @@ int encryption(void)
   return 0;
 }
 
-void printGrid(char grid[gridSize][gridSize]){
+void enc_printGrid(char grid[gridSize][gridSize]){
   int cntW, cntH;
   for (cntH=0; cntH<gridSize; cntH++){
     for (cntW=0; cntW<gridSize; cntW++){
@@ -68,28 +67,28 @@ void printGrid(char grid[gridSize][gridSize]){
   }
 }
 
-void shufle(char word[LENGTH], int size)
+void enc_shufle(char word[LENGTH], int size)
 {
   int game ;
 
   game = rand()%3;
   switch (game){
     case 0:
-      printf("we are going to change a vowel\n\n");
-      change(word, size, game);
+      printf("we are going to enc_change a enc_vowel\n\n");
+      enc_change(word, size, game);
       break;
     case 1 :
-      printf("we are going to change a constant\n\n" );
-      change(word, size, game);
+      printf("we are going to enc_change a enc_constant\n\n" );
+      enc_change(word, size, game);
       break;
     case 2 :
       printf("we are going to switch the whole row\n\n" );
-      changeRow(word, size);
+      enc_changeRow(word, size);
       break;
   }
 }
 
-void change(char word[LENGTH], int size, int game)
+void enc_change(char word[LENGTH], int size, int game)
 {
   int condition=TRUE, letter, i;
   char c;
@@ -97,8 +96,8 @@ void change(char word[LENGTH], int size, int game)
   do {
     if (game == 0){
       letter = rand()%size; /* pick random letter*/
-      if(isvowel(word[letter])){ /* see if the letter is a vowel*/
-        if((c=vowel()) != word[letter]){ /* see if the vowel is different of the on I had */
+      if(enc_isenc_vowel(word[letter])){ /* see if the letter is a enc_vowel*/
+        if((c=enc_vowel()) != word[letter]){ /* see if the enc_vowel is different of the on I had */
           for (i=0; i<size; i++){
             if (word[i] == word[letter]){ /* I want to check if there are more */
               word[i] = c;                /* than one same letters in my initial word */
@@ -110,8 +109,8 @@ void change(char word[LENGTH], int size, int game)
     }
     else if (game == 1 ){
       letter = rand()%size; /* same here  */
-      if(isvowel(word[letter]) == 0){
-        if((c=constant()) != word[letter]){
+      if(enc_isenc_vowel(word[letter]) == 0){
+        if((c=enc_constant()) != word[letter]){
           for (i=0; i<size; i++){
             if (word[i] == word[letter]){
               word[i] = c;
@@ -124,7 +123,7 @@ void change(char word[LENGTH], int size, int game)
   } while (condition);
 }
 
-void changeRow(char word[LENGTH], int size)
+void enc_changeRow(char word[LENGTH], int size)
 {
   int shift, i;
 
@@ -137,7 +136,7 @@ void changeRow(char word[LENGTH], int size)
   }
 }
 
-int isvowel(char c)
+int enc_isenc_vowel(char c)
 {
   c=tolower(c);
   if ((c=='a') || (c=='e') || (c=='u') || (c=='o') || (c=='i')){
@@ -148,13 +147,13 @@ int isvowel(char c)
   }
 }
 
-char vowel()
+char enc_vowel()
 {
   char letter[] = {'a','e','i','o','u'};
   return letter[rand()%5];
 }
 
-char constant()
+char enc_constant()
 {
   char letter[] = {'b','c','d','f','g','h','j','k','l','m','n','p','q',
                     'r','s','t','v','w','x','y','z'};
