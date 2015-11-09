@@ -52,7 +52,7 @@ int BinResult(int byte[BYTE_L])
    }
    return((int)result);
 }
-BinPrintArray(int array[8])
+void BinPrintArray(int array[BYTE_L])
 {
   int i;
   for(i=0;i<8;i++){
