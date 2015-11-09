@@ -4,7 +4,7 @@
 
 #define H 12
 #define W 12
-
+/*commit this*/
 typedef enum direction { LEFT, RIGHT, UP, DOWN } direction;
 typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
@@ -54,7 +54,7 @@ void freeEntityMem(cell grid[H][W]);
 
 void testGrid();
 
-int main(void)
+int grid(void)
 {
   srand(time(NULL));
   testGrid();
@@ -251,7 +251,7 @@ void fillGrid(cell grid[H][W])
   int HCnt, WCnt;
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
-      if (grid[HCnt][WCnt].background != NULL) {
+      if (grid[HCnt][WCnt].background == NULL) {
         grid[HCnt][WCnt].background = newEntity(0,'.');
       }
     }
