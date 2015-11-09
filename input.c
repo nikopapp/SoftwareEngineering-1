@@ -10,6 +10,7 @@ int input(void)
   while(!sw.finished){
       Nikos_SDL_Events(&sw,input_pointer);
   }
+  SDL_Quit();
   return(input_value);
 }
 
