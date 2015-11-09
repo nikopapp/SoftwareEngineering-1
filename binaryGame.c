@@ -6,9 +6,9 @@ int binaryGame(void)
 {
    int goal,res;
    int swich;
-   int lights[8] = {0,1,2,3,4,5,6,7};
-   int byte[8] = {0,0,0,0,0,0,0,0};
-   int player[8] = {0,0,0,0,0,0,0,1};
+   int lights[BYTE_L] = {0,1,2,3,4,5,6,7};
+   int byte[BYTE_L] = {0,0,0,0,0,0,0,0};
+   int player[BYTE_L] = {0,0,0,0,0,0,0,1};
    srand((unsigned) time(&t));
    goal =rand()%255;
 
