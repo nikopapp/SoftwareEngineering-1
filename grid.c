@@ -12,8 +12,8 @@ typedef enum ispassable { passable, impassable } ispassable;
 typedef struct entity {
   int ispassable; /* walls cannot be walked through - floors can */
   char type; /* for display when printing grid to terminal */
-  struct entity *pointsto; /* this allows for connections between entities - such as from a switch to a lightbulb */
-  int ison; /* 1 is on, 0 is off - for switches, lightbulbs */
+  struct entity *pointsto; /* this allows for connections between entities -
+  such as from a switch to a lightbulb */
 } entity;
 
 /* this and other entity-related stuff could probably be moved
@@ -142,31 +142,28 @@ void updateEntities(cell grid[H][W])
 
       /* logic for lighbulbs and switches */
       if (grid[HCnt][WCnt].background != NULL /*is there an object */
-      &&  grid[HCnt][WCnt].background->pointsto != NULL /*is switch connected */
-      && (grid[HCnt][WCnt].background->type == '-'
-      ||  grid[HCnt][WCnt].background->type == '+' )) { /*is the object a switch */
-        if (grid[HCnt][WCnt].background->ison == 1) {
+      &&  grid[HCnt][WCnt].background->pointsto != NULL) { /*is switch connected */
+        /*is the object an off switch */
+        if (grid[HCnt][WCnt].background->type == '+') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
-          grid[HCnt][WCnt].background->pointsto->ison = 1;
         }
-        if (grid[HCnt][WCnt].background->ison == 0) {
+        if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
-          grid[HCnt][WCnt].background->pointsto->ison = 0;
         }
       }
-
     }
   }
 }
 
 void testGrid() {
+  /* these vars are only for the tests */
   int i, rc, rp;
-
-  cell grid[H][W];
   cell *tmp;
 
+  /* this is the grid */
+  cell grid[H][W];
+
   initGrid(grid);
-  fillGrid(grid);
 
   /* foreground layer test */
   grid[6][6].foreground = newEntity(passable,'r');
@@ -181,7 +178,7 @@ void testGrid() {
   grid[1][8].background = newEntity(passable,'0');
   grid[1][9].background = newEntity(passable,'0');
 
-    /* switches */
+  /* switches */
   grid[4][2].background = newEntity(passable,'-'); /* off switches - '+' is on*/
   grid[4][3].background = newEntity(passable,'-');
   grid[4][4].background = newEntity(passable,'-');
@@ -191,6 +188,8 @@ void testGrid() {
   grid[4][8].background = newEntity(passable,'-');
   grid[4][9].background = newEntity(passable,'-');
 
+  fillGrid(grid);
+
   printGrid(grid, background);
 
   /* test for the update entities function */
@@ -198,20 +197,20 @@ void testGrid() {
     rp = rand()%2;
     rc = (rand()%8) + 2;
 
-    grid[4][rc].background->ison = rp;
     grid[4][rc].background->pointsto = grid[1][rc].background;
-    if (grid[4][rc].background->ison == 1) {
+    if (rp == 1) {
       changeEntity(grid[4][rc].background,'+');
     }
-    if (grid[4][rc].background->ison == 0) {
+    if (rp == 0) {
       changeEntity(grid[4][rc].background,'-');
     }
 
-    printf("\nNEXTEST:\n\nswitch %d has changed\n", rc-1);
+    printf("\nNEXTEST:\n\nswitch %d has changed to %d\n", rc-1,rp);
     grid[4][rc].background->pointsto = grid[1][rc].background;
     updateEntities(grid);
 
-    printf("\nbulb %d has changed\n", rc-1);
+    printf("\nbulb %d has changed to %d\n", rc-1, rp);
+
     printGrid(grid, background);
   }
 
@@ -252,7 +251,9 @@ void fillGrid(cell grid[H][W])
   int HCnt, WCnt;
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
-      grid[HCnt][WCnt].background = newEntity(0,'.');
+      if (grid[HCnt][WCnt].background != NULL) {
+        grid[HCnt][WCnt].background = newEntity(0,'.');
+      }
     }
   }
 }
