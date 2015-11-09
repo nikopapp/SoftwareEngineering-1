@@ -42,7 +42,7 @@ switch (select) {
 
 }
 
-
+SDL_Quit();
 printf("\n\n");
 return(0);
 }

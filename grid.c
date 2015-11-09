@@ -239,14 +239,14 @@ void testGrid(SDL_Simplewin *sw) {
 test comment finish  */
   /*foreground test and move test */
 
-  for(i = 0; i < 10; i++){
-    in = input(sw);
-    if(in!=0){  
+  while(!sw->finished){
+    in=input(sw);
+    if(in!=0){
        printf("INPUT RECIEVED (GRID): %d",in);
        move(&grid[player->y][player->x],player->x,player->y,in,grid);
        printGrid(grid, foreground);
     }
-  }
+}
 
   /*getNeighbour test */
   tmp = getNeighbour(2,6,RIGHT,grid);
