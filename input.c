@@ -1,15 +1,15 @@
 #include "input.h"
 
-int input(void)
+int input(SDL_Simplewin *sw)
 {
   int input_value;
   int *input_pointer;
-  SDL_Simplewin sw;
   input_pointer=&input_value;
-  Nikos_SDL_Init(&sw);
-  while(!sw.finished){
-      Nikos_SDL_Events(&sw,input_pointer);
+//  Nikos_SDL_Init(sw);
+  while(!sw->finished){
+      Nikos_SDL_Events(sw,input_pointer);
   }
+      printf("%d\n",input_value );
   SDL_Quit();
   return(input_value);
 }
@@ -64,31 +64,29 @@ int Nikos_SDL_Events(SDL_Simplewin *sw, int *p)
             switch( event.key.keysym.sym ){
                case SDLK_LEFT:
                   *p=1;
-                  printf("%d\n",*p);
-
+                  //printf("%d\n",*p);
+                  sw->finished=1;
                   return(1);
                   break;
                case SDLK_RIGHT:
                   *p=2;
-                  printf("%d\n",*p);
-
+                  sw->finished=1;
                   return(2);
                   break;
                case SDLK_UP:
                   *p=3;
-                  printf("%d\n",*p);
-
+                  sw->finished=1;
+                  //printf("%d\n",*p);
                   return(3);
                   break;
                case SDLK_DOWN:
-      //   printf("Interaction\n");
                   *p=4;
-                  printf("%d\n",*p);
-
+                  sw->finished=1;
+                  //  printf("%d\n",*p);
                   return(4);
                   break;
                case SDLK_ESCAPE:
-                  sw->finished =1;
+                  sw->finished = 1;
                   break;
          }
          break;

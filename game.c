@@ -3,9 +3,12 @@
 
 /*hello --this is a test change-- */
 
+SDL_Simplewin sw;
+SDL_Simplewin *swin;
 
 int main(int argc, char **argv)
 {
+  Nikos_SDL_Init(&sw);
    int select;
    if(argc==2){
       select = atoi(argv[1]);
@@ -17,6 +20,7 @@ int main(int argc, char **argv)
    printf("4.Test input\n");
    scanf("%d", &select );
    }
+   swin=&sw;
 switch (select) {
   case 1:
      if(binaryGame()==1){printf("everything OK\n");}
@@ -31,7 +35,7 @@ switch (select) {
      else{printf("ERROR \n");}
      break;
   case 4:
-     if(input()!=0){printf("everything OK\n");}
+     if(input(swin)!=0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
 

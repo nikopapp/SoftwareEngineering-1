@@ -6,4 +6,4 @@
 int binaryGame(void);
 int encryption(void);
 int grid(void);
-int input(void);
+int input(SDL_Simplewin *sw);

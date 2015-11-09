@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#include <SDL.h>
-=======
 #include <SDL2/SDL.h>
->>>>>>> ae85e4dfcb116ad742cbae4de47e8f8075c32210
 
 #define WWIDTH    400
 #define WHEIGHT   300
