@@ -1,7 +1,6 @@
 #include "binaryGame.h"
 
-void printArray(int array[8]);
-int result(int byte[8]);
+
 
 int binaryGame(void)
 {
@@ -25,11 +24,11 @@ int binaryGame(void)
           byte[swich]=0;
           break;
      }
-     printArray(lights);
-     printArray(byte);
-     printArray(player);
+     BinPrintArray(lights);
+     BinPrintArray(byte);
+     BinPrintArray(player);
 
-     res=result(byte);
+     res=BinResult(byte);
      printf("result %d\n",res );
      if(res==goal){
        break;
@@ -38,7 +37,7 @@ int binaryGame(void)
    printf("you win\n");
    return(1);
 }
-int result(int byte[8])
+int BinResult(int byte[BYTE_L])
 {
    int i;
    float result=0.0;
@@ -53,7 +52,7 @@ int result(int byte[8])
    }
    return((int)result);
 }
-printArray(int array[8])
+BinPrintArray(int array[8])
 {
   int i;
   for(i=0;i<8;i++){
