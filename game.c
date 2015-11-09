@@ -3,19 +3,21 @@
 
 /*hello --this is a test change-- */
 
+
 int main(int argc, char **argv)
 {
-   int sw;
+   int select;
    if(argc==2){
-      sw = atoi(argv[1]);
+      select = atoi(argv[1]);
    }
    else{
    printf("1.Binary Game\n");
    printf("2.Encryption Game\n");
    printf("3.Test Grid\n");
-   scanf("%d", &sw );
+   printf("4.Test input\n");
+   scanf("%d", &select );
    }
-switch (sw) {
+switch (select) {
   case 1:
      if(binaryGame()==1){printf("everything OK\n");}
      else{printf("ERROR \n");}
@@ -28,6 +30,11 @@ switch (sw) {
      if(grid()==0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
+  case 4:
+     if(input()!=0){printf("everything OK\n");}
+     else{printf("ERROR \n");}
+     break;
+
 
 }
 
