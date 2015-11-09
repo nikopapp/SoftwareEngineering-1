@@ -7,6 +7,8 @@
 #define MAX_8_BIT 255
 
 time_t t;
+void BinPrintArray(int array[BYTE_L]);
+int BinResult(int byte[BYTE_L]);
 /*
 int printNext(int byte[8],int *ctrlch,int lights[8],int player[8],int e);
 void Nikos_SDL_Init(SDL_Simplewin *sw);

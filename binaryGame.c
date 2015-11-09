@@ -1,20 +1,19 @@
 #include "binaryGame.h"
 
-void printArray(int array[8]);
-int result(int byte[8]);
+
 
 int binaryGame(void)
 {
    int goal,res;
    int swich;
-   int lights[8] = {0,1,2,3,4,5,6,7};
-   int byte[8] = {0,0,0,0,0,0,0,0};
-   int player[8] = {0,0,0,0,0,0,0,1};
+   int lights[BYTE_L] = {0,1,2,3,4,5,6,7};
+   int byte[BYTE_L] = {0,0,0,0,0,0,0,0};
+   int player[BYTE_L] = {0,0,0,0,0,0,0,1};
    srand((unsigned) time(&t));
    goal =rand()%255;
 
    printf("try summing %d\n", goal );
-   printf("result: %d\n", result(byte) );
+   printf("result: %d\n", BinResult(byte) );
    /*Light switch ON/OFF*/
    while(scanf("%d", &swich)==1){
      switch ( byte[swich]) {
@@ -25,11 +24,11 @@ int binaryGame(void)
           byte[swich]=0;
           break;
      }
-     printArray(lights);
-     printArray(byte);
-     printArray(player);
+     BinPrintArray(lights);
+     BinPrintArray(byte);
+     BinPrintArray(player);
 
-     res=result(byte);
+     res=BinResult(byte);
      printf("result %d\n",res );
      if(res==goal){
        break;
@@ -38,7 +37,7 @@ int binaryGame(void)
    printf("you win\n");
    return(1);
 }
-int result(int byte[8])
+int BinResult(int byte[BYTE_L])
 {
    int i;
    float result=0.0;
@@ -53,7 +52,7 @@ int result(int byte[8])
    }
    return((int)result);
 }
-printArray(int array[8])
+void BinPrintArray(int array[BYTE_L])
 {
   int i;
   for(i=0;i<8;i++){
