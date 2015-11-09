@@ -178,25 +178,16 @@ void testGrid() {
   /* foreground layer test */
   grid[6][6].foreground = newEntity(passable,'r');
 
-  /* lightbulbs */
-  grid[1][2].background = newEntity(passable,'0');
-  grid[1][3].background = newEntity(passable,'0');
-  grid[1][4].background = newEntity(passable,'0');
-  grid[1][5].background = newEntity(passable,'0');
-  grid[1][6].background = newEntity(passable,'0');
-  grid[1][7].background = newEntity(passable,'0');
-  grid[1][8].background = newEntity(passable,'0');
-  grid[1][9].background = newEntity(passable,'0');
+  /* lightbulbs and switches */
+  newBulb(grid, 2, 1);
+  newBulb(grid, 3, 1);
+  newBulb(grid, 4, 1);
+  newBulb(grid, 5, 1);
+  newBulb(grid, 6, 1);
+  newBulb(grid, 7, 1);
+  newBulb(grid, 8, 1);
+  newBulb(grid, 9, 1);
 
-  /* switches */
-  grid[4][2].background = newEntity(passable,'-'); /* off switches - '+' is on*/
-  grid[4][3].background = newEntity(passable,'-');
-  grid[4][4].background = newEntity(passable,'-');
-  grid[4][5].background = newEntity(passable,'-');
-  grid[4][6].background = newEntity(passable,'-');
-  grid[4][7].background = newEntity(passable,'-');
-  grid[4][8].background = newEntity(passable,'-');
-  grid[4][9].background = newEntity(passable,'-');
   fillGrid(grid);
 
   printGrid(grid, background);
