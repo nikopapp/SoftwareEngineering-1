@@ -52,30 +52,30 @@ int encryption(void)
 
 void enc_play(char grid[gridSize][gridSize], char avatar){
 
-  char move;
+  char move, newchar;
   int x_ava=5, y_ava=5;
 
-  while(scanf("%c",&move)==1){
+  while(scanf("%c %c",&move, &newchar)==1){
     switch (move) {
       case 'i': // move up
         grid[y_ava][x_ava] = ' ';
         y_ava--;
-        grid[y_ava][x_ava] = avatar;
+        grid[y_ava][x_ava] = newchar;
         break;
       case 'j': // move left
         grid[y_ava][x_ava] = ' ';
         x_ava--;
-        grid[y_ava][x_ava] = avatar;
+        grid[y_ava][x_ava] = newchar;
         break;
       case 'l' : // move right
         grid[y_ava][x_ava] = ' ';
         x_ava++;
-        grid[y_ava][x_ava] = avatar;
+        grid[y_ava][x_ava] = newchar;
         break;
       case 'k': // move down
         grid[y_ava][x_ava] = ' ';
         y_ava++;
-        grid[y_ava][x_ava] = avatar;
+        grid[y_ava][x_ava] = newchar;
         break;
       }
       enc_printGrid(grid);
