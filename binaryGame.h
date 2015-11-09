@@ -6,7 +6,6 @@
 #define BYTE_L 8
 #define MAX_8_BIT 255
 
-time_t t;
 void BinPrintArray(int array[BYTE_L]);
 int BinResult(int byte[BYTE_L]);
 /*
