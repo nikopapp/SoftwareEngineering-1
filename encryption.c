@@ -12,7 +12,7 @@ char enc_vowel();
 char enc_constant();
 void enc_changeRow(char word[LENGTH], int size);
 void enc_change(char word[LENGTH], int size, int game);
-void enc_printGrid(char grid[gridSize][gridSize]);
+void enc_printGrid(char grid[gridSize][gridSize]); //hello
 
 int encryption(void)
 {
