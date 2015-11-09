@@ -3,8 +3,14 @@
 #include <time.h>
 #include <stdlib.h>
 
-time_t t;
+#define BYTE_L 8
+#define MAX_8_BIT 255
 
+time_t t;
+/*
+int printNext(int byte[8],int *ctrlch,int lights[8],int player[8],int e);
+void Nikos_SDL_Init(SDL_Simplewin *sw);
+int Nikos_SDL_Events(SDL_Simplewin *sw);*/
 
 /*++ dificulty exact moves or
 4-11-15*/
