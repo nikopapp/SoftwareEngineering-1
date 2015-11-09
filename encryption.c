@@ -13,6 +13,10 @@ char enc_constant();
 void enc_changeRow(char word[LENGTH], int size);
 void enc_change(char word[LENGTH], int size, int game);
 void enc_printGrid(char grid[gridSize][gridSize]);
+void enc_gridInit(char grid[gridSize][gridSize]);
+void enc_wordInsert(char grid[gridSize][gridSize], char word[LENGTH],
+   int size, int row);
+void enc_compare(char word[LENGTH]);
 
 int encryption(void)
 {
@@ -35,9 +39,12 @@ int encryption(void)
   shuffle_word[word_size] = '\0';
 
   printf("\nThe initial word is %s and ", shuffle_word);
+  enc_gridInit(grid);
   enc_shufle(shuffle_word, word_size);
+  enc_wordInsert(grid, shuffle_word, word_size, 2);
   printf("%s\n", shuffle_word);
   enc_printGrid(grid);
+  enc_compare(rand_word);
 
   /*if (strcmp(given_word,list_word1) == 0){
     condition = FALSE;
@@ -45,7 +52,30 @@ int encryption(void)
   return 0;
 }
 
-void enc_printGrid(char grid[gridSize][gridSize]){
+void enc_compare(char word[LENGTH])
+{
+  char user_word[LENGTH];
+  int condition = FALSE;
+  while(condition == FALSE){
+    printf("\nTry to find the correct word\n");
+    scanf("%s",user_word);
+    if (strcmp(user_word,word) == 0){
+      printf("Congrats you have found the hidden word\n");
+      condition = TRUE;
+    }
+  }
+}
+
+
+void enc_wordInsert(char grid[gridSize][gridSize], char word[LENGTH],
+ int size, int row){
+  int cnt;
+  for(cnt=0; cnt<size; cnt++){
+    grid[row][cnt+1]=word[cnt];
+  }
+}
+
+void enc_gridInit(char grid[gridSize][gridSize]){
   int cntW, cntH;
   for (cntH=0; cntH<gridSize; cntH++){
     for (cntW=0; cntW<gridSize; cntW++){
@@ -58,14 +88,20 @@ void enc_printGrid(char grid[gridSize][gridSize]){
       else{
           grid[cntH][cntW]=' ';
       }
-      printf("%c", grid[cntH][cntW]);
-      if(grid[cntH][cntW]=='\0'){
-        printf("0");
-      }
     }
-    printf("\n");
   }
 }
+
+void enc_printGrid(char grid[gridSize][gridSize]){
+  int cntW, cntH;
+  for (cntH=0; cntH<gridSize; cntH++){
+    for (cntW=0; cntW<gridSize; cntW++){
+      printf("%c", grid[cntH][cntW]);
+      }
+    printf("\n");
+    }
+}
+
 
 void enc_shufle(char word[LENGTH], int size)
 {
