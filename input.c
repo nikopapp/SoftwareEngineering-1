@@ -81,7 +81,6 @@ int Nikos_SDL_Events(SDL_Simplewin *sw, int *p)
                case SDLK_DOWN:
                   *p=4;
                   printf("input output%d\n",*p);
-                  //  printf("%d\n",*p);
                   return(4);
                   break;
                case SDLK_ESCAPE:
