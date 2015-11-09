@@ -1,16 +1,17 @@
 #include "input.h"
 //input get a pointer for a simple window
-//simple window is declared 
+//simple window is declared
 int input(SDL_Simplewin *sw)
 {
-  int input_value;
+  int input_value=0;
   int *input_pointer;
   input_pointer=&input_value;
 //  Nikos_SDL_Init(sw);
   while(!sw->finished){
-      Nikos_SDL_Events(sw,input_pointer);
+      if(Nikos_SDL_Events(sw,input_pointer)!=0){
+      printf("shit :%d\n",input_value );
+      }
   }
-      printf("%d\n",input_value );
   SDL_Quit();
   return(input_value);
 }
@@ -61,27 +62,30 @@ int Nikos_SDL_Events(SDL_Simplewin *sw, int *p)
    {
       switch (event.type){
          case SDL_MOUSEBUTTONDOWN:
+            break;
          case SDL_KEYDOWN:
             switch( event.key.keysym.sym ){
                case SDLK_LEFT:
                   *p=1;
-                  //printf("%d\n",*p);
+                  printf("input output%d\n",*p);
                   sw->finished=1;
                   return(1);
                   break;
                case SDLK_RIGHT:
                   *p=2;
+                  printf("input output%d\n",*p);
                   sw->finished=1;
                   return(2);
                   break;
                case SDLK_UP:
                   *p=3;
+                  printf("input output%d\n",*p);
                   sw->finished=1;
-                  //printf("%d\n",*p);
                   return(3);
                   break;
                case SDLK_DOWN:
                   *p=4;
+                  printf("input output%d\n",*p);
                   sw->finished=1;
                   //  printf("%d\n",*p);
                   return(4);
@@ -93,6 +97,7 @@ int Nikos_SDL_Events(SDL_Simplewin *sw, int *p)
          break;
          case SDL_QUIT:
             sw->finished = 1;
+            break;
       }
       return(0);
    }

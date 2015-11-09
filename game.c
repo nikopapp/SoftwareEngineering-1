@@ -31,7 +31,7 @@ switch (select) {
      else{printf("ERROR \n");}
      break;
   case 3:
-     if(grid()==0){printf("everything OK\n");}
+     if(grid(swin)==0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
   case 4:

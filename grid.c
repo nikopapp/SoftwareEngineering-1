@@ -60,12 +60,12 @@ void printGrid(cell grid[H][W], layer layer);
 /* frees the memory used by malloc in the newEntity() function*/
 void freeEntityMem(cell grid[H][W]);
 
-void testGrid();
+void testGrid(SDL_Simplewin *sw);
 
-int grid(void)
+int grid(SDL_Simplewin *sw)
 {
   srand(time(NULL));
-  testGrid();
+  testGrid(sw);
   return 0;
 }
 
@@ -187,7 +187,7 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 }
 
 
-void testGrid() {
+void testGrid(SDL_Simplewin *sw) {
   /* these vars are only for the tests */
   int i, in, rc, rp;
   cell *tmp;
@@ -215,7 +215,7 @@ void testGrid() {
 
   printGrid(grid, background);
 
-  /* test for the update entities function */
+  /* test for the update entities function
   for(i = 0; i < 10; i++) {
     rp = rand()%2;
     rc = (rand()%8) + 2;
@@ -236,14 +236,16 @@ void testGrid() {
 
     printGrid(grid, background);
   }
-
+test comment finish  */
   /*foreground test and move test */
 
   for(i = 0; i < 10; i++){
-    in = input();
-    printf("INPUT RECIEVED (GRID): %d",in);
-    move(&grid[player->y][player->x],player->x,player->y,in,grid);
-    printGrid(grid, foreground);
+    in = input(sw);
+    if(in!=0){  
+       printf("INPUT RECIEVED (GRID): %d",in);
+       move(&grid[player->y][player->x],player->x,player->y,in,grid);
+       printGrid(grid, foreground);
+    }
   }
 
   /*getNeighbour test */
