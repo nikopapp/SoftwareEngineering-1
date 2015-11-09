@@ -110,6 +110,7 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 {
   int px, py;
   cell *c;
+  //d
 
   px = x;
   py = y;
