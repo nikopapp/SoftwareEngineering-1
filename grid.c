@@ -5,7 +5,7 @@
 #define H 12
 #define W 12
 /*commit this*/
-typedef enum direction { LEFT, RIGHT, UP, DOWN } direction;
+typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4 } direction;
 typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
 
@@ -41,6 +41,9 @@ void initGrid(cell grid[H][W]);
 
 /* call this to create a new entity.  uses malloc and needs a free() still */
 entity *newEntity(int ispassable, char type);
+
+/* creates a new bulb-switch pair */
+void newBulb(cell grid[H][W], int x, int y);
 
 /* placeholder function to fill grid with floor entities */
 void fillGrid(cell grid[H][W]);
@@ -94,6 +97,13 @@ entity *newEntity(int ispassable, char type)
   e->type = type;
   e->ispassable = ispassable;
   return e;
+}
+
+void newBulb(cell grid[H][W], int x, int y)
+{
+  grid[y][x].background = newEntity(passable,'0');
+  grid[y+3][x].background = newEntity(passable,'-');
+  grid[y+3][x].background->pointsto = grid[y][x].background;
 }
 
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
@@ -187,7 +197,6 @@ void testGrid() {
   grid[4][7].background = newEntity(passable,'-');
   grid[4][8].background = newEntity(passable,'-');
   grid[4][9].background = newEntity(passable,'-');
-
   fillGrid(grid);
 
   printGrid(grid, background);
