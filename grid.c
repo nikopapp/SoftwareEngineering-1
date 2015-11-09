@@ -110,7 +110,7 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
 {
   int px, py;
   cell *c;
-  
+
   px = x;
   py = y;
 
@@ -118,6 +118,10 @@ cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W])
   c = &grid[py][px];
 
   return c;
+}
+
+void move() {
+  
 }
 
 void directionsTrans(direction dir, int *x, int *y)
