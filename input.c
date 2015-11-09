@@ -1,5 +1,6 @@
 #include "input.h"
-
+//input get a pointer for a simple window
+//simple window is declared 
 int input(SDL_Simplewin *sw)
 {
   int input_value;
