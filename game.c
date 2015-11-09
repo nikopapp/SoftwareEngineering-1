@@ -12,6 +12,7 @@ int main(int argc, char **argv)
    else{
    printf("1.Binary Game\n");
    printf("2.Encryption Game\n");
+   printf("3.Test Grid\n");
    scanf("%d", &sw );
    }
 switch (sw) {
@@ -23,7 +24,13 @@ switch (sw) {
      if(encryption()==0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
+  case 3:
+     if(grid()==0){printf("everything OK\n");}
+     else{printf("ERROR \n");}
+     break;
+
 }
+
 
 printf("\n\n");
 return(0);
