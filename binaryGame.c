@@ -9,7 +9,7 @@ int binaryGame(void)
    int lights[BYTE_L] = {0,1,2,3,4,5,6,7};
    int byte[BYTE_L] = {0,0,0,0,0,0,0,0};
    int player[BYTE_L] = {0,0,0,0,0,0,0,1};
-   srand((unsigned) time(&t));
+   srand((unsigned) time(NULL));
    goal =rand()%255;
 
    printf("try summing %d\n", goal );
