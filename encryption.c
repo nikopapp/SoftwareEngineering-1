@@ -116,7 +116,7 @@ int enc_winCheck(char grid[GRIDSIZE][GRIDSIZE], int wordLength, int wordStart, c
   return 1;
 }
 
-/*hecks whether there is a letter, if there is a letter
+/*checks whether there is a letter, if there is a letter
 then it increments the letter by one*/
 int enc_gridCheck(char grid[GRIDSIZE][GRIDSIZE], int y, int x,
 int yPlus, int xPlus){
@@ -190,7 +190,7 @@ void enc_printGrid(char grid[GRIDSIZE][GRIDSIZE]){
 void enc_shufle(char word[LENGTH], int size){
   int game ;
 
-  game = rand()%2; // changed to avoid row change
+  game = rand()%3;
   switch (game){
     case 0:
       printf("we are going to enc_change a enc_vowel\n\n");
