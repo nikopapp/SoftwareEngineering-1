@@ -5,7 +5,7 @@
 
 #define H 12
 #define W 12
-/*commit this*/
+
 typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4 } direction;
 typedef enum layer { background, foreground } layer;
 typedef enum ispassable { passable, impassable } ispassable;
@@ -136,10 +136,10 @@ void directionsTrans(direction dir, int *x, int *y)
       (*x)++;
       break;
     case UP:
-      (*y)++;
+      (*y)--;
       break;
     case DOWN:
-      (*y)--;
+      (*y)++;
       break;
   }
 }
@@ -189,7 +189,7 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
 void testGrid(SDL_Simplewin *sw) {
   /* these vars are only for the tests */
-  int i, in, rc, rp, *p;
+  int i, in, rc, rp;
   cell *tmp;
   entity *player;
 
@@ -240,7 +240,7 @@ test comment finish  */
   /*foreground test and move test */
 
   while(!sw->finished){
-    in=Nikos_SDL_Events(sw, *p);
+    in=input(sw);
     if(in!=0){
        printf("INPUT RECIEVED (GRID): %d",in);
        move(&grid[player->y][player->x],player->x,player->y,in,grid);
