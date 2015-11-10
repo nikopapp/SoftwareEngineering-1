@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "game.h"
+#include "input.h"
 
 #define H 12
 #define W 12
@@ -189,7 +189,7 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
 void testGrid(SDL_Simplewin *sw) {
   /* these vars are only for the tests */
-  int i, in, rc, rp;
+  int i, in, rc, rp, *p;
   cell *tmp;
   entity *player;
 
@@ -240,7 +240,7 @@ test comment finish  */
   /*foreground test and move test */
 
   while(!sw->finished){
-    in=input(sw);
+    in=Nikos_SDL_Events(sw, *p);
     if(in!=0){
        printf("INPUT RECIEVED (GRID): %d",in);
        move(&grid[player->y][player->x],player->x,player->y,in,grid);
