@@ -55,7 +55,7 @@ void fillGrid(cell grid[H][W]);
 
 /* placeholder function to print grid to terminal.
 only prints one layer of the grid */
-void printGrid(cell grid[H][W], layer layer);
+void printGrid(cell grid[H][W]);
 
 /* frees the memory used by malloc in the newEntity() function*/
 void freeEntityMem(cell grid[H][W]);
@@ -213,9 +213,8 @@ void testGrid(SDL_Simplewin *sw) {
 
   fillGrid(grid);
 
-  printGrid(grid, background);
+  printGrid(grid);
 
-  /* test for the update entities function
   for(i = 0; i < 10; i++) {
     rp = rand()%2;
     rc = (rand()%8) + 2;
@@ -234,9 +233,9 @@ void testGrid(SDL_Simplewin *sw) {
 
     printf("\nbulb %d has changed to %d\n", rc-1, rp);
 
-    printGrid(grid, background);
+    printGrid(grid);
   }
-test comment finish  */
+
   /*foreground test and move test */
 
   while(!sw->finished){
@@ -244,7 +243,7 @@ test comment finish  */
     if(in!=0){
        printf("INPUT RECIEVED (GRID): %d",in);
        move(&grid[player->y][player->x],player->x,player->y,in,grid);
-       printGrid(grid, foreground);
+       printGrid(grid);
     }
 }
 
@@ -257,22 +256,18 @@ test comment finish  */
   freeEntityMem(grid);
 }
 
-void printGrid(cell grid[H][W], layer layer)
+void printGrid(cell grid[H][W])
 {
   int HCnt, WCnt;
+  
+  printf("\n");
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
-      if (layer == background
-      && grid[HCnt][WCnt].background != NULL) {
-        printf("%c ", grid[HCnt][WCnt].background->type);
-      }
-      if (layer == foreground
-      && grid[HCnt][WCnt].foreground != NULL) {
+      if (grid[HCnt][WCnt].foreground != NULL) {
         printf("%c ", grid[HCnt][WCnt].foreground->type);
       }
-      else if (layer == foreground
-      && grid[HCnt][WCnt].foreground == NULL) {
-        printf("%c ",' ');
+      else if (grid[HCnt][WCnt].background != NULL) {
+        printf("%c ", grid[HCnt][WCnt].background->type);
       }
     }
     printf("\n");
