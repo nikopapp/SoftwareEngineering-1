@@ -1,8 +1,6 @@
 #include "input.h"
 #include "grid.h"
 
-
-
 int grid(SDL_Simplewin *sw)
 {
   srand(time(NULL));
