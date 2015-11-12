@@ -1,6 +1,6 @@
-#include
+#include "game.h"
 
-int bgame (void)
+int bgame (SDL_Simplewin *sw)
 {
   cell grid[H][W];
   entity *player;
@@ -31,4 +31,6 @@ int bgame (void)
 
   /* free memory */
 	freeEntityMem(grid);
+  
+  return 0;
 }

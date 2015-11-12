@@ -18,6 +18,7 @@ int main(int argc, char **argv)
    printf("2.Encryption Game\n");
    printf("3.Test Grid\n");
    printf("4.Test input\n");
+   printf("5.Binary game/grid integration\n");  
    scanf("%d", &select );
    }
    swin=&sw;
@@ -38,7 +39,10 @@ switch (select) {
      if(input(swin)!=0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
-
+  case 5:
+     if(bgame(swin)!=0){printf("everything OK\n");}
+     else{printf("ERROR \n");}
+     break;
 
 }
 
