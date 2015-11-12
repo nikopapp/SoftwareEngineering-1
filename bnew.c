@@ -26,20 +26,23 @@ int bgame (SDL_Simplewin *sw)
   
   /* MAIN LOOP */
 	while(!sw->finished){
-    in=input(sw);
-    if( (in > 0) && (in < 5) ){
-      move(&grid[player->y][player->x],player->x,player->y,in,grid);
-      printGrid(grid);
-    }
-    if (in == 9) {
-      if( grid[player->y][player->x].background != NULL
-      &&  grid[player->y][player->x].background->type == '-') {
-        changeEntity(grid[player->y][player->x].background,'+');
-        updateEntities(grid);
-        printGrid(grid);
-      }
-    }
-  }
+		in=input(sw);
+		if( (in > 0) && (in < 5) ){
+		  move(&grid[player->y][player->x],player->x,player->y,in,grid);
+		}
+		if (in == 9) {
+		  if( grid[player->y][player->x].background != NULL
+		  &&  grid[player->y][player->x].background->type == '-') {
+			changeEntity(grid[player->y][player->x].background,'+');
+		  }
+		  if( grid[player->y][player->x].background != NULL
+		  &&  grid[player->y][player->x].background->type == '+') {
+			changeEntity(grid[player->y][player->x].background,'-');
+		  }
+		}
+    updateEntities(grid);
+    printGrid(grid);
+	}
   
   /* free memory */
 	freeEntityMem(grid);

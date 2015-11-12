@@ -1,5 +1,5 @@
 CFLAGS = `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm
-INCS = $(TARGET).h binaryGame.h encryption.h input.h grid.h game.h
+INCS = $(TARGET).h binaryGame.h encryption.h input.h grid.h
 TARGET = game
 SOURCES =  binaryGame.c encryption.c grid.c input.c  bnew.c $(TARGET).c
 LIBS =  `sdl2-config --libs`

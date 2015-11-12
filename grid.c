@@ -97,11 +97,11 @@ void updateEntities(cell grid[H][W])
   int HCnt, WCnt;
 
   for(HCnt=0; HCnt<H; HCnt++){
-    for(WCnt=0; WCnt<H; WCnt++){
+    for(WCnt=0; WCnt<W; WCnt++){
 
       /* logic for lighbulbs and switches */
       if (grid[HCnt][WCnt].background != NULL /*is there an object */
-      &&  grid[HCnt][WCnt].background->pointsto != NULL ) { /*is switch connected */
+      &&  grid[HCnt][WCnt].background->pointsto != NULL) { /*is switch connected */
         /*is the object an on switch */
         if (grid[HCnt][WCnt].background->type == '+') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
@@ -229,4 +229,5 @@ void testGrid(SDL_Simplewin *sw) {
 
   freeEntityMem(grid);
 }
+
 
