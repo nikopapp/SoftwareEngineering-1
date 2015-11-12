@@ -15,10 +15,8 @@ int bgame (SDL_Simplewin *sw)
   int goal,res;
   
   initGrid(grid);
-  
   /* place player */
   player = grid[6][6].foreground = newEntity(passable,'@',6,6);
-  
   /* 8 lightbytes and 8 switches */
   byte[7] = newBulb(grid, 2, 1);
   byte[6] = newBulb(grid, 3, 1);
@@ -28,7 +26,6 @@ int bgame (SDL_Simplewin *sw)
   byte[2] = newBulb(grid, 7, 1);
   byte[1] = newBulb(grid, 8, 1);
   byte[0] = newBulb(grid, 9, 1);
-  
   /*layer of floortiles */
   fillGrid(grid);
   
