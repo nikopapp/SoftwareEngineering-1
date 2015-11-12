@@ -59,4 +59,6 @@ void printGrid(cell grid[H][W]);
 /* frees the memory used by malloc in the newEntity() function*/
 void freeEntityMem(cell grid[H][W]);
 
-void testGrid(SDL_Simplewin *sw);
+/* checks conditions and changes entities which need changing */
+void updateEntities(cell grid[H][W]);
+

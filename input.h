@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 
-
 #define WWIDTH    400
 #define WHEIGHT   300
 

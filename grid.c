@@ -1,9 +1,9 @@
-#include "input.h"
-#include "grid.h"
+#include "game.h"
 
-int grid(SDL_Simplewin *sw)
+void testGrid(SDL_Simplewin *sw);
+
+int gridmain(SDL_Simplewin *sw)
 {
-  srand(time(NULL));
   testGrid(sw);
   return 0;
 }
@@ -27,8 +27,12 @@ void freeEntityMem(cell grid[H][W])
 
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<H; WCnt++){
-      free(grid[HCnt][WCnt].foreground);
-      free(grid[HCnt][WCnt].background);
+      if (grid[HCnt][WCnt].foreground != NULL) {
+        free(grid[HCnt][WCnt].foreground);
+      }
+      if (grid[HCnt][WCnt].background != NULL) {
+        free(grid[HCnt][WCnt].background);
+      }
     }
   }
   initGrid(grid);
@@ -97,11 +101,12 @@ void updateEntities(cell grid[H][W])
 
       /* logic for lighbulbs and switches */
       if (grid[HCnt][WCnt].background != NULL /*is there an object */
-      &&  grid[HCnt][WCnt].background->pointsto != NULL) { /*is switch connected */
-        /*is the object an off switch */
+      &&  grid[HCnt][WCnt].background->pointsto != NULL ) { /*is switch connected */
+        /*is the object an on switch */
         if (grid[HCnt][WCnt].background->type == '+') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
         }
+        /*is the object an off switch */
         if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
         }
@@ -126,20 +131,49 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 }
 
 
+void printGrid(cell grid[H][W])
+{
+  int HCnt, WCnt;
+  
+  printf("\n");
+  for(HCnt=0; HCnt<H; HCnt++){
+    for(WCnt=0; WCnt<W; WCnt++){
+      if (grid[HCnt][WCnt].foreground != NULL) {
+        printf("%c ", grid[HCnt][WCnt].foreground->type);
+      }
+      else if (grid[HCnt][WCnt].background != NULL) {
+        printf("%c ", grid[HCnt][WCnt].background->type);
+      }
+    }
+    printf("\n");
+  }
+}
+
+void fillGrid(cell grid[H][W])
+{
+  int HCnt, WCnt;
+  for(HCnt=0; HCnt<H; HCnt++){
+    for(WCnt=0; WCnt<W; WCnt++){
+      if (grid[HCnt][WCnt].background == NULL) {
+        grid[HCnt][WCnt].background = newEntity(0,'.',WCnt,HCnt);
+      }
+    }
+  }
+}
+
+
 void testGrid(SDL_Simplewin *sw) {
   /* these vars are only for the tests */
   int i, in, rc, rp;
   cell *tmp;
   entity *player;
 
-  /* this is the grid */
+  srand(time(NULL));
+
   cell grid[H][W];
-
   initGrid(grid);
-
   /* foreground layer test */
   player = grid[6][6].foreground = newEntity(passable,'@',6,6);
-
   /* lightbulbs and switches */
   newBulb(grid, 2, 1);
   newBulb(grid, 3, 1);
@@ -154,6 +188,7 @@ void testGrid(SDL_Simplewin *sw) {
 
   printGrid(grid);
 
+  /* test for switches and connectivity with objects */
   for(i = 0; i < 10; i++) {
     rp = rand()%2;
     rc = (rand()%8) + 2;
@@ -195,32 +230,3 @@ void testGrid(SDL_Simplewin *sw) {
   freeEntityMem(grid);
 }
 
-void printGrid(cell grid[H][W])
-{
-  int HCnt, WCnt;
-  
-  printf("\n");
-  for(HCnt=0; HCnt<H; HCnt++){
-    for(WCnt=0; WCnt<W; WCnt++){
-      if (grid[HCnt][WCnt].foreground != NULL) {
-        printf("%c ", grid[HCnt][WCnt].foreground->type);
-      }
-      else if (grid[HCnt][WCnt].background != NULL) {
-        printf("%c ", grid[HCnt][WCnt].background->type);
-      }
-    }
-    printf("\n");
-  }
-}
-
-void fillGrid(cell grid[H][W])
-{
-  int HCnt, WCnt;
-  for(HCnt=0; HCnt<H; HCnt++){
-    for(WCnt=0; WCnt<W; WCnt++){
-      if (grid[HCnt][WCnt].background == NULL) {
-        grid[HCnt][WCnt].background = newEntity(0,'.',WCnt,HCnt);
-      }
-    }
-  }
-}
