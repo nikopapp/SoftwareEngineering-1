@@ -48,11 +48,13 @@ entity *newEntity(int ispassable, char type, int x, int y)
   return e;
 }
 
-void newBulb(cell grid[H][W], int x, int y)
+entity *newBulb(cell grid[H][W], int x, int y)
 {
   grid[y][x].background = newEntity(passable,'0',x,y);
   grid[y+3][x].background = newEntity(passable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
+  
+  return grid[y][x].background;
 }
 
 cell *getNeighbour(int x, int y, direction dir, cell grid[H][W])

@@ -47,7 +47,7 @@ void initGrid(cell grid[H][W]);
 entity *newEntity(int ispassable, char type, int x, int y);
 
 /* creates a new bulb-switch pair */
-void newBulb(cell grid[H][W], int x, int y);
+entity *newBulb(cell grid[H][W], int x, int y);
 
 /* placeholder function to fill grid with floor entities */
 void fillGrid(cell grid[H][W]);
