@@ -39,11 +39,11 @@ int bgame (SDL_Simplewin *sw)
   /* MAIN LOOP */
 	while(!sw->finished){
     in=input(sw);
-    if( (in > 0) && (in < 5) ){
+    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,in,grid);
       printGrid(grid);
     }
-    if (in == 9) {
+    if (in == 9) { /*checks for spacebar */
       if( grid[player->y][player->x].background != NULL
       &&  grid[player->y][player->x].background->type == '-') {
         changeEntity(grid[player->y][player->x].background,'+');
@@ -62,13 +62,10 @@ int bgame (SDL_Simplewin *sw)
     if(res==goal){
       break;
     }
-   }
-   printf("you win\n");
-   return(1);
+  }
   
-  /* free memory */
-	freeEntityMem(grid);
-  
+  printf("you win\n");
+	freeEntityMem(grid);  /* free memory */
   return 0;
 }
 
