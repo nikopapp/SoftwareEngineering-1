@@ -19,7 +19,7 @@ typedef struct entity {
 } entity;
 
 /* this and other entity-related stuff could probably be moved
-to an entity.c file ff*/
+to an entity.c file */
 
 typedef struct cell {
   /* i have simplified the cells of the grid to just contain 2 possible
