@@ -26,21 +26,10 @@ int bgame (SDL_Simplewin *sw)
     newWall(grid, i, 3);
   }
 
-  // Outside walls
-  for (i = 0; i < W; i++) {
-    newWall(grid, i, 0);
-  }
-  for (i = 0; i < W; i++) {
-    newWall(grid, i, H-1);
-  }
-  for (i = 1; i < H-1; i++) {
-    newWall(grid, 0, i);
-  }
-  for (i = 1; i < H-1; i++) {
-    newWall(grid, W-1, i);
-  }
+  // Creates the boundary walls
+  createBoundingWalls(grid);
 
-  /*layer of floortiles */
+  /* layer of floortiles */
   fillGrid(grid);
 
   goal = rand()%255;
@@ -102,11 +91,5 @@ entity *newBulb(cell grid[H][W], int x, int y)
   grid[y+3][x].background = newEntity(passable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
 
-  return grid[y][x].background;
-}
-
-entity *newWall(cell grid[H][W], int x, int y)
-{
-  grid[y][x].background = newEntity(impassable,'#',x,y);
   return grid[y][x].background;
 }
