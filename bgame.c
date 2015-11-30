@@ -1,7 +1,7 @@
 /* This is the binary game's integration with the grid.  */
 #include "bgame.h"
 
-int bgame (SDL_Simplewin *sw)
+int bgame (Display *sw)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L];

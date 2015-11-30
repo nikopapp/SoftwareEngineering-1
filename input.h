@@ -1,7 +1,3 @@
-#include <SDL.h>
-#include "entity.h"
+#include "display.h"
 
-#define WWIDTH    400
-#define WHEIGHT   300
-
-int Nikos_SDL_Events(SDL_Simplewin *sw, int *p);
+int Nikos_SDL_Events(Display *d, int *p);

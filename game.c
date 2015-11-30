@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include "game.h"
 
-SDL_Simplewin sw;
-SDL_Simplewin *swin;
-
 int main(int argc, char **argv)
 {
-  Nikos_SDL_Init(&sw);
+  entity *e = newEntity(passable,1,6,6);
+   Display *d = newDisplay();
+   loadPhoto(d, "images/floor.bmp", 1);
+   drawEntity(d,e);
+   e->x=10;
+   e->y=10;
+   drawEntity(d,e);
+   drawFrame(d, 20);
    int select;
    if(argc==2){
       select = atoi(argv[1]);
@@ -19,7 +23,6 @@ int main(int argc, char **argv)
    printf("5.Binary game/grid integration\n");
    scanf("%d", &select );
    }
-   swin=&sw;
 switch (select) {
   // case 1:
   //    if(binaryGame()==1){printf("everything OK\n");}
@@ -34,17 +37,17 @@ switch (select) {
   //    else{printf("ERROR \n");}
   //    break;
   case 4:
-     if(input(swin)!=0){printf("everything OK\n");}
+     if(input(d)!=0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
   case 5:
-     if(bgame(swin)!=0){printf("everything OK\n");}
+     if(bgame(d)!=0){printf("everything OK\n");}
      else{printf("ERROR \n");}
      break;
 
 }
 
-SDL_Quit();
+closeDisplay(d);
 printf("\n\n");
 return(0);
 }
