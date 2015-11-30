@@ -2,10 +2,6 @@
 #include <math.h>
 #include "entity.h"
 
-
-
-#define WHEIGHT             700
-#define WWIDTH             1100
 #define MILLISECONDDELAY     20
 
 struct display {
@@ -29,7 +25,7 @@ void loadPhoto(Display *d, char *s, int i);
 //Splashes photo without loading it again
 void splashPhoto(Display *d);
 //draws entity
-void drawEntity(Display *d, entity *e);
+void drawEntities(Display *d, cell grid[H][W]);
 //Set drawing colour
 void setColour(Display *d, int r, int g, int b, int a);
 // Update the window on screen, after delaying for the (rest of) the given time.

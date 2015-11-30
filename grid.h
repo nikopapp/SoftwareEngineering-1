@@ -1,8 +1,5 @@
 #include "base.h"
 
-#define H 14
-#define W 12
-
 typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4 } direction;
 typedef enum layer { background, foreground } layer;
 

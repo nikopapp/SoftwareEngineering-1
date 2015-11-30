@@ -13,7 +13,7 @@ void initGrid(cell grid[H][W])
   int HCnt, WCnt;
 
   for(HCnt=0; HCnt<H; HCnt++){
-    for(WCnt=0; WCnt<H; WCnt++){
+    for(WCnt=0; WCnt<W; WCnt++){
       grid[HCnt][WCnt].foreground = NULL;
       grid[HCnt][WCnt].background = NULL;
       /* initialise the grid cells to contain no entities */

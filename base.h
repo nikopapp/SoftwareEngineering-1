@@ -6,6 +6,13 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
+#define WHEIGHT             700
+#define WWIDTH             1100
+#define TILESIZE             64
+
+#define H WHEIGHT / TILESIZE
+#define W WWIDTH / TILESIZE
+
 /* FORWARD DEDCLARATIONS */
 struct display;
 typedef struct display Display;

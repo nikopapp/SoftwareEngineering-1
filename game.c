@@ -3,14 +3,14 @@
 
 int main(int argc, char **argv)
 {
-  entity *e = newEntity(passable,1,6,6);
    Display *d = newDisplay();
-   loadPhoto(d, "images/floor.bmp", 1);
-   drawEntity(d,e);
-   e->x=10;
-   e->y=10;
-   drawEntity(d,e);
-   drawFrame(d, 20);
+   loadPhoto(d, "images/floor.bmp", '.');
+   loadPhoto(d, "images/offlight.bmp", '0');
+   loadPhoto(d, "images/onlight.bmp", '1');
+   loadPhoto(d, "images/offswitch.bmp", '-');
+   loadPhoto(d, "images/onswitch.bmp", '+');
+   loadPhoto(d, "images/Red_Elf_Front.bmp", '@');
+
    int select;
    if(argc==2){
       select = atoi(argv[1]);

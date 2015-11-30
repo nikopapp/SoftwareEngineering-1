@@ -5,22 +5,18 @@ int bgame (Display *sw)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L];
-  int in, i;
+  int in, i, j;
   int goal,res;
 
   initGrid(grid);
   /* place player */
   player = grid[6][6].foreground = newEntity(passable,'@',6,6);
   /* 8 lightbytes and 8 switches */
-  byte[7] = newBulb(grid, 2, 1);
-  byte[6] = newBulb(grid, 3, 1);
-  byte[5] = newBulb(grid, 4, 1);
-  byte[4] = newBulb(grid, 5, 1);
-  byte[3] = newBulb(grid, 6, 1);
-  byte[2] = newBulb(grid, 7, 1);
-  byte[1] = newBulb(grid, 8, 1);
-  byte[0] = newBulb(grid, 9, 1);
 
+  for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
+    byte[i-1] = newBulb(grid, j, 1);
+  }
+  
   // Dividing wall
   for (i = 1; i < W - 1; i++) {
     newWall(grid, i, 3);
@@ -32,6 +28,9 @@ int bgame (Display *sw)
   /* layer of floortiles */
   fillGrid(grid);
 
+  drawEntities(sw, grid);
+  drawFrame(sw, 20);
+
   goal = rand()%255;
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
@@ -39,6 +38,7 @@ int bgame (Display *sw)
   /* MAIN LOOP */
 	while(!sw->finished){
     in=input(sw);
+
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,in,grid);
       printGrid(grid);
@@ -49,14 +49,18 @@ int bgame (Display *sw)
         changeEntity(grid[player->y][player->x].background,'+');
         updateEntities(grid);
         printGrid(grid);
+        Mix_PlayChannel( -1, sw->zap, 0 );
       }
 	  else if( grid[player->y][player->x].background != NULL
       &&  grid[player->y][player->x].background->type == '+') {
         changeEntity(grid[player->y][player->x].background,'-');
         updateEntities(grid);
         printGrid(grid);
+        Mix_PlayChannel( -1, sw->zap, 0 );
       }
     }
+    drawEntities(sw, grid);
+    drawFrame(sw, 20);
     res=binResult(byte);
     printf("result %d\n",res);
     if(res==goal){
