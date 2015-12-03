@@ -1,8 +1,8 @@
-CFLAGS = `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -lSDL2_image -lSDL2_mixer
+CFLAGS = -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -lSDL2 -lSDL2_image -lSDL2_mixer
 INCS = $(TARGET).h input.h grid.h entity.h base.h bgame.h display.h
 TARGET = game
 SOURCES =  encryption.c grid.c input.c display.c entity.c bgame.c $(TARGET).c
-LIBS =  `sdl2-config --libs`
+LIBS =  -L/libs
 CC = gcc
 
 all: $(TARGET)
@@ -23,4 +23,3 @@ pull:
 	git pull "https://github.com/ProjectElves/SoftwareEngineering"
 debug:
 	valgrind ./game
-
