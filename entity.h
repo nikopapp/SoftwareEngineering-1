@@ -37,3 +37,9 @@ void printGrid(cell grid[H][W]);
 entity *newWall(cell grid[H][W], int x, int y);
 
 void createBoundingWalls(cell grid[H][W]);
+
+void delEntity(entity *e);
+
+void changePassable(entity *e, int ispassable);
+
+void updatePlayerfacing(entity *player, direction in);

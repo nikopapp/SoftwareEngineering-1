@@ -4,27 +4,27 @@
 int bgame (Display *sw)
 {
   cell grid[H][W];
-  entity *player, *byte[BYTE_L];
+  entity *player, *byte[BYTE_L],  *door1, *door2;
   int in, i, j;
   int goal,res;
 
   initGrid(grid);
   /* place player */
-  player = grid[6][6].foreground = newEntity(passable,'@',6,6);
+  player = grid[4][1].foreground = newEntity(passable,'R',1,4);
   /* 8 lightbytes and 8 switches */
-
   for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
     byte[i-1] = newBulb(grid, j, 1);
   }
-  
   // Dividing wall
   for (i = 1; i < W - 1; i++) {
     newWall(grid, i, 3);
   }
-
   // Creates the boundary walls
   createBoundingWalls(grid);
-
+  delEntity(grid[4][W-1].background);
+  delEntity(grid[4][0].background);
+  door1 = grid[4][W-1].background = newEntity(impassable,'&',W-1,4);
+  door2 = grid[4][0].background = newEntity(impassable,'&',0,4);
   /* layer of floortiles */
   fillGrid(grid);
 
@@ -37,11 +37,29 @@ int bgame (Display *sw)
 
   /* MAIN LOOP */
 	while(!sw->finished){
+    res=binResult(byte);
+    printf("result %d\n",res);
+    if(res==goal){
+      changeEntity(door1,'%');
+      changePassable(door1,passable);
+      changeEntity(door2,'%');
+      changePassable(door2,passable);
+      printf("you win\n");
+    }
     in=input(sw);
 
+    if (grid[player->y][player->x].background == door1) {
+      freeEntityMem(grid);  /* free memory */
+      bgame(sw);
+    }
+    if (grid[player->y][player->x].background == door2) {
+      freeEntityMem(grid);  /* free memory */
+      bgame(sw);
+    }
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,in,grid);
       printGrid(grid);
+      updatePlayerfacing(player, in);
     }
     if (in == 9) { /*checks for spacebar */
       if( grid[player->y][player->x].background != NULL
@@ -61,15 +79,7 @@ int bgame (Display *sw)
     }
     drawEntities(sw, grid);
     drawFrame(sw, 20);
-    res=binResult(byte);
-    printf("result %d\n",res);
-    if(res==goal){
-      break;
-    }
   }
-
-  printf("you win\n");
-	freeEntityMem(grid);  /* free memory */
   return 0;
 }
 

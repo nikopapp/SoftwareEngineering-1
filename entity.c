@@ -15,6 +15,16 @@ void changeEntity(entity *e, char newtype)
   e->type = newtype;
 }
 
+void changePassable(entity *e, int ispassable) {
+  e->ispassable = ispassable;
+}
+
+
+void delEntity(entity *e)
+{
+  free(e);
+}
+
 void updateEntities(cell grid[H][W])
 {
   int HCnt, WCnt;
@@ -56,6 +66,24 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
   cnew->foreground = c->foreground;
   c->foreground = NULL;
+}
+
+void updatePlayerfacing(entity *player, direction in)
+{
+  switch(in){
+    case LEFT:
+      changeEntity(player,'L');
+      break;
+    case RIGHT:
+      changeEntity(player,'R');
+      break;
+    case UP:
+      changeEntity(player,'U');
+      break;
+    case DOWN:
+      changeEntity(player,'D');
+      break;
+  }
 }
 
 void freeEntityMem(cell grid[H][W])

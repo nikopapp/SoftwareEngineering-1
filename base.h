@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <time.h>
 /*uses sdl libraries from srcfolder*/
-#include "incs/SDL2/SDL.h"
-#include "incs/SDL2/SDL_image.h"
-#include "incs/SDL2/SDL_mixer.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 #define WHEIGHT             700
 #define WWIDTH             1100
