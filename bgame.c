@@ -1,7 +1,7 @@
 /* This is the binary game's integration with the grid.  */
 #include "bgame.h"
 
-int bgame (Display *sw)
+int bgame (Display *d)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L],  *door1, *door2;
@@ -28,15 +28,17 @@ int bgame (Display *sw)
   /* layer of floortiles */
   fillGrid(grid);
 
-  drawEntities(sw, grid);
-  drawFrame(sw, 20);
+  splashPhoto(d,'b');
+  drawEntities(d, grid);
+  drawFrame(d, 20);
 
   goal = rand()%255;
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
 
   /* MAIN LOOP */
-	while(!sw->finished){
+	while(!d->finished){
+
     res=binResult(byte);
     printf("result %d\n",res);
     if(res==goal){
@@ -46,15 +48,15 @@ int bgame (Display *sw)
       changePassable(door2,passable);
       printf("you win\n");
     }
-    in=input(sw);
+    in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
       freeEntityMem(grid);  /* free memory */
-      bgame(sw);
+      bgame(d);
     }
     if (grid[player->y][player->x].background == door2) {
       freeEntityMem(grid);  /* free memory */
-      bgame(sw);
+      bgame(d);
     }
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,in,grid);
@@ -67,18 +69,18 @@ int bgame (Display *sw)
         changeEntity(grid[player->y][player->x].background,'+');
         updateEntities(grid);
         printGrid(grid);
-        Mix_PlayChannel( -1, sw->zap, 0 );
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
 	  else if( grid[player->y][player->x].background != NULL
       &&  grid[player->y][player->x].background->type == '+') {
         changeEntity(grid[player->y][player->x].background,'-');
         updateEntities(grid);
         printGrid(grid);
-        Mix_PlayChannel( -1, sw->zap, 0 );
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
     }
-    drawEntities(sw, grid);
-    drawFrame(sw, 20);
+    drawEntities(d, grid);
+    drawFrame(d, 20);
   }
   return 0;
 }

@@ -5,3 +5,4 @@ int encryption(void);
 int gridmain(Display *sw);
 int input(Display *sw);
 int bgame(Display *sw);
+void mediaLoad(Display *d);

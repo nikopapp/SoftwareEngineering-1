@@ -14,6 +14,7 @@ Display *newDisplay()
       Mix_GetError() );
       return(0);
     }
+    d->font=TTF_OpenFont("files/Verano.otf", 20);
     d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
     if (d->win == NULL){
@@ -69,10 +70,10 @@ void loadPhoto(Display *d, char *s, int i)
 
   SDL_RenderCopy(d->renderer, d->background, NULL, NULL);
 }
-
-void splashPhoto(Display *d)
+void splashPhoto(Display *d, int i)
 {
-SDL_RenderCopy(d->renderer, d->background, NULL, NULL);
+
+  SDL_RenderCopy(d->renderer, d->images[i], NULL, NULL);
 }
 
 /*My own delay function*/
@@ -80,6 +81,7 @@ void myDelay(int ms)
 {
   SDL_Delay(ms);
 }
+//void drawText()
 void drawEntities(Display *d, cell grid[H][W])
 {
   SDL_Rect tile,dest;
@@ -87,7 +89,8 @@ void drawEntities(Display *d, cell grid[H][W])
   tile.x = 0;
   tile.y = 0;
   int HCnt, WCnt;
-
+  /* draw background*/
+  SDL_RenderCopy(d->renderer, d->images[(int)'b'],NULL, NULL);
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       dest.x = WCnt * TILESIZE;

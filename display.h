@@ -16,6 +16,7 @@ struct display {
     //declare the music file
     Mix_Music *music;
     Mix_Chunk *zap;
+    TTF_Font *font;
 };
 
 
@@ -23,7 +24,7 @@ struct display {
 Display *newDisplay();
 void loadPhoto(Display *d, char *s, int i);
 //Splashes photo without loading it again
-void splashPhoto(Display *d);
+void splashPhoto(Display *d, int i);
 //draws entity
 void drawEntities(Display *d, cell grid[H][W]);
 //Set drawing colour

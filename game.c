@@ -7,21 +7,7 @@ int main(void)
    cell grid[H][W];
    entity *player, *door1, *door2;
    int in;
-
-   loadPhoto(d, "images/floor.bmp", '.');
-   loadPhoto(d, "images/offlight.bmp", '0');
-   loadPhoto(d, "images/onlight.bmp", '1');
-   loadPhoto(d, "images/offswitch.bmp", '-');
-   loadPhoto(d, "images/onswitch.bmp", '+');
-   loadPhoto(d, "images/dooropen.bmp", '%');
-   loadPhoto(d, "images/doorclosed.bmp", '&');
-   loadPhoto(d, "images/wall.bmp", '#');
-
-   loadPhoto(d, "images/Red_Elf_Front.bmp", 'D');
-   loadPhoto(d, "images/Red_Elf_Back.bmp", 'U');
-   loadPhoto(d, "images/Red_Elf_Left.bmp", 'L');
-   loadPhoto(d, "images/Red_Elf_Right.bmp", 'R');
-
+   mediaLoad(d);
    initGrid(grid);
    /* place player */
    player = grid[6][6].foreground = newEntity(passable,'R',6,6);
@@ -59,4 +45,21 @@ int main(void)
    closeDisplay(d);
    printf("\n\n");
    return(0);
+}
+void mediaLoad(Display *d)
+{
+  loadPhoto(d, "files/room0.bmp" , 'b');
+   loadPhoto(d, "images/floor.bmp", '.');
+  loadPhoto(d, "images/offlight.bmp", '0');
+  loadPhoto(d, "images/onlight.bmp", '1');
+  loadPhoto(d, "images/offswitch.bmp", '-');
+  loadPhoto(d, "images/onswitch.bmp", '+');
+  loadPhoto(d, "images/dooropen.bmp", '%');
+  loadPhoto(d, "images/doorclosed.bmp", '&');
+  loadPhoto(d, "images/wall.bmp", '#');
+  loadPhoto(d, "images/Red_Elf_Front.bmp", 'D');
+  loadPhoto(d, "images/Red_Elf_Back.bmp", 'U');
+  loadPhoto(d, "images/Red_Elf_Left.bmp", 'L');
+  loadPhoto(d, "images/Red_Elf_Right.bmp", 'R');
+
 }
