@@ -19,6 +19,18 @@ struct display {
     TTF_Font *font;
 };
 
+/* Font stuff */
+typedef unsigned short fntrow;
+#define FNTWIDTH (sizeof(fntrow)*8)
+#define FNTHEIGHT 18
+#define FNTCHARS 96
+#define FNT1STCHAR 32
+#define FONTNAME "files/m7fixed.fnt"
+fntrow fontdata[FNTCHARS][FNTHEIGHT];
+
+void Neill_SDL_DrawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy);
+void Neill_SDL_DrawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy);
+void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname);
 
 // Create a new display object.
 Display *newDisplay();
@@ -28,7 +40,8 @@ void splashPhoto(Display *d, int i);
 //draws entity
 void drawEntities(Display *d, cell grid[H][W]);
 //Set drawing colour
-void setColour(Display *d, int r, int g, int b, int a);
+void setColour(Display *d, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+void setColour1(Display *d, int r, int g, int b, int a);
 // Update the window on screen, after delaying for the (rest of) the given time.
 void drawFrame(Display *d, int milliseconds);
 // Return true if the quit button has been pressed.

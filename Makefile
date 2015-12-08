@@ -18,7 +18,7 @@ run: all
 
 push:
 	git commit -a -m $$(date +%d-%m-%Y/%H:%M)
-	git push "https://github.com/ProjectElves/SoftwareEngineering"
+	git push
 pull:
 	git pull "https://github.com/ProjectElves/SoftwareEngineering"
 debug:

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <assert.h>
 /*uses sdl libraries from srcfolder*/
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

@@ -2,7 +2,7 @@
 
 Display *newDisplay()
 {
-  Display *d = malloc(sizeof(Display));
+  Display *d =(Display *) malloc(sizeof(Display));
   int r = SDL_Init(SDL_INIT_EVERYTHING);
   if (r < 0){
     fail("Unable to initialize SDL");
@@ -15,6 +15,7 @@ Display *newDisplay()
       return(0);
     }
     d->font=TTF_OpenFont("files/Verano.otf", 20);
+    Neill_SDL_ReadFont(fontdata,FONTNAME);
     d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
     if (d->win == NULL){
@@ -108,6 +109,63 @@ void drawEntities(Display *d, cell grid[H][W])
       }
     }
   }
+}
+void Neill_SDL_DrawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
+{
+
+   int i=0;
+   unsigned char chr;
+   do{
+      chr = str[i++];
+      Neill_SDL_DrawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
+   }while(str[i]);
+}
+
+void Neill_SDL_DrawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
+{
+
+   unsigned x, y;
+   for(y = 0; y < FNTHEIGHT; y++){
+      for(x = 0; x < FNTWIDTH; x++){
+         if(fontdata[chr-FNT1STCHAR][y] >> (FNTWIDTH - 1 - x) & 1){
+            /*printf("*");*/
+            /* White Ink */
+            setColour(d, 255, 255, 200 ,0);
+            SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
+         }
+         else{
+            /*printf(".");*/
+            /* Black Ink */
+            setColour(d, 0, 0, 0, 255);
+            SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
+         }
+      }
+   }
+
+}
+
+void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
+{
+
+    FILE *fp = fopen(fname, "rb");
+    size_t itms;
+    if(!fp){
+       fprintf(stderr, "Can't open Font file %s\n", fname);
+       exit(1);
+   }
+   itms = fread(fontdata, sizeof(fntrow), FNTCHARS*FNTHEIGHT, fp);
+   if(itms != FNTCHARS*FNTHEIGHT){
+       fprintf(stderr, "Can't read all Font file %s (%d) \n", fname, (int)itms);
+       exit(1);
+   }
+   fclose(fp);
+
+}
+void setColour(Display *d, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+
+   SDL_SetRenderDrawColor(d->renderer, r, g, b, a);
+
 }
 void closeDisplay(Display *d)
 {
