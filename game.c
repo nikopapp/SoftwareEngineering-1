@@ -13,10 +13,8 @@ int main(void)
    player = grid[6][6].foreground = newEntity(passable,'R',6,6);
    // Creates the boundary walls
    createBoundingWalls(grid);
-   delEntity(grid[4][W-1].background);
-   delEntity(grid[4][0].background);
-   door1 = grid[4][W-1].background = newEntity(passable,'%',W-1,4);
-   door2 = grid[4][0].background = newEntity(passable,'%',0,4);
+   door1 = grid[5][W-8].background = newEntity(passable,'.',W-8,5);
+   door2 = grid[8][W-9].background = newEntity(passable,'.',W-9,8);
    /* layer of floortiles -
    must be the last entity placement*/
    fillGrid(grid);
@@ -27,17 +25,21 @@ int main(void)
       if (grid[player->y][player->x].background == door1) {
         bgame(d);
       }
-      if (grid[player->y][player->x].background == door2) {
+      if (grid[player->y][player->x].background == door2||
+          grid[player->y][player->x+1].background == door2||
+          grid[player->y][player->x+2].background == door2) {
         bgame(d);
+      delEntity(grid[8][W-1].background);
       }
+      loadPhoto(d, "files/board.bmp" , 'b');
+      drawEntities(d, grid);
+      drawFrame(d, 20);
       in=input(d);
       if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
         move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
         printGrid(grid);
         updatePlayerfacing(player,(direction)in);
       }
-      drawEntities(d, grid);
-      drawFrame(d, 20);
     }
 
    freeEntityMem(grid);  /* free memory */
@@ -47,7 +49,7 @@ int main(void)
 }
 void mediaLoad(Display *d)
 {
-  loadPhoto(d, "files/room0.bmp" , 'b');
+  loadPhoto(d, "files/board.bmp" , 'b');
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.bmp", '0');
   loadPhoto(d, "images/onlight.bmp", '1');

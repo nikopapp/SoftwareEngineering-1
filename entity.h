@@ -35,6 +35,7 @@ only prints one layer of the grid */
 void printGrid(cell grid[H][W]);
 
 entity *newWall(cell grid[H][W], int x, int y);
+entity *newLimit(cell grid[H][W], int x, int y);
 
 void createBoundingWalls(cell grid[H][W]);
 

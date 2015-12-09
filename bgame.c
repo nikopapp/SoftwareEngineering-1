@@ -6,30 +6,29 @@ int bgame (Display *d)
   cell grid[H][W];
   entity *player, *byte[BYTE_L],  *door1, *door2;
   int in, i, j;
-  int goal,res;
+  int goal,res=0;
   char str[3], instruction[16];
-  int bgameend = 0;
 
   initGrid(grid);
   /* place player */
-  player = grid[4][1].foreground = newEntity(passable,'R',1,4);
+  player = grid[8][1].foreground = newEntity(passable,'R',1,8);
   /* 8 lightbytes and 8 switches */
   for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
-    byte[i-1] = newBulb(grid, j, 1);
+    byte[i-1] = newBulb(grid, j, 4);
   }
-  // Dividing wall
+  // Dividing wall(invisible)
   for (i = 1; i < W - 1; i++) {
-    newWall(grid, i, 3);
+    newLimit(grid, i, 6);
   }
   // Creates the boundary walls
   createBoundingWalls(grid);
-  delEntity(grid[4][W-1].background);
-  delEntity(grid[4][0].background);
-  door1 = grid[4][W-1].background = newEntity(impassable,'&',W-1,4);
-  door2 = grid[4][0].background = newEntity(impassable,'&',0,4);
+  delEntity(grid[8][W-1].background);
+  delEntity(grid[8][0].background);
+  door1 = grid[8][W-1].background = newEntity(impassable,'&',W-1,8);
+  door2 = grid[8][0].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
-
+  loadPhoto(d, "files/room0.bmp" , 'b');
   splashPhoto(d,'b');
   drawEntities(d, grid);
   drawFrame(d, 20);
@@ -38,12 +37,17 @@ int bgame (Display *d)
   sprintf(instruction,"Try summing %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
+  drawEntities(d, grid);
+  sprintf(str, "%d%c",res,'\0');
+  assert(str!=NULL);
+  drawString(d, fontdata, instruction, 200, 100);
+  drawString(d, fontdata, str, 950, 400);
+  drawFrame(d, 20);
 
   /* MAIN LOOP */
 	while(!d->finished){
 
-    res=binResult(byte);
-    printf("result %d\n",res);
+    in=input(d);
     if(res==goal){
       changeEntity(door1,'%');
       changePassable(door1,passable);
@@ -51,15 +55,14 @@ int bgame (Display *d)
       changePassable(door2,passable);
       printf("you win\n");
     }
-    in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
       freeEntityMem(grid);  /* free memory */
-      bgame(d);
+      return 0;
     }
     if (grid[player->y][player->x].background == door2) {
       freeEntityMem(grid);  /* free memory */
-      bgame(d);
+      return 0;
     }
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,in,grid);
@@ -67,27 +70,29 @@ int bgame (Display *d)
       updatePlayerfacing(player, in);
     }
     if (in == 9) { /*checks for spacebar */
-      if( grid[player->y][player->x].background != NULL
-      &&  grid[player->y][player->x].background->type == '-') {
-        changeEntity(grid[player->y][player->x].background,'+');
+      if( grid[player->y-1][player->x].background != NULL
+      &&  grid[player->y-1][player->x].background->type == '-') {
+        changeEntity(grid[player->y-1][player->x].background,'+');
         updateEntities(grid);
         printGrid(grid);
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-	  else if( grid[player->y][player->x].background != NULL
-      &&  grid[player->y][player->x].background->type == '+') {
-        changeEntity(grid[player->y][player->x].background,'-');
+	  else if( grid[player->y-1][player->x].background != NULL
+      &&  grid[player->y-1][player->x].background->type == '+') {
+        changeEntity(grid[player->y-1][player->x].background,'-');
         updateEntities(grid);
         printGrid(grid);
         Mix_PlayChannel( -1, d->zap, 0 );
       }
+      res=binResult(byte);
     }
     drawEntities(d, grid);
     sprintf(str, "%d%c",res,'\0');
     assert(str!=NULL);
-    drawString(d, fontdata, instruction, 200, 400);
-    drawString(d, fontdata, str, 800, 400);
+    drawString(d, fontdata, instruction, 200, 100);
+    drawString(d, fontdata, str, 950, 400);
     drawFrame(d, 20);
+
   }
   return 0;
 }
@@ -111,7 +116,7 @@ int binResult(entity *byte[BYTE_L])
 entity *newBulb(cell grid[H][W], int x, int y)
 {
   grid[y][x].background = newEntity(impassable,'0',x,y);
-  grid[y+3][x].background = newEntity(passable,'-',x,y+3);
+  grid[y+3][x].background = newEntity(impassable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
 
   return grid[y][x].background;

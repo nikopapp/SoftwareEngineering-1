@@ -2,7 +2,7 @@
 
 entity *newEntity(int ispassable, char type, int x, int y)
 {
-  entity *e = malloc(sizeof(entity));
+  entity *e = (entity *)malloc(sizeof(entity));
   e-> x = x;
   e-> y = y;
   e->type = type;
@@ -139,6 +139,12 @@ entity *newWall(cell grid[H][W], int x, int y)
   grid[y][x].background = newEntity(impassable,'#',x,y);
   return grid[y][x].background;
 }
+entity *newLimit(cell grid[H][W], int x, int y)
+{
+  grid[y][x].background = newEntity(impassable,'.',x,y);
+  return grid[y][x].background;
+}
+
 
 void createBoundingWalls(cell grid[H][W])
 {
