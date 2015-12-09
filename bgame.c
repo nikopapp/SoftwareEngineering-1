@@ -8,6 +8,7 @@ int bgame (Display *d)
   int in, i, j;
   int goal,res;
   char str[3], instruction[16];
+  int bgameend = 0;
 
   initGrid(grid);
   /* place player */
@@ -34,7 +35,7 @@ int bgame (Display *d)
   drawFrame(d, 20);
 
   goal = rand()%255;
-  sprintf(instruction,"Try summind %d", goal);
+  sprintf(instruction,"Try summing %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
 
@@ -84,8 +85,8 @@ int bgame (Display *d)
     drawEntities(d, grid);
     sprintf(str, "%d%c",res,'\0');
     assert(str!=NULL);
-    Neill_SDL_DrawString(d, fontdata, instruction, 200, 400);
-    Neill_SDL_DrawString(d, fontdata, str, 800, 400);
+    drawString(d, fontdata, instruction, 200, 400);
+    drawString(d, fontdata, str, 800, 400);
     drawFrame(d, 20);
   }
   return 0;

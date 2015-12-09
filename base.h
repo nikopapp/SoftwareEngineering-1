@@ -8,8 +8,8 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#define WHEIGHT             700
-#define WWIDTH             1100
+#define WHEIGHT             704
+#define WWIDTH             1152
 #define TILESIZE             64
 
 #define H WHEIGHT / TILESIZE

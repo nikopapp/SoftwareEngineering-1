@@ -110,18 +110,18 @@ void drawEntities(Display *d, cell grid[H][W])
     }
   }
 }
-void Neill_SDL_DrawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
+void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
 
    int i=0;
    unsigned char chr;
    do{
       chr = str[i++];
-      Neill_SDL_DrawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
+      drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
    }while(str[i]);
 }
 
-void Neill_SDL_DrawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
+void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
 {
 
    unsigned x, y;
@@ -136,7 +136,7 @@ void Neill_SDL_DrawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsign
          else{
             /*printf(".");*/
             /* Black Ink */
-            setColour(d, 0, 0, 0, 255);
+            setColour(d, 0, 0, 0, 0);
             SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
          }
       }

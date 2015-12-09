@@ -20,7 +20,6 @@ int main(void)
    /* layer of floortiles -
    must be the last entity placement*/
    fillGrid(grid);
-
    drawEntities(d, grid);
    drawFrame(d, 20);
 
@@ -33,9 +32,9 @@ int main(void)
       }
       in=input(d);
       if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
-        move(&grid[player->y][player->x],player->x,player->y,in,grid);
+        move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
         printGrid(grid);
-        updatePlayerfacing(player, in);
+        updatePlayerfacing(player,(direction)in);
       }
       drawEntities(d, grid);
       drawFrame(d, 20);
@@ -49,7 +48,7 @@ int main(void)
 void mediaLoad(Display *d)
 {
   loadPhoto(d, "files/room0.bmp" , 'b');
-   loadPhoto(d, "images/floor.bmp", '.');
+  loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.bmp", '0');
   loadPhoto(d, "images/onlight.bmp", '1');
   loadPhoto(d, "images/offswitch.bmp", '-');
