@@ -155,7 +155,7 @@ void enc_print_ascii(char letter){
    }
 }
 
-void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
+void encUpdateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
 
    int i=0, size=strlen(shuffle);
 
@@ -163,6 +163,24 @@ void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
       shuffle[i] = grid[y][x++].background->type;
    }
 }
+
+// char *enc_getWord(void){
+//   FILE *file=fopen("encWords.txt", "r");
+//
+// }
+
+// int encLineCount(void){
+//   FILE *file=fopen("encWords.txt", "r");
+//   char str[LENGTH];
+//   int cnt=0;
+//   while(fgets(str, 30, file)!=NULL){
+//     cnt++;
+//   }
+//   return cnt;
+// }
+
+
+
 
 // this is a new function that vowels change only to vowels and likewise with consonants
 void enc_shiftLetter(cell grid[H][W], int y, int x){
