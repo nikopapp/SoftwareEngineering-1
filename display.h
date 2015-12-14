@@ -37,6 +37,7 @@ Display *newDisplay();
 void loadPhoto(Display *d, char *s, int i);
 //Splashes photo without loading it again
 void splashPhoto(Display *d, int i);
+void drawBackground(Display *d, char c);
 //draws entity
 void drawEntities(Display *d, cell grid[H][W]);
 //Set drawing colour
