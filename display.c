@@ -84,6 +84,10 @@ void myDelay(int ms)
   SDL_Delay(ms);
 }
 //void drawText()
+void drawBackground(Display *d,char c)
+{
+  SDL_RenderCopy(d->renderer, d->images[(int)c],NULL, NULL);
+}
 void drawEntities(Display *d, cell grid[H][W])
 {
   SDL_Rect tile,dest;
@@ -91,8 +95,8 @@ void drawEntities(Display *d, cell grid[H][W])
   tile.x = 0;
   tile.y = 0;
   int HCnt, WCnt;
-  /* draw background*/
-  SDL_RenderCopy(d->renderer, d->images[(int)'Z'],NULL, NULL);
+
+
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       dest.x = WCnt * TILESIZE;

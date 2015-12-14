@@ -21,15 +21,14 @@ int bgame (Display *d)
     newLimit(grid, i, 6);
   }
   // Creates the boundary walls
-  createBoundingWalls(grid);
+  //createBoundingWalls(grid);
   delEntity(grid[8][W-1].background);
   delEntity(grid[8][0].background);
   door1 = grid[8][W-1].background = newEntity(impassable,'&',W-1,8);
   door2 = grid[8][0].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
-  loadPhoto(d, "files/room0.bmp" , 'Z');
-  splashPhoto(d,'b');
+  drawBackground(d,'A');
   drawEntities(d, grid);
   drawFrame(d, 20);
 
@@ -37,6 +36,7 @@ int bgame (Display *d)
   sprintf(instruction,"Try summing %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
+  drawBackground(d,'A');
   drawEntities(d, grid);
   sprintf(str, "%d%c",res,'\0');
   assert(str!=NULL);
@@ -86,6 +86,7 @@ int bgame (Display *d)
       }
       res=binResult(byte);
     }
+    drawBackground(d,'A');
     drawEntities(d, grid);
     sprintf(str, "%d%c",res,'\0');
     assert(str!=NULL);

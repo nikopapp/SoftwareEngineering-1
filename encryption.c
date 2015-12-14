@@ -4,7 +4,7 @@
 
 
 
-int encryption(Display *sw)
+int encryption(Display *d)
 {
   char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
 
@@ -46,9 +46,9 @@ int encryption(Display *sw)
 
   /* layer of floortiles */
   fillGrid(grid);
-  loadPhoto(sw, "files/encryption.bmp" , 'Z');
-  drawEntities(sw, grid);
-  drawFrame(sw, 20);
+  drawBackground(d,'A');
+  drawEntities(d, grid);
+  drawFrame(d, 20 );
 
   grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
   grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
@@ -60,12 +60,12 @@ int encryption(Display *sw)
   printf("try to find the correct word");
 
   /* MAIN LOOP */
-  while(!sw->finished){
+  while(!d->finished){
       char hint0[]={"vowel"}; //variables have to be declared here otherwise dont work
       char hint1[]={"consonant"};
       char hint2[]={"whole row"};
       char reset[]={"reset"};
-      in=input(sw);
+      in=input(d);
       for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
          grid[2][j].background = newEntity(passable, '.', j, 2);
       }
@@ -119,8 +119,9 @@ int encryption(Display *sw)
            }
            break;
          }
-         drawEntities(sw, grid);
-         drawFrame(sw, 20);
+         drawBackground(d,'A');
+         drawEntities(d, grid);
+         drawFrame(d, 20);
       }
    }
    enc_updateWord(grid, yinit, xinit, shuffle_word);
@@ -128,9 +129,11 @@ int encryption(Display *sw)
    // printf("shuffle: %s\n",shuffle_word);
    // printf("original: %s\n",original_word);
    // I pass the letter of the collum I'm in
-   drawEntities(sw, grid);
-   drawFrame(sw, 20);
+   drawBackground(d,'A');
+   drawEntities(d, grid);
+   drawFrame(d, 20);
    enc_print_ascii(grid[yinit][player->x].background->type);
+   printf("shuffle:%s and original:%s\n",shuffle_word, rand_word );
    if(strcmp(shuffle_word, rand_word)==0){
       break;
    }
@@ -154,10 +157,10 @@ void enc_print_ascii(char letter){
 
 void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
 
-    int i=0, size=strlen(shuffle);
+   int i=0, size=strlen(shuffle);
 
-   for( ; x<size; x++){
-      shuffle[i++] = grid[y][x].background->type;
+   for( i=0; i<size; i++){
+      shuffle[i] = grid[y][x++].background->type;
    }
 }
 
