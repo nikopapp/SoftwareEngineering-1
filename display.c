@@ -92,7 +92,7 @@ void drawEntities(Display *d, cell grid[H][W])
   tile.y = 0;
   int HCnt, WCnt;
   /* draw background*/
-  SDL_RenderCopy(d->renderer, d->images[(int)'b'],NULL, NULL);
+  SDL_RenderCopy(d->renderer, d->images[(int)'Z'],NULL, NULL);
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       dest.x = WCnt * TILESIZE;

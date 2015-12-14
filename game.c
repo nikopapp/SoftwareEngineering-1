@@ -28,10 +28,10 @@ int main(void)
       if (grid[player->y][player->x].background == door2||
           grid[player->y][player->x+1].background == door2||
           grid[player->y][player->x+2].background == door2) {
-        bgame(d);
+        encryption(d);
       delEntity(grid[8][W-1].background);
       }
-      loadPhoto(d, "files/board.bmp" , 'b');
+      loadPhoto(d, "files/board.bmp" , 'Z');
       drawEntities(d, grid);
       drawFrame(d, 20);
       in=input(d);
@@ -49,7 +49,7 @@ int main(void)
 }
 void mediaLoad(Display *d)
 {
-  loadPhoto(d, "files/board.bmp" , 'b');
+  loadPhoto(d, "files/board.bmp" , 'Z');
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.bmp", '0');
   loadPhoto(d, "images/onlight.bmp", '1');
@@ -62,5 +62,35 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/Red_Elf_Back.bmp", 'U');
   loadPhoto(d, "images/Red_Elf_Left.bmp", 'L');
   loadPhoto(d, "images/Red_Elf_Right.bmp", 'R');
+  loadPhoto(d, "images/chars/a.bmp", 'a');
+ loadPhoto(d, "images/chars/b.bmp", 'b');
+ loadPhoto(d, "images/chars/c.bmp", 'c');
+ loadPhoto(d, "images/chars/d.bmp", 'd');
+ loadPhoto(d, "images/chars/e.bmp", 'e');
+ loadPhoto(d, "images/chars/f.bmp", 'f');
+ loadPhoto(d, "images/chars/g.bmp", 'g');
+ loadPhoto(d, "images/chars/h.bmp", 'h');
+ loadPhoto(d, "images/chars/i.bmp", 'i');
+ loadPhoto(d, "images/chars/j.bmp", 'j');
+ loadPhoto(d, "images/chars/k.bmp", 'k');
+ loadPhoto(d, "images/chars/l.bmp", 'l');
+ loadPhoto(d, "images/chars/m.bmp", 'm');
+ loadPhoto(d, "images/chars/n.bmp", 'n');
+ loadPhoto(d, "images/chars/o.bmp", 'o');
+ loadPhoto(d, "images/chars/p.bmp", 'p');
+ loadPhoto(d, "images/chars/q.bmp", 'q');
+ loadPhoto(d, "images/chars/r.bmp", 'r');
+ loadPhoto(d, "images/chars/s.bmp", 's');
+ loadPhoto(d, "images/chars/t.bmp", 't');
+ loadPhoto(d, "images/chars/v.bmp", 'v');
+ loadPhoto(d, "images/chars/u.bmp", 'u');
+ loadPhoto(d, "images/chars/w.bmp", 'w');
+ loadPhoto(d, "images/chars/x.bmp", 'x');
+ loadPhoto(d, "images/chars/y.bmp", 'y');
+ loadPhoto(d, "images/chars/z.bmp", 'z');
+ loadPhoto(d, "images/RArrow.bmp", '>');
+ loadPhoto(d, "images/LArrow.bmp", '<');
+ loadPhoto(d, "images/DArrow.bmp", '$');
+ loadPhoto(d, "images/UArrow.bmp", '^');
 
 }

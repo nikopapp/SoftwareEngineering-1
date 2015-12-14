@@ -28,7 +28,7 @@ int bgame (Display *d)
   door2 = grid[8][0].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
-  loadPhoto(d, "files/room0.bmp" , 'b');
+  loadPhoto(d, "files/room0.bmp" , 'Z');
   splashPhoto(d,'b');
   drawEntities(d, grid);
   drawFrame(d, 20);
