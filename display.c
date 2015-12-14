@@ -31,7 +31,8 @@ Display *newDisplay()
     if (d->zap==NULL){
       fail("music not good");
     }
-    d->music = Mix_LoadMUS("files/PdPrince-SStrobe.mp3");
+    Mix_VolumeMusic(40);
+    d->music = Mix_LoadMUS("files/elevator.mp3");
     if (d->music==NULL){
       fail("music not good");
     }
