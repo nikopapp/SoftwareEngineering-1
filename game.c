@@ -13,8 +13,8 @@ int main(void)
    player = grid[6][6].foreground = newEntity(passable,'R',6,6);
    // Creates the boundary walls
    //createBoundingWalls(grid);
-   door1 = grid[4][W-6].background = newEntity(passable,'&',W-6,4);
-   door2 = grid[7][W-11].background = newEntity(passable,'&',W-11,7);
+   door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
+   door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
    /* layer of floortiles -
    must be the last entity placement*/
    fillGrid(grid);
@@ -26,13 +26,13 @@ int main(void)
         bgame(d);
 
       }
-      if (/*grid[player->y][player->x].background == door2||
-          grid[player->y][player->x+1].background == door2|| */
-          grid[player->y][player->x+2].background == door2) {
+      if (grid[player->y][player->x].background == door2||
+          /*grid[player->y][player->x+1].background == door2||
+          grid[player->y][player->x+2].background == door2*/) {
         encryption(d);
       //delEntity(grid[8][W-1].background);
       }
-      drawBackground(d,'Z');
+      drawBackground(d,0);
       drawEntities(d, grid);
       drawFrame(d, 20);
       in=input(d);
@@ -50,8 +50,8 @@ int main(void)
 }
 void mediaLoad(Display *d)
 {
-  loadPhoto(d, "files/board.bmp" , 'Z');
-  loadPhoto(d, "files/room0.bmp" , 'A');
+  loadPhoto(d, "files/board.bmp" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
+  loadPhoto(d, "files/room0.bmp" , 1);
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.bmp", '0');
   loadPhoto(d, "images/onlight.bmp", '1');
