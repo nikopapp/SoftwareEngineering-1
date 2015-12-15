@@ -38,18 +38,13 @@ int bgame (Display *d)
   door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
-
+  
+  bgameDraw(d, grid, instruction, str);
+  
   goal = rand()%255;
   sprintf(instruction,"Try summing %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
-  drawBackground(d,1);
-  drawEntities(d, grid);
-  sprintf(str, "%d%c",res,'\0');
-  assert(str!=NULL);
-  drawString(d, fontdata, instruction, 200, 100);
-  drawString(d, fontdata, str, 950, 400);
-  drawFrame(d, 20);
 
   /* MAIN LOOP */
 	while(!d->finished){
@@ -93,13 +88,7 @@ int bgame (Display *d)
       }
       res=binResult(byte);
     }
-    drawBackground(d,1);
-    drawEntities(d, grid);
-    sprintf(str, "%d%c",res,'\0');
-    assert(str!=NULL);
-    drawString(d, fontdata, instruction, 200, 100);
-    drawString(d, fontdata, str, 950, 400);
-    drawFrame(d, 20);
+    bgameDraw(d, grid, instruction, str);
 
   }
   return 0;
@@ -129,3 +118,17 @@ entity *newBulb(cell grid[H][W], int x, int y)
 
   return grid[y][x].background;
 }
+
+
+void bgameDraw(Display *d, cell grid[H][W], char* instruction, char *str )
+  {
+    drawBackground(d,1);
+    drawEntities(d, grid);
+    
+    sprintf(str, "%d%c",res,'\0');
+    assert(str!=NULL);
+    
+    drawString(d, fontdata, instruction, 200, 100);
+    drawString(d, fontdata, str, 950, 400);
+    drawFrame(d, 20);
+  }
