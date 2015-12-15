@@ -18,20 +18,22 @@ int bgame (Display *d)
   }
   // Dividing wall(invisible)
   for (i = 1; i < W - 1; i++) {
-    newLimit(grid, i, 6);
+    newLimit(grid, i, H - 1);
   }
   newLimit(grid,0, 7);
   newLimit(grid,1, 7);
   newLimit(grid,2, 7);
-  newLimit(grid,3, 7);
-  newLimit(grid,W-4, 7);
+  newLimit(grid,4, 7);  
   newLimit(grid,W-1, 7);
   newLimit(grid,W-2, 7);
-  newLimit(grid,W-3, 7);
-  // Creates the boundary walls
-  //createBoundingWalls(grid);
-  delEntity(grid[7][W-3].background);
-  delEntity(grid[7][3].background);
+  newLimit(grid,W-4, 7);
+  newLimit(grid,W-5, 7);
+  
+  newLimit(grid,0, 8);
+  newLimit(grid,0, 9);
+  newLimit(grid,W-1, 8);
+  newLimit(grid,W-1, 9);
+ 
   door1 = grid[7][W-3].background = newEntity(impassable,'&',W-1,8);
   door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
