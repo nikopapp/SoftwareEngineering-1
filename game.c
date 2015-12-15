@@ -53,7 +53,7 @@ void mediaLoad(Display *d)
   loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
   loadPhoto(d, "files/room0.png" , 1);
   loadPhoto(d, "images/floor.bmp", '.');
-  loadPhoto(d, "images/offlight.bmp", '0');
+  loadPhoto(d, "images/offlight.png", '0');
   loadPhoto(d, "images/onlight.bmp", '1');
   loadPhoto(d, "images/offswitch.bmp", '-');
   loadPhoto(d, "images/onswitch.bmp", '+');
