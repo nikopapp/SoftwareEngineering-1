@@ -22,10 +22,10 @@ int bgame (Display *d)
   }
   // Creates the boundary walls
   //createBoundingWalls(grid);
-  delEntity(grid[8][W-1].background);
-  delEntity(grid[8][0].background);
-  door1 = grid[8][W-1].background = newEntity(impassable,'&',W-1,8);
-  door2 = grid[8][0].background = newEntity(impassable,'&',0,8);
+  delEntity(grid[7][W-3].background);
+  delEntity(grid[7][3].background);
+  door1 = grid[7][W-3].background = newEntity(impassable,'&',W-1,8);
+  door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
 
