@@ -29,5 +29,6 @@ void enc_letterUp(entity *e);
 void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]);
 void enc_print_ascii(char letter);
 int isvowel(char c);
-void *enc_getWord(char str[LENGTH]);
+int enc_getWord(char str[LENGTH]);
 int encLineCount(void);
+void enc_getHint(char str[LENGTH], int line);
