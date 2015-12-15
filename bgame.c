@@ -28,6 +28,7 @@ int bgame (Display *d)
   door2 = grid[8][0].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
+  
   drawBackground(d,1);
   drawEntities(d, grid);
   drawFrame(d, 20);
@@ -37,6 +38,7 @@ int bgame (Display *d)
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
   
+  drawBackground(d,1);
   drawEntities(d, grid);
   sprintf(str, "%d%c",res,'\0');
   assert(str!=NULL);
