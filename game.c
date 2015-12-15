@@ -13,8 +13,8 @@ int main(void)
    player = grid[6][6].foreground = newEntity(passable,'R',6,6);
    // Creates the boundary walls
    //createBoundingWalls(grid);
-   door1 = grid[5][W-8].background = newEntity(passable,'.',W-8,5);
-   door2 = grid[8][W-9].background = newEntity(passable,'.',W-9,8);
+   door1 = grid[4][W-10].background = newEntity(passable,'&',W-10,4);
+   door2 = grid[8][W-9].background = newEntity(passable,'&',W-9,8);
    /* layer of floortiles -
    must be the last entity placement*/
    fillGrid(grid);
