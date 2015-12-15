@@ -40,7 +40,6 @@ int bgame (Display *d)
 
   goal = rand()%255;
   sprintf(instruction,"Try and make the number %d", goal);
-  sprintf(doorlabel, "EXIT");
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
   drawBackground(d,1);
