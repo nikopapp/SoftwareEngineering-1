@@ -7,7 +7,7 @@ int bgame (Display *d)
   entity *player, *byte[BYTE_L],  *door1, *door2;
   int in, i, j;
   int goal,res=0;
-  char str[3], instruction[16], doorlabel[5];
+  char str[3], instruction[16];
 
   initGrid(grid);
   /* place player */
@@ -49,8 +49,7 @@ int bgame (Display *d)
   assert(str!=NULL);
   drawString(d, fontdata, instruction, 200, 100);
   drawString(d, fontdata, str, 950, 400);
-  drawString(d, fontdata, doorlabel, 880, 420);
-  drawString(d, fontdata, doorlabel, 180, 420);
+  
   drawFrame(d, 20);
 
   /* MAIN LOOP */
@@ -101,7 +100,6 @@ int bgame (Display *d)
     assert(str!=NULL);
     drawString(d, fontdata, instruction, 200, 100);
     drawString(d, fontdata, str, 950, 400);
-    drawString(d, fontdata, doorlabel, 880, 420);
     
     drawFrame(d, 20);
 
