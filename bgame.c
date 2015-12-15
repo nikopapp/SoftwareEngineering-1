@@ -14,7 +14,7 @@ int bgame (Display *d)
   player = grid[8][1].foreground = newEntity(passable,'R',1,8);
   /* 8 lightbytes and 8 switches */
   for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
-    byte[i-1] = newBulb(grid, j, 0);
+    byte[i-1] = newBulb(grid, j, 4);
   }
   // Dividing wall(invisible)
   for (i = 1; i < W - 1; i++) {
@@ -111,9 +111,13 @@ int binResult(entity *byte[BYTE_L])
 
 entity *newBulb(cell grid[H][W], int x, int y)
 {
-  grid[y][x].background = newEntity(impassable,'0',x,y);
-  grid[y+7][x].background = newEntity(impassable,'-',x,y+3);
-  grid[y+7][x].background->pointsto = grid[y][x].background;
+  grid[y][x].background = newEntity(impassable,'[',x,y);
+  grid[0][x].background = newEntity(impassable,'[',x,y);
+  grid[1][x].background = newEntity(impassable,'[',x,y);
+  grid[2][x].background = newEntity(impassable,'[',x,y);
+  grid[3][x].background = newEntity(impassable,'[',x,y);
+  grid[y+3][x].background = newEntity(impassable,'-',x,y+3);
+  grid[y+3][x].background->pointsto = grid[y][x].background;
 
   return grid[y][x].background;
 }
