@@ -49,7 +49,7 @@ int bgame (Display *d)
   drawString(d, fontdata, instruction, 200, 100);
   drawString(d, fontdata, str, 950, 400);
   drawString(d, fontdata, doorlabel, 880, 420);
-  drawString(d, fontdata, doorlabel, 160, 420);
+  drawString(d, fontdata, doorlabel, 140, 420);
   drawFrame(d, 20);
 
   /* MAIN LOOP */
@@ -98,8 +98,8 @@ int bgame (Display *d)
     drawEntities(d, grid);
     sprintf(str, "%d%c",res,'\0');
     assert(str!=NULL);
-    drawString(d, fontdata, instruction, 200, 100);
-    drawString(d, fontdata, str, 950, 400);
+    drawString(d, fontdata, doorlabel, 880, 420);
+    drawString(d, fontdata, doorlabel, 140, 420);
     drawFrame(d, 20);
 
   }
