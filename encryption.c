@@ -6,21 +6,28 @@
 
 int encryption(Display *d)
 {
-  char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
+  // char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
 
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
+  char hintWord[LENGTH];
   int i, word_size, j, yinit = H/2, xinit = 2, cnt=0, game;
+  int hintNum=0;
   cell grid[H][W];
   entity *player;
   int in;
+  printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
-
   srand(time(NULL));
-  if (sscanf(list[(rand()%LIST_SIZE)], "%s", rand_word) != 1){
-    printf("couldn't get a word from the list\n");
-    return 1;
-  }
+  // if (sscanf(list[(rand()%LIST_SIZE)], "%s", rand_word) != 1){
+  //   printf("couldn't get a word from the list\n");
+  //   return 1;
+  // }
+  hintNum=enc_getWord(rand_word);
+  enc_getHint(hintWord, hintNum-1);
+
+
   word_size = strlen(rand_word);
+  rand_word[word_size]='\0';
   for (i=0; i<word_size; i++){
     shuffle_word[i] = rand_word[i];
   }
@@ -30,7 +37,7 @@ int encryption(Display *d)
   // printf("%s\n", shuffle_word);
   strcpy(original_word, shuffle_word);
   // printf("%s\n",original_word );
-  player = grid[10][10].foreground = newEntity(passable,'R',10,10);
+  player = grid[8][8].foreground = newEntity(passable,'R',8,8);
   /* place the word in the grid */
   for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
@@ -56,14 +63,13 @@ int encryption(Display *d)
   grid[8][9].background = newEntity(passable,'&',8,9);
 
 
-
   printf("try to find the correct word");
 
   /* MAIN LOOP */
   while(!d->finished){
-      char hint0[]={"vowel"}; //variables have to be declared here otherwise dont work
-      char hint1[]={"consonant"};
-      char hint2[]={"whole row"};
+      // char hint0[]={"vowel"}; //variables have to be declared here otherwise dont work
+      // char hint1[]={"consonant"};
+      // char hint2[]={"whole row"};
       char reset[]={"reset"};
       in=input(d);
       for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
@@ -75,9 +81,9 @@ int encryption(Display *d)
       updatePlayerfacing(player,(direction)in);
    }
    if (in == 9) { /*checks for spacebar */
-   if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
-        enc_shiftLetter(grid, player->y, player->x);
-      }
+     if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
+          enc_shiftLetter(grid, player->y, player->x);
+        }
       else if(grid[player->y][player->x].background->type == '^') {
          enc_shiftLetter(grid, player->y, player->x);
       }
@@ -102,23 +108,27 @@ int encryption(Display *d)
          }
       }
       else if(grid[player->y][player->x].background->type == '&') {// "&" is now the hint symbol
-        switch (game){
-         case 0:
-         for (j=0; hint0[j]!='\0'; j++){
-           grid[1][j+5].background = newEntity(passable, hint0[j], j+5, 1);
-           }
-           break;
-         case 1 :
-         for (j=0; hint1[j]!='\0'; j++){
-           grid[1][j+3].background = newEntity(passable, hint1[j], j+3, 1);
-           }
-           break;
-         case 2 :
-         for (j=0; hint2[j]!='\0'; j++){
-           grid[1][j+3].background = newEntity(passable, hint2[j], j+3, 1);
-           }
-           break;
+        // switch (game){
+        //  case 0:
+        //  for (j=0; hint0[j]!='\0'; j++){
+        //    grid[1][j+5].background = newEntity(passable, hint0[j], j+5, 1);
+        //    }
+        //    break;
+        //  case 1 :
+        //  for (j=0; hint1[j]!='\0'; j++){
+        //    grid[1][j+3].background = newEntity(passable, hint1[j], j+3, 1);
+        //    }
+        //    break;
+        //  case 2 :
+        //  for (j=0; hint2[j]!='\0'; j++){
+        //    grid[1][j+3].background = newEntity(passable, hint2[j], j+3, 1);
+        //    }
+        //    break;
+        for (j=0; hintWord[j]!='\0'; j++){
+          grid[1][j+3].background = newEntity(passable, hintWord[j], j+3, 1);
+          // }
          }
+
          drawBackground(d,'A');
          drawEntities(d, grid);
          drawFrame(d, 20);
@@ -164,21 +174,35 @@ void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
    }
 }
 
-void *enc_getWord(char str[LENGTH]){
+int enc_getWord(char str[LENGTH]){
   FILE *file=fopen("encWords.txt", "r");
   int line=rand()%encLineCount(), cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){
-    while(fgets(str, 30, file)!=NULL){
-      cnt++;
+  fgets(str, LENGTH, file);
+  cnt++;
     }
-  }
+  str[strcspn(str, "\n")]='\0';
+  return cnt;
 }
+
+void enc_getHint(char str[LENGTH], int line){
+  FILE *file=fopen("encHints.txt", "r");
+  int cnt=0; //find a random line
+  for(cnt=0; cnt<=line; cnt++){
+  fgets(str, LENGTH, file);
+  cnt++;
+    }
+  str[strcspn(str, "\n")]='\0';
+}
+
+
 
 int encLineCount(void){
   FILE *file=fopen("encWords.txt", "r");
   char str[LENGTH];
   int cnt=0;
   while(fgets(str, 30, file)!=NULL){
+    printf("fgst\n");
     cnt++;
   }
   return cnt;
