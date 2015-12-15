@@ -7,7 +7,7 @@ int bgame (Display *d)
   entity *player, *byte[BYTE_L],  *door1, *door2;
   int in, i, j;
   int goal,res=0;
-  char str[3], instruction[16];
+  char instruction[16];
 
   initGrid(grid);
   /* place player */
@@ -39,7 +39,7 @@ int bgame (Display *d)
   /* layer of floortiles */
   fillGrid(grid);
   
-  bgameDraw(d, grid, instruction, str);
+  bgameDraw(d, grid, instruction, res);
   
   goal = rand()%255;
   sprintf(instruction,"Try summing %d", goal);
@@ -88,7 +88,7 @@ int bgame (Display *d)
       }
       res=binResult(byte);
     }
-    bgameDraw(d, grid, instruction, str);
+    bgameDraw(d, grid, instruction, res);
 
   }
   return 0;
@@ -120,8 +120,10 @@ entity *newBulb(cell grid[H][W], int x, int y)
 }
 
 
-void bgameDraw(Display *d, cell grid[H][W], char* instruction, char *str )
+void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   {
+    char str[3];
+    
     drawBackground(d,1);
     drawEntities(d, grid);
     

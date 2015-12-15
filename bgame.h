@@ -9,4 +9,4 @@ int binResult(entity *byte[BYTE_L]);
 entity *newBulb(cell grid[H][W], int x, int y);
 
 
-void bgameDraw(Display *d, cell grid[H][W], char* instruction, char *str );
+void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res );
