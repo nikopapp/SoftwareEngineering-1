@@ -10,11 +10,10 @@ int encryption(Display *d)
 
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
   char hintWord[LENGTH];
-  int i, word_size, j, yinit = H/2, xinit = 2, cnt=0, game;
+  int i, word_size, j, yinit = H/2, xinit = 2, cnt=0, game, in, printHint=0;
   int hintNum=0;
   cell grid[H][W];
   entity *player;
-  int in;
   printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
   srand(time(NULL));
@@ -53,7 +52,7 @@ int encryption(Display *d)
 
   /* layer of floortiles */
   fillGrid(grid);
-  drawBackground(d,'A');
+  drawBackground(d,1);
   drawEntities(d, grid);
   drawFrame(d, 20 );
 
@@ -110,7 +109,7 @@ int encryption(Display *d)
       else if(grid[player->y][player->x].background->type == '&') {// "&" is now the hint symbol
         // switch (game){
         //  case 0:
-        //  for (j=0; hint0[j]!='\0'; j++){
+        //  for (j=0; hint0[j]!='\0vi '; j++){
         //    grid[1][j+5].background = newEntity(passable, hint0[j], j+5, 1);
         //    }
         //    break;
@@ -124,14 +123,12 @@ int encryption(Display *d)
         //    grid[1][j+3].background = newEntity(passable, hint2[j], j+3, 1);
         //    }
         //    break;
-        for (j=0; hintWord[j]!='\0'; j++){
-          grid[1][j+3].background = newEntity(passable, hintWord[j], j+3, 1);
-          // }
-         }
-
-         drawBackground(d,'A');
-         drawEntities(d, grid);
-         drawFrame(d, 20);
+        // drawString(d, fontdata, hintWord, 64, 64);
+        // for (j=0; hintWord[j]!='\0'; j++){
+        //   grid[1][j+1].background = newEntity(passable, hintWord[j], j+1, 1);
+        //   }
+        //  }
+        printHint=1;
       }
    }
    enc_updateWord(grid, yinit, xinit, shuffle_word);
@@ -139,9 +136,7 @@ int encryption(Display *d)
    // printf("shuffle: %s\n",shuffle_word);
    // printf("original: %s\n",original_word);
    // I pass the letter of the collum I'm in
-   drawBackground(d,'A');
-   drawEntities(d, grid);
-   drawFrame(d, 20);
+   encGameDraw(d, grid, printHint, hintWord);
    enc_print_ascii(grid[yinit][player->x].background->type);
    printf("shuffle:%s and original:%s\n",shuffle_word, rand_word );
    if(strcmp(shuffle_word, rand_word)==0){
@@ -152,6 +147,16 @@ int encryption(Display *d)
   printf("you win in %d moves\n", cnt);
   freeEntityMem(grid);  /* free memory */
   return 0;
+}
+
+void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
+  drawBackground(d,1);
+  printf("hint word%s\n", hintWord);
+  drawEntities(d, grid);
+  if(printHint==1){
+    drawString(d, fontdata, hintWord, 64, 64);
+  }
+  drawFrame(d, 20);
 }
 
 
@@ -185,7 +190,7 @@ int enc_getWord(char str[LENGTH]){
   return cnt;
 }
 
-void enc_getHint(char str[LENGTH], int line){
+void enc_getHint(char str[HINTLENGTH], int line){
   FILE *file=fopen("encHints.txt", "r");
   int cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){

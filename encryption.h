@@ -13,6 +13,7 @@
 #define VOWEL 1
 #define CONSONANT 2
 #define ROW 3
+#define HINTLENGTH 200
 
 int enc_shufle(char word[LENGTH], int size);
 int enc_isenc_vowel(char c);
@@ -31,4 +32,5 @@ void enc_print_ascii(char letter);
 int isvowel(char c);
 int enc_getWord(char str[LENGTH]);
 int encLineCount(void);
-void enc_getHint(char str[LENGTH], int line);
+void enc_getHint(char str[HINTLENGTH], int line);
+void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]);
