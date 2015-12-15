@@ -7,7 +7,7 @@ int bgame (Display *d)
   entity *player, *byte[BYTE_L],  *door1, *door2;
   int in, i, j;
   int goal,res=0;
-  char str[3], instruction[16], doorlabel[5] = "EXIT";
+  char str[3], instruction[16], doorlabel[5];
 
   initGrid(grid);
   /* place player */
@@ -40,6 +40,7 @@ int bgame (Display *d)
 
   goal = rand()%255;
   sprintf(instruction,"Try and make the number %d", goal);
+  sprintf(doorlabel, "EXIT");
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
   drawBackground(d,1);
