@@ -121,16 +121,18 @@ entity *newBulb(cell grid[H][W], int x, int y)
 
 
 void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
-  {
-    char str[3];
-    
-    drawBackground(d,1);
-    drawEntities(d, grid);
-    
-    sprintf(str, "%d%c",res,'\0');
-    assert(str!=NULL);
-    
-    drawString(d, fontdata, instruction, 200, 100);
-    drawString(d, fontdata, str, 950, 400);
-    drawFrame(d, 20);
-  }
+{
+  char str[3];
+  
+  drawBackground(d,1);
+  drawEntities(d, grid);
+  
+  sprintf(str, "%d%c",res,'\0');
+  assert(str!=NULL);
+  
+  drawString(d, fontdata, instruction, 200, 100);
+  drawString(d, fontdata, str, 950, 400);
+  drawString(d, fontdata, "EXIT", 180, 380);
+  drawString(d, fontdata, "EXIT", 180, 380);
+  drawFrame(d, 20);
+}
