@@ -14,7 +14,7 @@ int main(void)
    // Creates the boundary walls
    //createBoundingWalls(grid);
    door1 = grid[4][W-6].background = newEntity(passable,'&',W-6,4);
-   door2 = grid[8][W-9].background = newEntity(passable,'&',W-9,8);
+   door2 = grid[7][W-11].background = newEntity(passable,'&',W-11,7);
    /* layer of floortiles -
    must be the last entity placement*/
    fillGrid(grid);
@@ -26,11 +26,11 @@ int main(void)
         bgame(d);
 
       }
-      if (grid[player->y][player->x].background == door2||
-          grid[player->y][player->x+1].background == door2||
+      if (/*grid[player->y][player->x].background == door2||
+          grid[player->y][player->x+1].background == door2|| */
           grid[player->y][player->x+2].background == door2) {
         encryption(d);
-      delEntity(grid[8][W-1].background);
+      //delEntity(grid[8][W-1].background);
       }
       drawBackground(d,'Z');
       drawEntities(d, grid);
