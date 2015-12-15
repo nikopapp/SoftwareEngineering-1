@@ -1,21 +1,50 @@
 /* This is the binary game's integration with the grid.  */
 #include "bgame.h"
-  
+
 int bgame (Display *d)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L],  *door1, *door2;
-  int in;
+  int in, i, j;
   int goal,res=0;
   char instruction[16];
+
+  initGrid(grid);
+  /* place player */
+  player = grid[8][1].foreground = newEntity(passable,'R',1,8);
+  /* 8 lightbytes and 8 switches */
+  for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
+    byte[i-1] = newBulb(grid, j, 4);
+  }
+  // Dividing wall(invisible)
+  for (i = 1; i < W - 1; i++) {
+    newLimit(grid, i, H - 1);
+  }
+  newLimit(grid,0, 7);
+  newLimit(grid,1, 7);
+  newLimit(grid,2, 7);
+  newLimit(grid,4, 7);  
+  newLimit(grid,W-1, 7);
+  newLimit(grid,W-2, 7);
+  newLimit(grid,W-3, 7);
+  newLimit(grid,W-5, 7);
+  
+  newLimit(grid,0, 8);
+  newLimit(grid,0, 9);
+  newLimit(grid,W-1, 8);
+  newLimit(grid,W-1, 9);
  
-  init(grid, player);
-  bgameDraw(d, grid, instruction, res);
+  door1 = grid[7][W-4].background = newEntity(impassable,'&',W-1,8);
+  door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
+  /* layer of floortiles */
+  fillGrid(grid);
+  
   goal = rand()%255;
-  sprintf(instruction,"Try to reach the number %d", goal);
+  sprintf(instruction,"Try and reach %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
   
+  bgameDraw(d, grid, instruction, res);
   /* MAIN LOOP */
 	while(!d->finished){
 
@@ -105,40 +134,4 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
   drawFrame(d, 20);
-}
-
-void init(cell grid[H][W], entity *player)
-{
-  int i, j;
-  
-  initGrid(grid);
-  /* place player */
-  player = grid[8][1].foreground = newEntity(passable,'R',1,8);
-  /* 8 lightbytes and 8 switches */
-  for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
-    byte[i-1] = newBulb(grid, j, 4);
-  }
-  // Dividing wall(invisible)
-  for (i = 1; i < W - 1; i++) {
-    newLimit(grid, i, H - 1);
-  }
-  newLimit(grid,0, 7);
-  newLimit(grid,1, 7);
-  newLimit(grid,2, 7);
-  newLimit(grid,4, 7);  
-  newLimit(grid,W-1, 7);
-  newLimit(grid,W-2, 7);
-  newLimit(grid,W-3, 7);
-  newLimit(grid,W-5, 7);
-  
-  newLimit(grid,0, 8);
-  newLimit(grid,0, 9);
-  newLimit(grid,W-1, 8);
-  newLimit(grid,W-1, 9);
- 
-  door1 = grid[7][W-4].background = newEntity(impassable,'&',W-1,8);
-  door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
-  /* layer of floortiles */
-  fillGrid(grid);
- 
 }
