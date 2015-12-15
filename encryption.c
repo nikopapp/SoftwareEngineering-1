@@ -155,7 +155,7 @@ void enc_print_ascii(char letter){
    }
 }
 
-void encUpdateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
+void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
 
    int i=0, size=strlen(shuffle);
 
@@ -164,20 +164,25 @@ void encUpdateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
    }
 }
 
-// char *enc_getWord(void){
-//   FILE *file=fopen("encWords.txt", "r");
-//
-// }
+void *enc_getWord(char str[LENGTH]){
+  FILE *file=fopen("encWords.txt", "r");
+  int line=rand()%encLineCount(), cnt=0; //find a random line
+  for(cnt=0; cnt<=line; cnt++){
+    while(fgets(str, 30, file)!=NULL){
+      cnt++;
+    }
+  }
+}
 
-// int encLineCount(void){
-//   FILE *file=fopen("encWords.txt", "r");
-//   char str[LENGTH];
-//   int cnt=0;
-//   while(fgets(str, 30, file)!=NULL){
-//     cnt++;
-//   }
-//   return cnt;
-// }
+int encLineCount(void){
+  FILE *file=fopen("encWords.txt", "r");
+  char str[LENGTH];
+  int cnt=0;
+  while(fgets(str, 30, file)!=NULL){
+    cnt++;
+  }
+  return cnt;
+}
 
 
 
