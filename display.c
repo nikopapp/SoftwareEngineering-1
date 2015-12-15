@@ -138,12 +138,6 @@ void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char ch
             setColour(d, 255, 255, 200 ,0);
             SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
          }
-         else{
-            /*printf(".");*/
-            /* Black Ink */
-            setColour(d, 0, 0, 0, 0);
-            SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
-         }
       }
    }
 
