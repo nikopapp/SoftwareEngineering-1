@@ -18,9 +18,7 @@ int main(void)
    /* layer of floortiles -
    must be the last entity placement*/
    // Dividing wall(invisible)
-   for (i = 1; i < W - 1; i++) {
-     newLimit(grid, i, H - 1);
-   }
+   
    fillGrid(grid);
    drawEntities(d, grid);
    drawFrame(d, 20);
