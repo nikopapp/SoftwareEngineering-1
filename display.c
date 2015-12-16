@@ -104,6 +104,9 @@ void drawEntities(Display *d, cell grid[H][W])
       || grid[HCnt][WCnt].background->type == '1') ) {
         tile.h = dest.h = 419;
       } /* custom rect for lightbulbs */
+      else {
+        tile.h = dest.h = TILESIZE;
+      }
       dest.x = WCnt * TILESIZE;
       dest.y = HCnt * TILESIZE;
 
