@@ -46,12 +46,6 @@ int encryption(Display *d)
   /* MAIN LOOP */
   while(!d->finished){
  
-    if(strcmp(shuffle_word, rand_word)==0){
-      changeEntity(door1,'%');
-      changePassable(door1,passable);
-      changeEntity(door2,'%');
-      changePassable(door2,passable);
-    }
     in=input(d);
     resetsent = 0;
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
@@ -91,21 +85,27 @@ int encryption(Display *d)
       else if(grid[player->y-1][player->x].background->type == '&') {// "&" is now the hint symbol
         printHint=1;
       }
-   }
-   enc_updateWord(grid, yinit, xinit, shuffle_word);
-   printGrid(grid);
-   encGameDraw(d, grid, printHint, hintWord, resetsent);
-   enc_print_ascii(grid[yinit][player->x].background->type);
+    }
+    if(strcmp(shuffle_word, rand_word)==0){
+      changeEntity(door1,'%');
+      changePassable(door1,passable);
+      changeEntity(door2,'%');
+      changePassable(door2,passable);
+    }    
+    enc_updateWord(grid, yinit, xinit, shuffle_word);
+    printGrid(grid);
+    encGameDraw(d, grid, printHint, hintWord, resetsent);
+    enc_print_ascii(grid[yinit][player->x].background->type);
    
-  if (grid[player->y][player->x].background == door1) {
-    freeEntityMem(grid);  /* free memory */
-    return 0;
-  }
-  if (grid[player->y][player->x].background == door2) {
-    freeEntityMem(grid);  /* free memory */
-    return 0;
-  }
-  cnt++;
+    if (grid[player->y][player->x].background == door1) {
+      freeEntityMem(grid);  /* free memory */
+      return 0;
+    }
+    if (grid[player->y][player->x].background == door2) {
+      freeEntityMem(grid);  /* free memory */
+      return 0;
+    }
+    cnt++;
   }
 
   freeEntityMem(grid);  /* free memory */
