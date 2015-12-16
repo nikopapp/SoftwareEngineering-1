@@ -7,7 +7,7 @@ Collection of data
 Screens are made of this!
 How many pixels there are in the screen.
 Think of it as a computer in your hand.
-Windows operating system is made by this company.
+Creators of Windows operating system.
 The word is originated from latin, meaning "To calculate"
 This is the brain of the computer.
 This has the biggest memory size in the computer

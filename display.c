@@ -99,15 +99,15 @@ void drawEntities(Display *d, cell grid[H][W])
 
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
-      if (grid[HCnt][WCnt].background != NULL 
-      && (grid[HCnt][WCnt].background->type == '0' 
+      if (grid[HCnt][WCnt].background != NULL
+      && (grid[HCnt][WCnt].background->type == '0'
       || grid[HCnt][WCnt].background->type == '1') ) {
         tile.h = dest.h = BULBHEIGHT;
       } /* custom rect for lightbulbs */
       else {
         tile.h = dest.h = TILESIZE;
       }
-      
+
       dest.x = WCnt * TILESIZE;
       dest.y = HCnt * TILESIZE;
 
@@ -126,14 +126,26 @@ void drawEntities(Display *d, cell grid[H][W])
 }
 void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
-  int i = 0;
+  int i = 0, j=0 ,wrdcnt=0;
+  int x=ox;
   unsigned char chr;
 
   do{
-    chr = str[i++];
-    drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
-  }
-  while(str[i]);
+    chr = str[i];
+    x += (FNTWIDTH);
+    drawChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
+    if(str[i]==' '){
+      wrdcnt++;
+    }
+    /*find a better way over x-mas*/
+    if(wrdcnt>6){
+      j++;
+      wrdcnt=0;
+    x=ox;
+    }
+    i++;
+  }while(str[i]);
+
 
 }
 
@@ -152,10 +164,10 @@ void drawScreen(Display *d, int width, int height, int x, int y)
   tile.h = dest.h = height;
   tile.x = 0;
   tile.y = 0;
-  
+
   dest.x = x;
   dest.y = y;
-   
+
   SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
 }
 
