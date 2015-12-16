@@ -128,22 +128,25 @@ void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int
 {
     SDL_Rect tile,dest;
     tile.w = dest.w = FNTWIDTH * strlen(str) + 32;
-    tile.h = dest.h = FNTHEIGHT;
+    tile.h = dest.h = FNTHEIGHT + 20;
     tile.x = 0;
     tile.y = 0;
     
-    dest.x = ox;
-    dest.y = oy;
+    dest.x = ox - 5;
+    dest.y = oy - 5;
     
     int i = 0;
     unsigned char chr;
+    
+    SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
+    
     do{
       chr = str[i++];
       drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
     }
     while(str[i]);
 
-    SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
+
 }
 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
