@@ -114,14 +114,18 @@ int encryption(Display *d)
 }
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
+  int line = 0;
+  
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   if(printHint==1){
-    drawString(d, fontdata, hintWord, 224, 64);
+    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
+    line++;
   }
   if(resetsent==1){
-    drawString(d, fontdata, "RESET", 224, 64);
+    drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line);
+    line++;
   }
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
