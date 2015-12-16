@@ -111,7 +111,7 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   if(printHint==1){
-    drawString(d, fontdata, hintWord, LINESTARTX, LINESTARTY);
+    drawString(d, fontdata, hintWord, 264, 64);
   }
   drawFrame(d, 20);
 }
