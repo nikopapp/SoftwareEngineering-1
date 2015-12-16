@@ -23,9 +23,9 @@ int encryption(Display *d)
   strcpy(shuffle_word, rand_word);
   enc_shufle(shuffle_word, word_size);
   strcpy(original_word, shuffle_word);
-  player = grid[8][3].foreground = newEntity(passable,'R',8,8);
-  door1 = grid[7][W-4].background = newEntity(impassable,'*',W-1,8);
-  door2 = grid[7][3].background = newEntity(impassable,'*',0,8);
+  player = grid[8][3].foreground = newEntity(passable,'R',3,8);
+  door1 = grid[7][W-4].background = newEntity(impassable,'*',W-4,7);
+  door2 = grid[7][3].background = newEntity(impassable,'*',3,7);
   
   /* place the word in the grid */
   for (j=0; j<word_size; j++){
