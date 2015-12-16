@@ -197,7 +197,7 @@ void enc_getHint(char str[HINTLENGTH], int line){
   FILE *file=fopen("encHints.txt", "r");
   int cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){
-  fgets(str, LENGTH, file);
+  fgets(str, HINTLENGTH, file);
   cnt++;
     }
   str[strcspn(str, "\n")]='\0';
