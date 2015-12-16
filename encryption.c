@@ -33,7 +33,7 @@ int encryption(Display *d)
   }
   for (i = 0; i < W; i++) {
     if (i != W-2 && i != W-4 && i != 3 && i != 1) { /* non-wall locations*/
-      newLimit(grid, i, 9);
+      newLimit(grid, i, 7);
     }
   }
   grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
