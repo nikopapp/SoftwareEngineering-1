@@ -43,13 +43,13 @@ void updateEntities(cell grid[H][W])
         if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
         }
-        if (grid[HCnt][WCnt].background->type == '[' /* is it an off-wire */
+        if (grid[HCnt][WCnt].background->type == 'F' /* is it an off-wire */
         || grid[HCnt][WCnt].background->type == '0') {
-          changeEntity(grid[HCnt][WCnt].background->pointsto,']');
+          changeEntity(grid[HCnt][WCnt].background->pointsto,'N');
         }
-        if (grid[HCnt][WCnt].background->type == ']' /* is it an on-wire */
+        if (grid[HCnt][WCnt].background->type == 'N' /* is it an on-wire */
         || grid[HCnt][WCnt].background->type == '1') {
-          changeEntity(grid[HCnt][WCnt].background->pointsto,'[');
+          changeEntity(grid[HCnt][WCnt].background->pointsto,'F');
         }
       }
     }
