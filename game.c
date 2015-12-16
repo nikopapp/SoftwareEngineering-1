@@ -6,23 +6,27 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int i, in, count=0, in_prev=0;
-   
+  int i,j, in, count=0, in_prev=0;
+
   mediaLoad(d);
   initGrid(grid);
    /* place player */
   player = grid[10][2].foreground = newEntity(passable,'R',2,10);
-  
-   // Creates the boundary walls  
+
+   // Creates the boundary walls
   for (i = 0; i < W; i++) {
-    if (i != W-6 && i != W-11) { /*ladder locations */
-      newLimit(grid, i, 9);
+    for(j=5;j<H-1;j++){
+
+      if (i != W-6 && i != W-11) { /*ladder locations */
+        newLimit(grid, i, j);
+      }
     }
   }
-  
+    newLimit(grid, 7, H-5);
+    newLimit(grid, 12, H-9);
   door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
   door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
-   
+
   /* layer of floortiles -
   must be the last entity placement*/
   fillGrid(grid);
@@ -31,23 +35,20 @@ int main(void)
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
-      move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D');
       bgame(d);
-  
+
     }
-    if (grid[player->y][player->x].background == door2) {
-      move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D');
+    if (grid[player->y][player->x].background == door2 /*||
+        grid[player->y][player->x+1].background == door2||
+        grid[player->y][player->x+2].background == door2*/) {
       encryption(d);
+    //delEntity(grid[8][W-1].background);
     }
     drawBackground(d,0);
     drawEntities(d, grid);
     drawFrame(d, 20);
     in=input(d);
-    if( (in > 0) && (in < 5) ){
-      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
-    }
+    move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
     printGrid(grid);
     count = next_movment(count, &in_prev, in);
     updatePlayerfacing(player,(direction)in, count);
@@ -65,16 +66,16 @@ void mediaLoad(Display *d)
   loadPhoto(d, "files/room0.png" , 1);
   loadPhoto(d, "images/screen.png" , 2);
   loadPhoto(d, "files/room1.png" , 3);
-  
+
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.png", '0');
   loadPhoto(d, "images/onlight.png", '1');
   loadPhoto(d, "images/offswitch.bmp", '-');
   loadPhoto(d, "images/onswitch.bmp", '+');
-  
+
   loadPhoto(d, "images/dooropen.bmp", '%');
   loadPhoto(d, "images/doorclosed.bmp", '*');
-  
+
   loadPhoto(d, "images/blue_un.bmp", '&');
   loadPhoto(d, "images/red_un.bmp", 'E');
   loadPhoto(d, "images/wall.bmp", '#');
