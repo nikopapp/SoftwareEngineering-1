@@ -44,8 +44,6 @@ int bgame (Display *d)
 
   /* MAIN LOOP */
 	while(!d->finished){
-
-    in=input(d);
     if(res==goal){
       changeEntity(door1,'%');
       changePassable(door1,passable);
@@ -53,6 +51,8 @@ int bgame (Display *d)
       changePassable(door2,passable);
       printf("you win\n");
     }
+    
+    in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
         /* free memory */

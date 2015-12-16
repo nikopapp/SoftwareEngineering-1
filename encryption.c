@@ -45,41 +45,45 @@ int encryption(Display *d)
   encGameDraw(d, grid, printHint, hintWord, resetsent);
   /* MAIN LOOP */
   while(!d->finished){
-      in=input(d);
-      resetsent = 0;
-      // for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
-         // grid[2][j].background = newEntity(passable, '.', j, 2);
-      // }
-   if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
+ 
+    if(strcmp(shuffle_word, rand_word)==0){
+      changeEntity(door1,'%');
+      changePassable(door1,passable);
+      changeEntity(door2,'%');
+      changePassable(door2,passable);
+    }
+    in=input(d);
+    resetsent = 0;
+    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
       count = next_movment(count, &in_prev, in);
       updatePlayerfacing(player,(direction)in, count);
-   }
-   if (in == 9) { /*checks for spacebar */
-     if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
+    }
+    if (in == 9) { /*checks for spacebar */
+      if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
           enc_shiftLetter(grid, player->y, player->x);
         }
       else if(grid[player->y][player->x].background->type == '^') {
-         enc_shiftLetter(grid, player->y, player->x);
+        enc_shiftLetter(grid, player->y, player->x);
       }
       else if(grid[player->y][player->x].background->type == '>') {
-         enc_changeRow(shuffle_word, word_size, -1);
-         for (j=0; j<word_size; j++){
-           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
-         }
+        enc_changeRow(shuffle_word, word_size, -1);
+        for (j=0; j<word_size; j++){
+          enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
+        }
       }
       else if(grid[player->y][player->x].background->type == '<') {
-         enc_changeRow(shuffle_word, word_size, 1);
-         for (j=0; j<word_size; j++){
-           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
-         }
+        enc_changeRow(shuffle_word, word_size, 1);
+        for (j=0; j<word_size; j++){
+          enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
+        }
       }
       else if(grid[player->y-1][player->x].background->type == 'E') {// "E" is now the reset letter
-         for (i=0; i<word_size; i++){
-            enc_newLetter(grid, xinit+i, yinit, original_word[i]);
-         }
-         resetsent = 1;
+        for (i=0; i<word_size; i++){
+          enc_newLetter(grid, xinit+i, yinit, original_word[i]);
+        }
+        resetsent = 1;
          // for (j=0; reset[j]!='\0'; j++){
             // grid[2][j+5].background = newEntity(passable, reset[j], j+5, 2);
          // }
@@ -92,22 +96,17 @@ int encryption(Display *d)
    printGrid(grid);
    encGameDraw(d, grid, printHint, hintWord, resetsent);
    enc_print_ascii(grid[yinit][player->x].background->type);
-   if(strcmp(shuffle_word, rand_word)==0){
-     changeEntity(door1,'%');
-     changePassable(door1,passable);
-     changeEntity(door2,'%');
-     changePassable(door2,passable);
-      }
-      if (grid[player->y][player->x].background == door1) {
-        freeEntityMem(grid);  /* free memory */
-        return 0;
-      }
-      if (grid[player->y][player->x].background == door2) {
-        freeEntityMem(grid);  /* free memory */
-        return 0;
-      }
-    cnt++;
-   }
+   
+  if (grid[player->y][player->x].background == door1) {
+    freeEntityMem(grid);  /* free memory */
+    return 0;
+  }
+  if (grid[player->y][player->x].background == door2) {
+    freeEntityMem(grid);  /* free memory */
+    return 0;
+  }
+  cnt++;
+  }
 
   freeEntityMem(grid);  /* free memory */
   return 0;
