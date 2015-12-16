@@ -3,6 +3,7 @@
 #include "entity.h"
 
 #define MILLISECONDDELAY     20
+#define BULBHEIGHT           364
 
 struct display {
     SDL_bool finished;
