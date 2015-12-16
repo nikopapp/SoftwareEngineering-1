@@ -15,6 +15,9 @@
 #define ROW 3
 #define HINTLENGTH 200
 
+#define SCRNSTARTY 66
+#define SCRNSTARTX 224
+
 int enc_shufle(char word[LENGTH], int size);
 int enc_isenc_vowel(char c);
 char enc_vowel();
