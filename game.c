@@ -45,7 +45,9 @@ int main(void)
     drawEntities(d, grid);
     drawFrame(d, 20);
     in=input(d);
-    move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+    if( (in > 0) && (in < 5) ){
+      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+    }
     printGrid(grid);
     count = next_movment(count, &in_prev, in);
     updatePlayerfacing(player,(direction)in, count);
