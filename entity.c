@@ -41,21 +41,22 @@ void updateEntities(cell grid[H][W])
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
           temp = grid[HCnt][WCnt].background->pointsto;
           while (temp != NULL) {
-            printf("%c\n", temp->type);
-            temp->type = 'N'; /*switch the wire on */
-            temp = temp->pointsto;
+            temp = temp->pointsto;          
+            if (temp->type == 'F') {
+              temp->type = 'N'; /*switch the wire on */
+            }
           }
-          temp = NULL;
         }
         /*is the object an off switch */
         if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
-          temp = grid[HCnt][WCnt].background->pointsto;
+          temp = grid[HCnt][WCnt].background->pointsto; /* temp = bulb */
           while (temp != NULL) {
-            temp->type = 'F'; /*switch the wire off */
-            temp = temp->pointsto;
+            temp = temp->pointsto;  /* temp = wire */
+            if (temp->type == 'N') {
+              temp->type = 'F'; /*switch the wire off */
+            }
           }
-          temp = NULL;
         }
       }
     }
