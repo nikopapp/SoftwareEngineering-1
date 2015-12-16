@@ -126,13 +126,19 @@ void drawEntities(Display *d, cell grid[H][W])
 }
 void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
-
-   int i=0;
-   unsigned char chr;
-   do{
+    SDL_Rect tile,dest;
+    tile.w = dest.w = FNTWIDTH * strlen(str) + 32;
+    tile.h = dest.h = FNTHEIGHT;
+    tile.x = oy;
+    tile.y = ox;
+    int i=0;
+    unsigned char chr;
+    do{
       chr = str[i++];
       drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
-   }while(str[i]);
+    }while(str[i]);
+
+    SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
 }
 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)

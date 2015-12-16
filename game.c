@@ -17,8 +17,6 @@ int main(void)
    door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
    /* layer of floortiles -
    must be the last entity placement*/
-   // Dividing wall(invisible)
-   
    fillGrid(grid);
    drawEntities(d, grid);
    drawFrame(d, 20);
@@ -54,15 +52,17 @@ void mediaLoad(Display *d)
 {
   loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
   loadPhoto(d, "files/room0.png" , 1);
+  loadPhoto(d, "images/screen.png" , 2);
+  
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.png", '0');
   loadPhoto(d, "images/onlight.png", '1');
   loadPhoto(d, "images/offswitch.bmp", '-');
   loadPhoto(d, "images/onswitch.bmp", '+');
-
+  
   loadPhoto(d, "images/dooropen.bmp", '%');
   loadPhoto(d, "images/doorclosed.bmp", '*');
-
+  
   loadPhoto(d, "images/blue_un.bmp", '&');
   loadPhoto(d, "images/red_un.bmp", 'E');
   loadPhoto(d, "images/wall.bmp", '#');
