@@ -127,12 +127,12 @@ void drawEntities(Display *d, cell grid[H][W])
 void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
     SDL_Rect tile,dest;
-    tile.w = dest.w = FNTWIDTH * strlen(str) + 62;
-    tile.h = dest.h = FNTHEIGHT + 10;
+    tile.w = dest.w = FNTWIDTH * strlen(str) + 80;
+    tile.h = dest.h = FNTHEIGHT + 16;
     tile.x = 0;
     tile.y = 0;
     
-    dest.x = ox - 16;
+    dest.x = ox - 10;
     dest.y = oy - 16;
     
     int i = 0;
