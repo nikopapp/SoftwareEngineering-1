@@ -72,16 +72,16 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 }
 
 int isEdge(int x, int y) {
-  if ( x > (W - 1)) {
+  if ( x > (W - 2)) {
     return 1;
   }
-  if ( x < 0) {
+  if ( x < 1) {
     return 1;
   }
-  if ( y > (H - 1)) {
+  if ( y > (H - 2)) {
     return 1;
   }
-  if ( y < 0) {
+  if ( y < 1) {
     return 1;
   }
   return 0;
