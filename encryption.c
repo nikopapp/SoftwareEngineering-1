@@ -105,14 +105,25 @@ int encryption(Display *d)
   freeEntityMem(grid);  /* free memory */
   return 0;
 }
-
+#define TVSIZE 640
+#define LINESTARTY 64
+#define LINESTARTX 264 /*for printing hint strings etc */
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   if(printHint==1){
-    drawString(d, fontdata, hintWord, 64, 64);
+    if (strlen(hintWord) > (TVSIZE / FNTWIDTH)) {
+      char *hintline2[HINTLENGTH];
+      strcpy(hintline2, hintWord[TVSIZE / FNTWIDTH]);
+      hintWord[TVSIZE / FNTWIDTH] = '\0';
+      drawString(d, fontdata, hintWord, LINESTARTY, LINESTARTX);
+      drawString(d, fontdata, hintline2, LINESTARTY + FNTHEIGHT, LINESTARTX);
+    }
+    else {
+      drawString(d, fontdata, hintWord, 64, 264);
+    }
   }
   drawFrame(d, 20);
 }
