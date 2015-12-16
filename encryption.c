@@ -121,11 +121,11 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   drawEntities(d, grid);
   if(printHint==1){
     drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
-    line++;
+    line+= FNTHEIGHT;
   }
   if(resetsent==1){
     drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line);
-    line++;
+    line+= FNTHEIGHT;
   }
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
