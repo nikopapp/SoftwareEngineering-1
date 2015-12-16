@@ -59,11 +59,11 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
   px = x;
   py = y;
+  directionsTrans(dir,&px,&py); 
   
   if (isEdge(px,py)) {
     return;
   }
-  directionsTrans(dir,&px,&py);
   c->foreground->x = px;
   c->foreground->y = py;
 
