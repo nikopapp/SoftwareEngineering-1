@@ -14,9 +14,9 @@ int main(void)
   player = grid[10][2].foreground = newEntity(passable,'R',2,10);
   
    // Creates the boundary walls  
-  for (i = 1; i < W - 1; i++) {
-    if (i != 7 || i != 11) {
-      newLimit(grid, i, 7);
+  for (i = 0; i < W; i++) {
+    if (i != 10 || i != 11) {
+      newLimit(grid, i, 10);
     }
   }
   
