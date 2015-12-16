@@ -41,6 +41,7 @@ void updateEntities(cell grid[H][W])
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
           temp = grid[HCnt][WCnt].background->pointsto;
           while (temp != NULL) {
+            printf("%c\n", temp->type);
             temp->type = 'N'; /*switch the wire on */
             temp = temp->pointsto;
           }
