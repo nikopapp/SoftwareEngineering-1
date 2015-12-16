@@ -31,14 +31,14 @@ int main(void)
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
-      move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
+
       bgame(d);
 
     }
     if (grid[player->y][player->x].background == door2 /*||
         grid[player->y][player->x+1].background == door2||
         grid[player->y][player->x+2].background == door2*/) {
-      move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
+
       encryption(d);
     //delEntity(grid[8][W-1].background);
     }
