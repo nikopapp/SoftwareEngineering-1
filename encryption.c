@@ -8,7 +8,7 @@ int encryption(Display *d)
   // char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
 
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
-  char hintWord[LENGTH];
+  char hintWord[HINTLENGTH];
   int i, word_size, j, yinit = 8, xinit, cnt=0, game, in, printHint=0;
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
@@ -22,8 +22,6 @@ int encryption(Display *d)
   // }
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
-
-
   word_size = strlen(rand_word);
   rand_word[word_size]='\0';
   // here we make sure the word always apears in the middle

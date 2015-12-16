@@ -8,7 +8,7 @@ CC = gcc
 all: $(TARGET)
 
 $(TARGET): $(SOURCES) $(INCS)
-	$(CC) $(SOURCES) -o $(TARGET) $(CFLAGS) $(LIBS) -g
+	$(CC) $(SOURCES) -o $(TARGET) $(CFLAGS) $(LIBS) 
 
 clean:
 	rm -f $(TARGET)
