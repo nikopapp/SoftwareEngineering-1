@@ -131,7 +131,7 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   sprintf(str, "%d%c",res,'\0');
   assert(str!=NULL);
 
-  drawString(d, fontdata, instruction, 200, 100);
+  drawString(d, fontdata, instruction, 100, 100);
   drawString(d, fontdata, str, 875, 300);
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);

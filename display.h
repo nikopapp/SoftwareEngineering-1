@@ -52,3 +52,6 @@ void fail(char *s);
 /*My own delay function*/
 void myDelay(int ms);
 void closeDisplay(Display *d);
+
+//draws a tv screen
+void drawScreen(Display *d, int width, int height, int x, int y);

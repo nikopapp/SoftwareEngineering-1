@@ -126,13 +126,37 @@ void drawEntities(Display *d, cell grid[H][W])
 }
 void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
+  int i = 0;
+  unsigned char chr;
 
-   int i=0;
-   unsigned char chr;
-   do{
-      chr = str[i++];
-      drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
-   }while(str[i]);
+  do{
+    chr = str[i++];
+    drawChar(d, fontdata, chr, ox+i*FNTWIDTH, oy);
+  }
+  while(str[i]);
+
+}
+
+// tile.w = dest.w = FNTWIDTH * strlen(str) + 80;
+// tile.h = dest.h = FNTHEIGHT + 16;
+// tile.x = 0;
+// tile.y = 0;
+// dest.x = ox - 10;
+// dest.y = oy - 16;
+// this is for a screen around a string
+
+void drawScreen(Display *d, int width, int height, int x, int y)
+{
+  SDL_Rect tile,dest;
+  tile.w = dest.w = width;
+  tile.h = dest.h = height;
+  tile.x = 0;
+  tile.y = 0;
+  
+  dest.x = x;
+  dest.y = y;
+   
+  SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
 }
 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
