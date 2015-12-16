@@ -149,3 +149,5 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   drawString(d, fontdata, "EXIT", 875, 420);
   drawFrame(d, 20);
 }
+
+
