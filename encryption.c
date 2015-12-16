@@ -86,13 +86,13 @@ int encryption(Display *d)
         printHint=1;
       }
     }
+    enc_updateWord(grid, yinit, xinit, shuffle_word);
     if(strcmp(shuffle_word, rand_word)==0){
       changeEntity(door1,'%');
       changePassable(door1,passable);
       changeEntity(door2,'%');
       changePassable(door2,passable);
-    }    
-    enc_updateWord(grid, yinit, xinit, shuffle_word);
+    } 
     printGrid(grid);
     encGameDraw(d, grid, printHint, hintWord, resetsent);
     enc_print_ascii(grid[yinit][player->x].background->type);
