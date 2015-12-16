@@ -32,13 +32,13 @@ int main(void)
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D')
+      changeEntity(player,'D');
       bgame(d);
   
     }
     if (grid[player->y][player->x].background == door2) {
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D')
+      changeEntity(player,'D');
       encryption(d);
     }
     drawBackground(d,0);
