@@ -12,6 +12,7 @@
 #define WHEIGHT             704
 #define WWIDTH             1152
 #define TILESIZE             64
+#define REFRESH_RATE         20
 
 #define H WHEIGHT / TILESIZE
 #define W WWIDTH / TILESIZE

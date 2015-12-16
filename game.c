@@ -14,6 +14,8 @@ int main(void)
   player = grid[10][2].foreground = newEntity(passable,'R',2,10);
 
    // Creates the boundary walls
+  newLimit(grid, 7, H-5);
+  newLimit(grid, 12, H-9);
   for (i = 0; i < W; i++) {
     for(j=5;j<H-1;j++){
 
@@ -22,8 +24,6 @@ int main(void)
       }
     }
   }
-    newLimit(grid, 7, H-5);
-    newLimit(grid, 12, H-9);
   door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
   door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
 
@@ -31,7 +31,7 @@ int main(void)
   must be the last entity placement*/
   fillGrid(grid);
   drawEntities(d, grid);
-  drawFrame(d, 20);
+  drawFrame(d, REFRESH_RATE);
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
