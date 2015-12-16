@@ -40,11 +40,11 @@ int bgame (Display *d)
   fillGrid(grid);
   
   goal = rand()%255;
-  sprintf(instruction,"Try and reach %d", goal);
+  sprintf(instruction,"Target: %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
-  
   bgameDraw(d, grid, instruction, res);
+  
   /* MAIN LOOP */
 	while(!d->finished){
 
@@ -111,11 +111,12 @@ int binResult(entity *byte[BYTE_L])
 
 entity *newBulb(cell grid[H][W], int x, int y)
 {
-  grid[y][x].background = newEntity(impassable,'[',x,y);
-  grid[0][x].background = newEntity(impassable,'[',x,y);
-  grid[1][x].background = newEntity(impassable,'[',x,y);
-  grid[2][x].background = newEntity(impassable,'[',x,y);
-  grid[3][x].background = newEntity(impassable,'[',x,y);
+
+  for (i = y - 1; i >= 0; i--) {
+   grid[i][x].background = newEntity(impassable,'[',x,i); /* wires */
+   grid[i][x].background->pointsto = grid[i + 1][x].background;
+  }
+  
   grid[y+3][x].background = newEntity(impassable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
 
