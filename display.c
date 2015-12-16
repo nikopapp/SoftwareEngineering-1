@@ -102,11 +102,12 @@ void drawEntities(Display *d, cell grid[H][W])
       if (grid[HCnt][WCnt].background != NULL 
       && (grid[HCnt][WCnt].background->type == '0' 
       || grid[HCnt][WCnt].background->type == '1') ) {
-        tile.h = dest.h = 364;
+        tile.h = dest.h = BULBHEIGHT;
       } /* custom rect for lightbulbs */
       else {
         tile.h = dest.h = TILESIZE;
       }
+      
       dest.x = WCnt * TILESIZE;
       dest.y = HCnt * TILESIZE;
 
