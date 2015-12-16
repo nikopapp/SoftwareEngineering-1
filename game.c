@@ -57,7 +57,12 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/onlight.png", '1');
   loadPhoto(d, "images/offswitch.bmp", '-');
   loadPhoto(d, "images/onswitch.bmp", '+');
+  loadPhoto(d, "images/offwire.png", 'F');
+  loadPhoto(d, "images/onwire.png", 'N');
+  
   loadPhoto(d, "images/dooropen.bmp", '%');
+  loadPhoto(d, "images/doorclosed.bmp", '*');
+  
   loadPhoto(d, "images/blue_un.bmp", '&');
   loadPhoto(d, "images/red_un.bmp", 'E');
   loadPhoto(d, "images/wall.bmp", '#');

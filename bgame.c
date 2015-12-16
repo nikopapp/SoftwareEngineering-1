@@ -34,8 +34,8 @@ int bgame (Display *d)
   newLimit(grid,W-1, 8);
   newLimit(grid,W-1, 9);
 
-  door1 = grid[7][W-4].background = newEntity(impassable,'&',W-1,8);
-  door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
+  door1 = grid[7][W-4].background = newEntity(impassable,'*',W-1,8);
+  door2 = grid[7][3].background = newEntity(impassable,'*',0,8);
   /* layer of floortiles */
   fillGrid(grid);
 
@@ -114,14 +114,17 @@ entity *newBulb(cell grid[H][W], int x, int y)
 {
   int i;
 
-  grid[0][x].background = newEntity(impassable,'[',x,0);
-  for (i = 1; i < y; i++) {
-   grid[i][x].background = newEntity(impassable,'[',x,i); /* wires */
-   grid[i][x].background->pointsto = grid[i - 1][x].background;
-  }
-
+  // grid[0][x].background = newEntity(impassable,'[',x,0);
+  // for (i = 1; i < y; i++) {
+   // grid[i][x].background = newEntity(impassable,'[',x,i); /* wires */
+   // grid[i][x].background->pointsto = grid[i - 1][x].background;
+  // }
+  grid[y-1][x].background = newEntity(impassable,'F',x,y-1); 
   grid[y][x].background = newEntity(impassable,'0',x,y);
   grid[y][x].background->pointsto = grid[y - 1][x].background;
+
+  // grid[y][x].background = newEntity(impassable,'0',x,y);
+  // grid[y][x].background->pointsto = grid[y - 1][x].background;
 
   grid[y+3][x].background = newEntity(impassable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
@@ -146,3 +149,5 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   drawString(d, fontdata, "EXIT", 875, 420);
   drawFrame(d, 20);
 }
+
+
