@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <assert.h>
+#include <CUnit/Basic.h>
 /*uses sdl libraries from srcfolder*/
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
