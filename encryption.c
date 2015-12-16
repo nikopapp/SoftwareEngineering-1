@@ -4,17 +4,20 @@ int encryption(Display *d)
 {
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
   char hintWord[HINTLENGTH];
-  int i, word_size, j, yinit = 9, xinit, cnt=0, in, printHint=0;
+  int i, word_size, j, yinit = 9, xinit, cnt=0, in, printHint=0, resetsent = 0;
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player, *door1, *door2;
+  
   printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
   srand(time(NULL));
+  
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
   word_size = strlen(rand_word);
   rand_word[word_size]='\0';
+  
   // here we make sure the word always apears in the middle
   xinit = (W/2) - (word_size/2);
   strcpy(shuffle_word, rand_word);
@@ -23,6 +26,7 @@ int encryption(Display *d)
   player = grid[8][8].foreground = newEntity(passable,'R',8,8);
   door1 = grid[7][W-4].background = newEntity(impassable,'*',W-1,8);
   door2 = grid[7][3].background = newEntity(impassable,'*',0,8);
+  
   /* place the word in the grid */
   for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
@@ -39,11 +43,11 @@ int encryption(Display *d)
   encGameDraw(d, grid, printHint, hintWord);
   /* MAIN LOOP */
   while(!d->finished){
-      char reset[]={"reset"};
       in=input(d);
-      for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
-         grid[2][j].background = newEntity(passable, '.', j, 2);
-      }
+      resetsent = 0;
+      // for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
+         // grid[2][j].background = newEntity(passable, '.', j, 2);
+      // }
    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
@@ -73,9 +77,10 @@ int encryption(Display *d)
          for (i=0; i<word_size; i++){
             enc_newLetter(grid, xinit+i, yinit, original_word[i]);
          }
-         for (j=0; reset[j]!='\0'; j++){
-            grid[2][j+5].background = newEntity(passable, reset[j], j+5, 2);
-         }
+         resetsent = 1;
+         // for (j=0; reset[j]!='\0'; j++){
+            // grid[2][j+5].background = newEntity(passable, reset[j], j+5, 2);
+         // }
       }
       else if(grid[player->y][player->x].background->type == '&') {// "&" is now the hint symbol
         printHint=1;
@@ -106,12 +111,15 @@ int encryption(Display *d)
   return 0;
 }
 
-void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
+void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   if(printHint==1){
     drawString(d, fontdata, hintWord, 224, 64);
+  }
+  if(resetsent==1){
+    drawString(d, fontdata, "RESET", 224, 64);
   }
   drawFrame(d, 20);
 }

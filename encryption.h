@@ -33,4 +33,5 @@ int isvowel(char c);
 int enc_getWord(char str[LENGTH]);
 int encLineCount(void);
 void enc_getHint(char str[40], int line);
-void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]);
+
+void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent)
