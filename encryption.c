@@ -5,27 +5,39 @@
 
 int encryption(Display *d)
 {
-  char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH], hintWord[HINTLENGTH];
-  int i, word_size, j, yinit = 8, xinit, cnt=0, in, printHint=0, hintNum=0, in_prev=0, count=0;
+  // char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
+
+  char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
+  char hintWord[HINTLENGTH];
+  int i, word_size, j, yinit = 8, xinit, cnt=0, game, in, printHint=0;
+  int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player;
+  printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
   srand(time(NULL));
+  // if (sscanf(list[(rand()%LIST_SIZE)], "%s", rand_word) != 1){
+  //   printf("couldn't get a word from the list\n");
+  //   return 1;
+  // }
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
   word_size = strlen(rand_word);
+  rand_word[word_size]='\0';
+  // here we make sure the word always apears in the middle
   xinit = (W/2) - (word_size/2);
   for (i=0; i<word_size; i++){
     shuffle_word[i] = rand_word[i];
   }
-  shuffle_word[word_size] = '\0';
-  enc_shufle(shuffle_word, word_size);
+  game = enc_shufle(shuffle_word, word_size);
   strcpy(original_word, shuffle_word);
   player = grid[8][8].foreground = newEntity(passable,'R',8,8);
-  for (j=0; j<word_size; j++){ // places the word on the grid
+  /* place the word in the grid */
+  for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
   }
-  for (i = 1; i < W - 1; i++) {  // Dividing wall
+
+  for (i = 1; i < W - 1; i++) {   // Dividing wall
     newLimit(grid, i, 3);
   }
 
@@ -33,11 +45,17 @@ int encryption(Display *d)
   grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
   grid[8][1].background = newEntity(passable,'E',8,1);
   grid[8][16].background = newEntity(passable,'&',8,16);
-  fillGrid(grid); // layer of floortiles
+  fillGrid(grid);   /* layer of floortiles */
   drawBackground(d,1);
   drawEntities(d, grid);
   drawFrame(d, 20 );
-  while(strcmp(shuffle_word, rand_word)!=0){   /* MAIN LOOP */
+
+
+
+  printf("try to find the correct word");
+
+  /* MAIN LOOP */
+  while(!d->finished){
       char reset[]={"reset"};
       in=input(d);
       for (j=0; reset[j]!='\0'; j++){ //makes reset dissappear if set
@@ -84,8 +102,13 @@ int encryption(Display *d)
    printGrid(grid);
    encGameDraw(d, grid, printHint, hintWord);
    enc_print_ascii(grid[yinit][player->x].background->type);
+   printf("shuffle:%s and original:%s\n",shuffle_word, rand_word );
+   if(strcmp(shuffle_word, rand_word)==0){
+      break;
+   }
     cnt++;
    }
+  printf("you win in %d moves\n", cnt);
   freeEntityMem(grid);  /* free memory */
   return 0;
 }
@@ -101,6 +124,8 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   drawFrame(d, 20);
 }
 
+
+
 void enc_print_ascii(char letter){
    if ((letter < 'a') || (letter > 'z')){
       printf("ascii code: %c\n",' ' );
@@ -113,6 +138,7 @@ void enc_print_ascii(char letter){
 void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
 
    int i=0, size=strlen(shuffle);
+
    for( i=0; i<size; i++){
       shuffle[i] = grid[y][x++].background->type;
    }
@@ -139,6 +165,8 @@ void enc_getHint(char str[HINTLENGTH], int line){
   str[strcspn(str, "\n")]='\0';
 }
 
+
+
 int encLineCount(void){
   FILE *file=fopen("encWords.txt", "r");
   char str[LENGTH];
@@ -151,9 +179,12 @@ int encLineCount(void){
 }
 
 
+
+
 // this is a new function that vowels change only to vowels and likewise with consonants
 void enc_shiftLetter(cell grid[H][W], int y, int x){
    entity *e;
+
    e = grid[y][x].background->pointsto;
    if (isvowel(e->type)){
       do {
@@ -171,6 +202,9 @@ void enc_shiftLetter(cell grid[H][W], int y, int x){
 
 void enc_updateLetter(cell grid[H][W], int y, int x){
 
+   if (grid[y][x].background->type == '$') {// cause 'v' may be part of the word
+    enc_letterDown(grid[y][x].background->pointsto);
+   }
    if (grid[y][x].background->type == '^'){
     enc_letterUp(grid[y][x].background->pointsto);
    }
