@@ -132,7 +132,7 @@ void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int
     tile.x = 0;
     tile.y = 0;
     
-    dest.x = ox - 7;
+    dest.x = ox - 10;
     dest.y = oy - 5;
     
     int i = 0;
