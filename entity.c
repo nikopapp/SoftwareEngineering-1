@@ -47,9 +47,9 @@ void updateEntities(cell grid[H][W])
         || grid[HCnt][WCnt].background->type == '0') { 
           changeEntity(grid[HCnt][WCnt].background->pointsto,']');
         }        
-        if (grid[HCnt][WCnt].background->pointsto->type == ']' /* is it an on-wire */
+        if (grid[HCnt][WCnt].background->type == ']' /* is it an on-wire */
         || grid[HCnt][WCnt].background->type == '1') {         
-          changeEntity(grid[HCnt][WCnt].background,'[');
+          changeEntity(grid[HCnt][WCnt].background->pointsto,'[');
         }  
       }
     }
