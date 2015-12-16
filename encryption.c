@@ -118,8 +118,8 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
       char *hintline2[HINTLENGTH];
       strcpy(hintline2, hintWord[TVSIZE / FNTWIDTH]);
       hintWord[TVSIZE / FNTWIDTH] = '\0';
-      drawString(d, fontdata, hintWord, LINESTARTY, LINESTARTX);
-      drawString(d, fontdata, hintline2, LINESTARTY + FNTHEIGHT, LINESTARTX);
+      drawString(d, fontdata, hintWord, LINESTARTX, LINESTARTY);
+      drawString(d, fontdata, hintline2, LINESTARTX, LINESTARTY + FNTHEIGHT);
     }
     else {
       drawString(d, fontdata, hintWord, 64, 264);
