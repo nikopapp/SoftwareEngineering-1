@@ -11,3 +11,5 @@ entity *newBulb(cell grid[H][W], int x, int y);
 void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res );
 
 void init(cell grid[H][W], entity *player);
+
+void makeBoundariesBinary(cell grid[H][W]);

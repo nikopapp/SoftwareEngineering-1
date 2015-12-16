@@ -8,16 +8,16 @@ int encryption(Display *d)
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player, *door1, *door2;
-  
+
   printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
   srand(time(NULL));
-  
+
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
   word_size = strlen(rand_word);
   rand_word[word_size]='\0';
-  
+
   // here we make sure the word always apears in the middle
   xinit = (W/2) - (word_size/2);
   strcpy(shuffle_word, rand_word);
@@ -26,16 +26,12 @@ int encryption(Display *d)
   player = grid[8][3].foreground = newEntity(passable,'R',3,8);
   door1 = grid[7][W-4].background = newEntity(impassable,'*',W-4,7);
   door2 = grid[7][3].background = newEntity(impassable,'*',3,7);
-  
+
   /* place the word in the grid */
   for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
   }
-  for (i = 0; i < W; i++) {
-    if (i != W-2 && i != W-4 && i != 3 && i != 1) { /* non-wall locations*/
-      newLimit(grid, i, 7);
-    }
-  }
+  makeBoundariesEncryption(grid);
   grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
   grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
   grid[7][1].background = newEntity(impassable,'E',7,1);
@@ -45,7 +41,7 @@ int encryption(Display *d)
   encGameDraw(d, grid, printHint, hintWord, resetsent);
   /* MAIN LOOP */
   while(!d->finished){
- 
+
     in=input(d);
     resetsent = 0;
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
@@ -92,11 +88,11 @@ int encryption(Display *d)
       changePassable(door1,passable);
       changeEntity(door2,'%');
       changePassable(door2,passable);
-    } 
+    }
     printGrid(grid);
     encGameDraw(d, grid, printHint, hintWord, resetsent);
     enc_print_ascii(grid[yinit][player->x].background->type);
-   
+
     if (grid[player->y][player->x].background == door1) {
       freeEntityMem(grid);  /* free memory */
       return 0;
@@ -111,10 +107,18 @@ int encryption(Display *d)
   freeEntityMem(grid);  /* free memory */
   return 0;
 }
-
+void makeBoundariesEncryption(cell grid[H][W])
+{
+  int i;
+  for (i = 0; i < W; i++) {
+    if (i != W-2 && i != W-4 && i != 3 && i != 1) { /* non-wall locations*/
+      newLimit(grid, i, 7);
+    }
+  }
+}
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
-  
+
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
@@ -127,7 +131,7 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   }
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
-  drawFrame(d, 20);
+  drawFrame(d, REFRESH_RATE);
 }
 
 

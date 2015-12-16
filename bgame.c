@@ -16,21 +16,7 @@ int bgame (Display *d)
   for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
     byte[i-1] = newBulb(grid, j, 0);
   }
-  // Dividing wall(invisible)
-  newLimit(grid,0, 7);
-  newLimit(grid,1, 7);
-  newLimit(grid,2, 7);
-  newLimit(grid,4, 7);
-  newLimit(grid,W-1, 7);
-  newLimit(grid,W-2, 7);
-  newLimit(grid,W-3, 7);
-  newLimit(grid,W-5, 7);
-
-  newLimit(grid,0, 8);
-  newLimit(grid,0, 9);
-  newLimit(grid,W-1, 8);
-  newLimit(grid,W-1, 9);
-
+  makeBoundariesBinary(grid);
   door1 = grid[7][W-4].background = newEntity(impassable,'*',W-1,8);
   door2 = grid[7][3].background = newEntity(impassable,'*',0,8);
   /* layer of floortiles */
@@ -45,7 +31,7 @@ int bgame (Display *d)
   /* MAIN LOOP */
 	while(!d->finished){
 
-    
+
     in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
@@ -85,7 +71,7 @@ int bgame (Display *d)
       changeEntity(door2,'%');
       changePassable(door2,passable);
       printf("you win\n");
-    }    
+    }
     bgameDraw(d, grid, instruction, res);
 
   }
@@ -109,7 +95,7 @@ int binResult(entity *byte[BYTE_L])
 }
 
 entity *newBulb(cell grid[H][W], int x, int y)
-{ 
+{
   grid[y][x].background = newEntity(impassable,'0',x,y);
 
   grid[y+7][x].background = newEntity(impassable,'-',x,y+7);
@@ -118,7 +104,24 @@ entity *newBulb(cell grid[H][W], int x, int y)
   return grid[y][x].background;
 }
 
+void makeBoundariesBinary(cell grid[H][W])
+{
+  // Dividing wall(invisible)
+  newLimit(grid,0, 7);
+  newLimit(grid,1, 7);
+  newLimit(grid,2, 7);
+  newLimit(grid,4, 7);
+  newLimit(grid,W-1, 7);
+  newLimit(grid,W-2, 7);
+  newLimit(grid,W-3, 7);
+  newLimit(grid,W-5, 7);
 
+  newLimit(grid,0, 8);
+  newLimit(grid,0, 9);
+  newLimit(grid,W-1, 8);
+  newLimit(grid,W-1, 9);
+
+}
 void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
 {
   char str[3];
@@ -133,7 +136,5 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
   drawString(d, fontdata, str, 875, 300);
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
-  drawFrame(d, 20);
+  drawFrame(d, REFRESH_RATE);
 }
-
-
