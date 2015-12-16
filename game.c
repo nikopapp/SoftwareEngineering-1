@@ -16,7 +16,7 @@ int main(void)
    // Creates the boundary walls  
   for (i = 0; i < W; i++) {
     if (i != W-6 && i != W-11) { /*ladder locations */
-      newLimit(grid, i, 8);
+      newLimit(grid, i, 9);
     }
   }
   
