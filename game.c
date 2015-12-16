@@ -6,7 +6,7 @@ int main(void)
    Display *d = newDisplay();
    cell grid[H][W];
    entity *player, *door1, *door2;
-   int in;
+   int in, count=0, in_prev=0;
    mediaLoad(d);
    initGrid(grid);
    /* place player */
@@ -36,18 +36,18 @@ int main(void)
       drawEntities(d, grid);
       drawFrame(d, 20);
       in=input(d);
-      if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
-        move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
-        printGrid(grid);
-        updatePlayerfacing(player,(direction)in);
-      }
-    }
+      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+      printGrid(grid);
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player,(direction)in, count);
+   }
 
    freeEntityMem(grid);  /* free memory */
    closeDisplay(d);
    printf("\n\n");
    return(0);
 }
+
 void mediaLoad(Display *d)
 {
   loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
@@ -55,17 +55,29 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.png", '0');
   loadPhoto(d, "images/onlight.png", '1');
-  loadPhoto(d, "images/onwire.png", ']');
-  loadPhoto(d, "images/offwire.png", '[');
   loadPhoto(d, "images/offswitch.bmp", '-');
   loadPhoto(d, "images/onswitch.bmp", '+');
   loadPhoto(d, "images/dooropen.bmp", '%');
-  loadPhoto(d, "images/doorclosed.bmp", '&');
+  loadPhoto(d, "images/blue_un.bmp", '&');
+  loadPhoto(d, "images/red_un.bmp", 'E');
   loadPhoto(d, "images/wall.bmp", '#');
+
   loadPhoto(d, "images/Red_Elf_Front.bmp", 'D');
+  loadPhoto(d, "images/Red_Elf_Front2.bmp", '/');
+  loadPhoto(d, "images/Red_Elf_Front3.bmp", '?');
+
   loadPhoto(d, "images/Red_Elf_Back.bmp", 'U');
+  loadPhoto(d, "images/Red_Elf_Back2.bmp", ';');
+  loadPhoto(d, "images/Red_Elf_Back3.bmp", ':');
+
   loadPhoto(d, "images/Red_Elf_Left.bmp", 'L');
+  loadPhoto(d, "images/Red_Elf_Left2.bmp", '{');
+  loadPhoto(d, "images/Red_Elf_Left3.bmp", '(');
+
   loadPhoto(d, "images/Red_Elf_Right.bmp", 'R');
+  loadPhoto(d, "images/Red_Elf_Right2.bmp", '}');
+  loadPhoto(d, "images/Red_Elf_Right3.bmp", ')');
+
   loadPhoto(d, "images/chars/a.bmp", 'a');
  loadPhoto(d, "images/chars/b.bmp", 'b');
  loadPhoto(d, "images/chars/c.bmp", 'c');

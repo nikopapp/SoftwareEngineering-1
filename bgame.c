@@ -5,7 +5,7 @@ int bgame (Display *d)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L],  *door1, *door2;
-  int in, i, j;
+  int in, i, j, in_prev=0, count=0;
   int goal,res=0;
   char instruction[16];
 
@@ -23,28 +23,28 @@ int bgame (Display *d)
   newLimit(grid,0, 7);
   newLimit(grid,1, 7);
   newLimit(grid,2, 7);
-  newLimit(grid,4, 7);  
+  newLimit(grid,4, 7);
   newLimit(grid,W-1, 7);
   newLimit(grid,W-2, 7);
   newLimit(grid,W-3, 7);
   newLimit(grid,W-5, 7);
-  
+
   newLimit(grid,0, 8);
   newLimit(grid,0, 9);
   newLimit(grid,W-1, 8);
   newLimit(grid,W-1, 9);
- 
+
   door1 = grid[7][W-4].background = newEntity(impassable,'&',W-1,8);
   door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
   /* layer of floortiles */
   fillGrid(grid);
-  
+
   goal = rand()%255;
   sprintf(instruction,"Target: %d", goal);
   printf("try summing %d\n", goal );
   printf("result: %d\n", binResult(byte) );
   bgameDraw(d, grid, instruction, res);
-  
+
   /* MAIN LOOP */
 	while(!d->finished){
 
@@ -66,9 +66,10 @@ int bgame (Display *d)
       return 0;
     }
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
-      move(&grid[player->y][player->x],player->x,player->y,in,grid);
+      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
-      updatePlayerfacing(player, in);
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player, (direction)in, count);
     }
     if (in == 9) { /*checks for spacebar */
       if( grid[player->y-1][player->x].background != NULL
@@ -112,16 +113,16 @@ int binResult(entity *byte[BYTE_L])
 entity *newBulb(cell grid[H][W], int x, int y)
 {
   int i;
-  
-  grid[0][x].background = newEntity(impassable,'[',x,0); 
+
+  grid[0][x].background = newEntity(impassable,'[',x,0);
   for (i = 1; i < y; i++) {
    grid[i][x].background = newEntity(impassable,'[',x,i); /* wires */
    grid[i][x].background->pointsto = grid[i - 1][x].background;
   }
 
-  grid[y][x].background = newEntity(impassable,'0',x,y);  
+  grid[y][x].background = newEntity(impassable,'0',x,y);
   grid[y][x].background->pointsto = grid[y - 1][x].background;
-  
+
   grid[y+3][x].background = newEntity(impassable,'-',x,y+3);
   grid[y+3][x].background->pointsto = grid[y][x].background;
 
@@ -132,13 +133,13 @@ entity *newBulb(cell grid[H][W], int x, int y)
 void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
 {
   char str[3];
-  
+
   drawBackground(d,1);
   drawEntities(d, grid);
-  
+
   sprintf(str, "%d%c",res,'\0');
   assert(str!=NULL);
-  
+
   drawString(d, fontdata, instruction, 200, 100);
   drawString(d, fontdata, str, 875, 300);
   drawString(d, fontdata, "EXIT", 175, 420);

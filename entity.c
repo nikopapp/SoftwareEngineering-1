@@ -44,13 +44,13 @@ void updateEntities(cell grid[H][W])
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
         }
         if (grid[HCnt][WCnt].background->type == '[' /* is it an off-wire */
-        || grid[HCnt][WCnt].background->type == '0') { 
+        || grid[HCnt][WCnt].background->type == '0') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,']');
-        }        
+        }
         if (grid[HCnt][WCnt].background->type == ']' /* is it an on-wire */
-        || grid[HCnt][WCnt].background->type == '1') {         
+        || grid[HCnt][WCnt].background->type == '1') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'[');
-        }  
+        }
       }
     }
   }
@@ -76,21 +76,41 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
   c->foreground = NULL;
 }
 
-void updatePlayerfacing(entity *player, direction in)
+int next_movment(int count, int *in_prev, int in){
+
+   if( in == *in_prev){// same arrow key
+      count++;
+   }// we are going to use 'count' for moving animation inside the updatePlayerfacing function
+   else if( in != *in_prev ){// different arrow key
+      *in_prev = in;
+      count = 0;
+   }
+   return count;
+}
+
+void updatePlayerfacing(entity *player, direction in, int count)
 {
   switch(in){
     case LEFT:
-      changeEntity(player,'L');
-      break;
+       if (count % 3 == 0){  changeEntity(player,'L'); }
+       if (count % 3 == 1){  changeEntity(player,'{'); }
+       if (count % 3 == 2){  changeEntity(player,'('); }
+       break;
     case RIGHT:
-      changeEntity(player,'R');
+      if (count % 3 == 0){  changeEntity(player,'R'); }
+      if (count % 3 == 1){  changeEntity(player,'}'); }
+      if (count % 3 == 2){  changeEntity(player,')'); }
       break;
     case UP:
-      changeEntity(player,'U');
-      break;
+       if (count % 3 == 0){  changeEntity(player,'U'); }
+       if (count % 3 == 1){  changeEntity(player,';'); }
+       if (count % 3 == 2){  changeEntity(player,':'); }
+       break;
     case DOWN:
-      changeEntity(player,'D');
-      break;
+       if (count % 3 == 0){  changeEntity(player,'D'); }
+       if (count % 3 == 1){  changeEntity(player,'/'); }
+       if (count % 3 == 2){  changeEntity(player,'?'); }
+       break;
   }
 }
 

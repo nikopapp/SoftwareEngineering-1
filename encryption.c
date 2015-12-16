@@ -3,15 +3,14 @@
 #include "encryption.h"
 
 
-
 int encryption(Display *d)
 {
   // char *list[] = {"frondo", "gandalf","elrond", "legolas", "gimli", "aragorn","saouron"};
 
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
   char hintWord[LENGTH];
-  int i, word_size, j, yinit = H/2, xinit = 2, cnt=0, game, in, printHint=0;
-  int hintNum=0;
+  int i, word_size, j, yinit = 8, xinit, cnt=0, game, in, printHint=0;
+  int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player;
   printf("enc_linecount= %d\n", encLineCount());
@@ -27,6 +26,8 @@ int encryption(Display *d)
 
   word_size = strlen(rand_word);
   rand_word[word_size]='\0';
+  // here we make sure the word always apears in the middle
+  xinit = (W/2) - (word_size/2);
   for (i=0; i<word_size; i++){
     shuffle_word[i] = rand_word[i];
   }
@@ -47,8 +48,12 @@ int encryption(Display *d)
     newLimit(grid, i, 3);
   }
 
+  grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
+  grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
+  grid[8][1].background = newEntity(passable,'E',8,1);
+  grid[8][16].background = newEntity(passable,'&',8,16);
   // Creates the boundary walls
-  createBoundingWalls(grid);
+  //createBoundingWalls(grid);
 
   /* layer of floortiles */
   fillGrid(grid);
@@ -56,10 +61,6 @@ int encryption(Display *d)
   drawEntities(d, grid);
   drawFrame(d, 20 );
 
-  grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
-  grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
-  grid[8][1].background = newEntity(passable,'r',8,1);
-  grid[8][9].background = newEntity(passable,'&',8,9);
 
 
   printf("try to find the correct word");
@@ -75,9 +76,10 @@ int encryption(Display *d)
          grid[2][j].background = newEntity(passable, '.', j, 2);
       }
    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
-      move(&grid[player->y][player->x],player->x,player->y,in,grid);
+      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
-      updatePlayerfacing(player,(direction)in);
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player,(direction)in, count);
    }
    if (in == 9) { /*checks for spacebar */
      if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
@@ -98,7 +100,7 @@ int encryption(Display *d)
            enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
          }
       }
-      else if(grid[player->y][player->x].background->type == 'r') {
+      else if(grid[player->y][player->x].background->type == 'E') {// "E" is now the reset letter
          for (i=0; i<word_size; i++){
             enc_newLetter(grid, xinit+i, yinit, original_word[i]);
          }
@@ -148,6 +150,7 @@ int encryption(Display *d)
   freeEntityMem(grid);  /* free memory */
   return 0;
 }
+
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
   drawBackground(d,1);

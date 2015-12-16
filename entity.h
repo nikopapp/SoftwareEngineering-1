@@ -43,4 +43,6 @@ void delEntity(entity *e);
 
 void changePassable(entity *e, int ispassable);
 
-void updatePlayerfacing(entity *player, direction in);
+int next_movment(int count, int *in_prev, int in);
+
+void updatePlayerfacing(entity *player, direction in, int count);
