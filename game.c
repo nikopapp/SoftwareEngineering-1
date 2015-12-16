@@ -15,8 +15,8 @@ int main(void)
   
    // Creates the boundary walls  
   for (i = 0; i < W; i++) {
-    if (i != 10 || i != 11) {
-      newLimit(grid, i, 10);
+    if (i != 7 && i != 11) {
+      newLimit(grid, i, 9);
     }
   }
   
