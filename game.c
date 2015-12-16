@@ -6,7 +6,7 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int in, count=0, in_prev=0;
+  int i, in, count=0, in_prev=0;
    
   mediaLoad(d);
   initGrid(grid);
