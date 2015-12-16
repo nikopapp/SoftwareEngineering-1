@@ -44,7 +44,7 @@ void updateEntities(cell grid[H][W])
             temp->type = 'N'; /*switch the wire on */
             temp = temp->pointsto;
           }
-          temp = NULL:
+          temp = NULL;
         }
         /*is the object an off switch */
         if (grid[HCnt][WCnt].background->type == '-') {
@@ -54,7 +54,7 @@ void updateEntities(cell grid[H][W])
             temp->type = 'F'; /*switch the wire off */
             temp = temp->pointsto;
           }
-          temp = NULL:
+          temp = NULL;
         }
       }
     }
