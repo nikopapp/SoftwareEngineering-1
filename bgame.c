@@ -17,9 +17,6 @@ int bgame (Display *d)
     byte[i-1] = newBulb(grid, j, 0);
   }
   // Dividing wall(invisible)
-  for (i = 1; i < W - 1; i++) {
-    newLimit(grid, i, H - 1);
-  }
   newLimit(grid,0, 7);
   newLimit(grid,1, 7);
   newLimit(grid,2, 7);
