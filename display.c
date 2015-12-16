@@ -95,14 +95,15 @@ void drawEntities(Display *d, cell grid[H][W])
   tile.x = 0;
   tile.y = 0;
   int HCnt, WCnt;
-  if (grid[HCnt][WCnt].background != NULL 
-  && (grid[HCnt][WCnt].background->type == '0' 
-  || grid[HCnt][WCnt].background->type == '1') ) {
-    tile.h = dest.h = 419;
-  }
+
 
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
+      if (grid[HCnt][WCnt].background != NULL 
+      && (grid[HCnt][WCnt].background->type == '0' 
+      || grid[HCnt][WCnt].background->type == '1') ) {
+        tile.h = dest.h = 419;
+      } /* custom rect for lightbulbs */
       dest.x = WCnt * TILESIZE;
       dest.y = HCnt * TILESIZE;
 
