@@ -106,8 +106,8 @@ int encryption(Display *d)
   return 0;
 }
 #define TVSIZE 640
-#define LINESTARTY 64
-#define LINESTARTX 264 /*for printing hint strings etc */
+#define LINESTARTY 264
+#define LINESTARTX 64 /*for printing hint strings etc */
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
   drawBackground(d,3);
