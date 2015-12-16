@@ -28,7 +28,6 @@ void delEntity(entity *e)
 void updateEntities(cell grid[H][W])
 {
   int HCnt, WCnt;
-  entity *temp;
 
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
