@@ -49,23 +49,42 @@ void updateEntities(cell grid[H][W])
 }
 
 void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
+
   cell *cnew = getNeighbour(x,y,dir,grid);
 
   if (cnew->background->ispassable == impassable) {
     return;
   }
-
   int px, py;
 
   px = x;
   py = y;
-
+  
+  if (isEdge(px,py)) {
+    return;
+  }
   directionsTrans(dir,&px,&py);
   c->foreground->x = px;
   c->foreground->y = py;
 
   cnew->foreground = c->foreground;
   c->foreground = NULL;
+}
+
+int isEdge(int x, int y) {
+  if ( x > (w - 1)) {
+    return 1;
+  }
+  if ( x < 0) {
+    return 1;
+  }
+  if ( y > (W - 1)) {
+    return 1;
+  }
+  if ( y < 0) {
+    return 1;
+  }
+  return 0;
 }
 
 int next_movment(int count, int *in_prev, int in){

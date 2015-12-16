@@ -46,3 +46,6 @@ void changePassable(entity *e, int ispassable);
 int next_movment(int count, int *in_prev, int in);
 
 void updatePlayerfacing(entity *player, direction in, int count);
+
+//checks if off edge
+int isEdge(int x, int y);
