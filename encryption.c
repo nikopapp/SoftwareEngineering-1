@@ -119,13 +119,12 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
-  if(printHint==1){
-    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
+  if(resetsent==1){
+    drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY);
     line+= FNTHEIGHT;
   }
-  if(resetsent==1){
-    drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line);
-    line+= FNTHEIGHT;
+  if(printHint==1){
+    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
   }
   drawString(d, fontdata, "EXIT", 175, 420);
   drawString(d, fontdata, "EXIT", 875, 420);
