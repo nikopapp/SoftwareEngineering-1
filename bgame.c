@@ -44,13 +44,7 @@ int bgame (Display *d)
 
   /* MAIN LOOP */
 	while(!d->finished){
-    if(res==goal){
-      changeEntity(door1,'%');
-      changePassable(door1,passable);
-      changeEntity(door2,'%');
-      changePassable(door2,passable);
-      printf("you win\n");
-    }
+
     
     in=input(d);
 
@@ -85,6 +79,13 @@ int bgame (Display *d)
       }
       res=binResult(byte);
     }
+    if(res==goal){
+      changeEntity(door1,'%');
+      changePassable(door1,passable);
+      changeEntity(door2,'%');
+      changePassable(door2,passable);
+      printf("you win\n");
+    }    
     bgameDraw(d, grid, instruction, res);
 
   }
