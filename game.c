@@ -31,7 +31,7 @@ int main(void)
   must be the last entity placement*/
   fillGrid(grid);
   drawEntities(d, grid);
-  drawFrame(d, 20);
+  drawFrame(d, REFRESH_RATE);
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
