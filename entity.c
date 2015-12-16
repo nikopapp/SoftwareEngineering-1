@@ -39,24 +39,10 @@ void updateEntities(cell grid[H][W])
         /*is the object an on switch */
         if (grid[HCnt][WCnt].background->type == '+') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
-          temp = grid[HCnt][WCnt].background->pointsto;
-          while (temp != NULL) {
-            temp = temp->pointsto;          
-            if (temp->type == 'F') {
-              temp->type = 'N'; /*switch the wire on */
-            }
-          }
         }
         /*is the object an off switch */
         if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
-          temp = grid[HCnt][WCnt].background->pointsto; /* temp = bulb */
-          while (temp != NULL) {
-            temp = temp->pointsto;  /* temp = wire */
-            if (temp->type == 'N') {
-              temp->type = 'F'; /*switch the wire off */
-            }
-          }
         }
       }
     }
