@@ -61,6 +61,7 @@ void mediaLoad(Display *d)
   loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
   loadPhoto(d, "files/room0.png" , 1);
   loadPhoto(d, "images/screen.png" , 2);
+  loadPhoto(d, "files/room1.png" , 3);
   
   loadPhoto(d, "images/floor.bmp", '.');
   loadPhoto(d, "images/offlight.png", '0');

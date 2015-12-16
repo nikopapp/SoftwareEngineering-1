@@ -109,7 +109,7 @@ int encryption(Display *d)
 
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH]){
-  drawBackground(d,1);
+  drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   if(printHint==1){
