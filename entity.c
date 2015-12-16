@@ -50,6 +50,9 @@ void updateEntities(cell grid[H][W])
 
 void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
+  if (isEdge(x,y,dir)) {
+    return;
+  }
   cell *cnew = getNeighbour(x,y,dir,grid);
 
   if (cnew->background->ispassable == impassable) {
@@ -59,11 +62,9 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
   px = x;
   py = y;
-  directionsTrans(dir,&px,&py); 
-  
-  if (isEdge(px,py)) {
-    return;
-  }
+
+  directionsTrans(dir,&px,&py);
+
   c->foreground->x = px;
   c->foreground->y = py;
 
@@ -71,22 +72,28 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
   c->foreground = NULL;
 }
 
-int isEdge(int x, int y) {
+int isEdge(int x, int y, direction dir) {
 
   printf("x: %d y: %d", x, y);
-  if ( x > (W - 1)) {
+  if ( x == (W - 1)&& dir == RIGHT ) {
+printf("x>edge\n");
     return 1;
   }
-  if ( x < 0) {
+  else if ( x == 0 && dir == LEFT) {
+printf("x<0\n");
     return 1;
   }
-  if ( y > (H - 1)) {
+  else if ( y == (H - 1) && dir == DOWN) {
+    printf("y>h-1\n");
     return 1;
   }
-  if ( y < 0) {
+    else if ( y == 0 && dir == UP) {
+printf("y<0\n");
     return 1;
   }
+  else{
   return 0;
+  }
 }
 
 int next_movment(int count, int *in_prev, int in){
