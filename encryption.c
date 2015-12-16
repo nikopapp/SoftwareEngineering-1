@@ -40,7 +40,7 @@ int encryption(Display *d)
   grid[7][16].background = newEntity(passable,'&',7,16);
   fillGrid(grid);   /* layer of floortiles */
 
-  encGameDraw(d, grid, printHint, hintWord);
+  encGameDraw(d, grid, printHint, hintWord, resetsent);
   /* MAIN LOOP */
   while(!d->finished){
       in=input(d);
@@ -88,7 +88,7 @@ int encryption(Display *d)
    }
    enc_updateWord(grid, yinit, xinit, shuffle_word);
    printGrid(grid);
-   encGameDraw(d, grid, printHint, hintWord);
+   encGameDraw(d, grid, printHint, hintWord, resetsent);
    enc_print_ascii(grid[yinit][player->x].background->type);
    if(strcmp(shuffle_word, rand_word)==0){
      changeEntity(door1,'%');
