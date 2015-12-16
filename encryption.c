@@ -35,9 +35,8 @@ int encryption(Display *d)
   grid[7][1].background = newEntity(passable,'E',7,1);
   grid[7][16].background = newEntity(passable,'&',7,16);
   fillGrid(grid);   /* layer of floortiles */
-  drawBackground(d,1);
-  drawEntities(d, grid);
-  drawFrame(d, 20 );
+
+  encGameDraw(d, grid, printHint, hintWord);
   /* MAIN LOOP */
   while(!d->finished){
       char reset[]={"reset"};
