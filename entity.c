@@ -28,7 +28,6 @@ void delEntity(entity *e)
 void updateEntities(cell grid[H][W])
 {
   int HCnt, WCnt;
-  entity *temp;
 
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
@@ -39,23 +38,10 @@ void updateEntities(cell grid[H][W])
         /*is the object an on switch */
         if (grid[HCnt][WCnt].background->type == '+') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
-          temp = grid[HCnt][WCnt].background->pointsto;
-          while (temp != NULL) {
-            printf("%c\n", temp->type);
-            temp->type = 'N'; /*switch the wire on */
-            temp = temp->pointsto;
-          }
-          temp = NULL;
         }
         /*is the object an off switch */
         if (grid[HCnt][WCnt].background->type == '-') {
           changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
-          temp = grid[HCnt][WCnt].background->pointsto;
-          while (temp != NULL) {
-            temp->type = 'F'; /*switch the wire off */
-            temp = temp->pointsto;
-          }
-          temp = NULL;
         }
       }
     }
