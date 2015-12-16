@@ -31,13 +31,15 @@ int encryption(Display *d)
   for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
   }
-  for (i = 1; i < W - 1; i++) {   // Dividing wall
-    newLimit(grid, i, 3);
+  for (i = 0; i < W; i++) {
+    if (i != W-2 && i != W-4 && i != 3 && i != 1) { /* non-wall locations*/
+      newLimit(grid, i, 9);
+    }
   }
   grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
   grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
-  grid[7][1].background = newEntity(passable,'E',7,1);
-  grid[7][16].background = newEntity(passable,'&',7,16);
+  grid[7][1].background = newEntity(impassable,'E',7,1);
+  grid[7][16].background = newEntity(impassable,'&',7,16);
   fillGrid(grid);   /* layer of floortiles */
 
   encGameDraw(d, grid, printHint, hintWord, resetsent);
@@ -73,7 +75,7 @@ int encryption(Display *d)
            enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
          }
       }
-      else if(grid[player->y][player->x].background->type == 'E') {// "E" is now the reset letter
+      else if(grid[player->y-1][player->x].background->type == 'E') {// "E" is now the reset letter
          for (i=0; i<word_size; i++){
             enc_newLetter(grid, xinit+i, yinit, original_word[i]);
          }
@@ -82,7 +84,7 @@ int encryption(Display *d)
             // grid[2][j+5].background = newEntity(passable, reset[j], j+5, 2);
          // }
       }
-      else if(grid[player->y][player->x].background->type == '&') {// "&" is now the hint symbol
+      else if(grid[player->y-1][player->x].background->type == '&') {// "&" is now the hint symbol
         printHint=1;
       }
    }
@@ -121,6 +123,8 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   if(resetsent==1){
     drawString(d, fontdata, "RESET", 224, 64);
   }
+  drawString(d, fontdata, "EXIT", 175, 420);
+  drawString(d, fontdata, "EXIT", 875, 420);
   drawFrame(d, 20);
 }
 
