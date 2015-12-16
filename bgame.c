@@ -34,8 +34,8 @@ int bgame (Display *d)
   newLimit(grid,W-1, 8);
   newLimit(grid,W-1, 9);
 
-  door1 = grid[7][W-4].background = newEntity(impassable,'&',W-1,8);
-  door2 = grid[7][3].background = newEntity(impassable,'&',0,8);
+  door1 = grid[7][W-4].background = newEntity(impassable,'*',W-1,8);
+  door2 = grid[7][3].background = newEntity(impassable,'*',0,8);
   /* layer of floortiles */
   fillGrid(grid);
 
