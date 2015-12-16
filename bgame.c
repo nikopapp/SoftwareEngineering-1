@@ -113,12 +113,12 @@ entity *newBulb(cell grid[H][W], int x, int y)
 {
   int i;
   
+  grid[0][x].background = newEntity(impassable,'[',x,0); 
   for (i = y - 1; i > 0; i--) {
    grid[i][x].background = newEntity(impassable,'[',x,i); /* wires */
    grid[i][x].background->pointsto = grid[i - 1][x].background;
   }
-  grid[0][x].background = newEntity(impassable,'[',x,0); 
-  
+
   grid[y][x].background = newEntity(impassable,'0',x,y);  
   grid[y][x].background->pointsto = grid[y - 1][x].background;
   
