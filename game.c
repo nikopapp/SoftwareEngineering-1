@@ -6,24 +6,15 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int i,j, in, count=0, in_prev=0;
+  int in, count=0, in_prev=0;
 
   mediaLoad(d);
   initGrid(grid);
    /* place player */
   player = grid[10][2].foreground = newEntity(passable,'R',2,10);
-
    // Creates the boundary walls
-  newLimit(grid, 7, H-5);
-  newLimit(grid, 12, H-9);
-  for (i = 0; i < W; i++) {
-    for(j=5;j<H-1;j++){
+  makeBoundariesLobby(grid);
 
-      if (i != W-6 && i != W-11) { /*ladder locations */
-        newLimit(grid, i, j);
-      }
-    }
-  }
   door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
   door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
 
@@ -46,7 +37,7 @@ int main(void)
     }
     drawBackground(d,0);
     drawEntities(d, grid);
-    drawFrame(d, 20);
+    drawFrame(d, REFRESH_RATE);
     in=input(d);
     move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
     printGrid(grid);
@@ -59,7 +50,20 @@ int main(void)
   printf("\n\n");
   return(0);
 }
+void makeBoundariesLobby(cell grid[H][W])
+{
+  int i,j;
+  newLimit(grid, 7, H-5);
+  newLimit(grid, 12, H-9);
+  for (i = 0; i < W; i++) {
+    for(j=5;j<H-1;j++){
 
+      if (i != W-6 && i != W-11) { /*ladder locations */
+        newLimit(grid, i, j);
+      }
+    }
+  }
+}
 void mediaLoad(Display *d)
 {
   loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
