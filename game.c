@@ -7,10 +7,11 @@ int main(void)
    cell grid[H][W];
    entity *player, *door1, *door2;
    int in, count=0, in_prev=0;
+   
    mediaLoad(d);
    initGrid(grid);
    /* place player */
-   player = grid[6][6].foreground = newEntity(passable,'R',6,6);
+   player = grid[10][2].foreground = newEntity(passable,'R',2,10);
    // Creates the boundary walls
    //createBoundingWalls(grid);
    door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
