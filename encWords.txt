@@ -1,11 +1,20 @@
-memory
+ram
 binary
-computer
 turing
-bus
-restart
 code
-tree
 data
 information
 pixel
+resolution
+smartphone
+microsoft
+computer
+cpu
+hard disk
+colossus
+www
+linux
+huffman
+mainboard
+windows
+elf

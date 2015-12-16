@@ -1,12 +1,20 @@
-ram
-ones and zeros
-machine
-enigma creator
-pci/people mover
-turn it off and on
-morse
-green and big
-big and growing
-facts
-screens made from these
-
+Handles memory between Hard Disk and CPU
+There are 10 kinds of people in the world. Those who understand this, and those who don't.
+The Imitation Game
+All programmes are made of this
+A collection of facts and statistics.
+Collection of data
+Screens are made of this!
+How many pixels there are in the screen.
+Think of it as a computer in your hand.
+Window operating system is made by this company.
+The word is originated from a latin word, with the meaning "To calculate"
+This is the brain of the computer.
+This has the biggest memory size in the computer
+This was the first modern computer in history, created by Alan Turing.
+Hello World!
+The operating system open to all
+One of the earliest coding algorithm designed to compress large data.
+Another name for this part of the computer is called the "Motherboard"
+The most commonly used operating system
+Legolas, Erwin, Tauriel.. You know them!
