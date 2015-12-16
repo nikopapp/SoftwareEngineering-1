@@ -22,7 +22,8 @@ int main(void)
       }
     }
   }
-
+    newLimit(grid, 7, H-5);
+    newLimit(grid, 12, H-9);
   door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
   door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
 
