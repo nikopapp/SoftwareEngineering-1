@@ -17,7 +17,6 @@ struct display {
     //declare the music file
     Mix_Music *music;
     Mix_Chunk *zap;
-    TTF_Font *font;
 };
 
 /* Font stuff */

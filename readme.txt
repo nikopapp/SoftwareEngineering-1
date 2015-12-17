@@ -18,3 +18,8 @@ will open.
 Other keys:
 Space - Action key: press buttons, switches and so on.
 Esc   - Quit the game.
+
+Libraries needed:
+SDL2
+SDL2 image
+SDL2 mixer

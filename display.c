@@ -14,7 +14,7 @@ Display *newDisplay()
       Mix_GetError() );
       return(0);
     }
-    d->font=TTF_OpenFont("files/Verano.otf", 20);
+
     Neill_SDL_ReadFont(fontdata,FONTNAME);
     d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
                 SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
@@ -44,6 +44,7 @@ Display *newDisplay()
       return d;
 }
 
+//Credit to Ian Holyer for the drawFrame and fail function
 void fail(char *s) {
     fprintf(stderr, "%s: %s\n", s, SDL_GetError());
     SDL_Quit();
@@ -51,7 +52,6 @@ void fail(char *s) {
 }
 
 // Update the window on screen, after delaying for the (rest of) the given time.
-//IAN HOLYER stuff
 void drawFrame(Display *d, int milliseconds) {
     int t = milliseconds - SDL_GetTicks() % milliseconds;
     SDL_Delay(t);
@@ -155,7 +155,7 @@ void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int
 // tile.y = 0;
 // dest.x = ox - 10;
 // dest.y = oy - 16;
-// this is for a screen around a string
+// this is for a screen around a string - currently unused
 
 void drawScreen(Display *d, int width, int height, int x, int y)
 {
@@ -171,6 +171,7 @@ void drawScreen(Display *d, int width, int height, int x, int y)
   SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
 }
 
+//Credit to Neill Campbell for the .fnt file reading function
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
 {
 
