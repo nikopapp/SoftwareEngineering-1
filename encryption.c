@@ -50,10 +50,12 @@ int encryption(Display *d)
     }
     if (in == 9) { /*checks for spacebar */
       if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
-          enc_shiftLetter(grid, player->y, player->x);
+          // enc_shiftLetter(grid, player->y, player->x);#
+        enc_updateLetter(grid, player->y, player->x);  
         }
       else if(grid[player->y][player->x].background->type == '^') {
-        enc_shiftLetter(grid, player->y, player->x);
+        // enc_shiftLetter(grid, player->y, player->x);
+        enc_updateLetter(grid, player->y, player->x);
       }
       else if(grid[player->y][player->x].background->type == '>') {
         enc_changeRow(shuffle_word, word_size, -1);
