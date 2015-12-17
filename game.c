@@ -7,6 +7,8 @@ int main(void)
   cell grid[H][W];
   entity *player, *door1, *door2;
   int in, count=0, in_prev=0;
+  srand(time(NULL));
+
 
   mediaLoad(d);
   initGrid(grid);
@@ -39,16 +41,16 @@ int main(void)
     drawEntities(d, grid);
     drawFrame(d, REFRESH_RATE);
     in=input(d);
-    if( (in > 0) && (in < 5) ){
-      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
-      printGrid(grid);
-      count = next_movment(count, &in_prev, in);
-      updatePlayerfacing(player,(direction)in, count);
-    }
-    freeEntityMem(grid);  /* free memory */
-    closeDisplay(d);
-    printf("\n\n");
-    return(0);
+    move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+    printGrid(grid);
+    count = next_movment(count, &in_prev, in);
+    updatePlayerfacing(player,(direction)in, count);
+  }
+
+  freeEntityMem(grid);  /* free memory */
+  closeDisplay(d);
+  printf("\n\n");
+  return(0);
 }
 void makeBoundariesLobby(cell grid[H][W])
 {

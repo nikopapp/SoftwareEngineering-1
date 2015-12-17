@@ -9,7 +9,6 @@ int encryption(Display *d)
   cell grid[H][W];
   entity *player, *door1, *door2;
   initGrid(grid);
-  srand(time(NULL));
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
   word_size = strlen(rand_word);
