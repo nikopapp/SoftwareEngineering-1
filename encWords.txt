@@ -10,7 +10,7 @@ smartphone
 microsoft
 computer
 cpu
-hard disk
+harddisk
 colossus
 www
 linux
