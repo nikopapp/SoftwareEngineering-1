@@ -35,11 +35,11 @@ int bgame (Display *d)
     in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
-        /* free memory */
+      freeEntityMem(grid);  /* free memory */
       return 0;
     }
     if (grid[player->y][player->x].background == door2) {
-        /* free memory */
+      freeEntityMem(grid);  /* free memory */
       return 0;
     }
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
@@ -75,6 +75,7 @@ int bgame (Display *d)
     bgameDraw(d, grid, instruction, res);
 
   }
+  freeEntityMem(grid);
   return 0;
 }
 
