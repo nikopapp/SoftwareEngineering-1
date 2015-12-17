@@ -41,16 +41,14 @@ int main(void)
     in=input(d);
     if( (in > 0) && (in < 5) ){
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+      printGrid(grid);
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player,(direction)in, count);
     }
-    printGrid(grid);
-    count = next_movment(count, &in_prev, in);
-    updatePlayerfacing(player,(direction)in, count);
-  }
-
-  freeEntityMem(grid);  /* free memory */
-  closeDisplay(d);
-  printf("\n\n");
-  return(0);
+    freeEntityMem(grid);  /* free memory */
+    closeDisplay(d);
+    printf("\n\n");
+    return(0);
 }
 void makeBoundariesLobby(cell grid[H][W])
 {
