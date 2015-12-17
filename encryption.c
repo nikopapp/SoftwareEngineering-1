@@ -51,32 +51,38 @@ int encryption(Display *d)
     if (in == 9) { /*checks for spacebar */
       if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
           // enc_shiftLetter(grid, player->y, player->x);#
-        enc_updateLetter(grid, player->y, player->x);  
+        enc_updateLetter(grid, player->y, player->x);
+        Mix_PlayChannel( -1, d->zap, 0 );
         }
       else if(grid[player->y][player->x].background->type == '^') {
         // enc_shiftLetter(grid, player->y, player->x);
         enc_updateLetter(grid, player->y, player->x);
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
       else if(grid[player->y][player->x].background->type == '>') {
         enc_changeRow(shuffle_word, word_size, -1);
         for (j=0; j<word_size; j++){
           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
         }
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
       else if(grid[player->y][player->x].background->type == '<') {
         enc_changeRow(shuffle_word, word_size, 1);
         for (j=0; j<word_size; j++){
           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
         }
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
       else if(grid[player->y-1][player->x].background->type == 'E') {// "E" is now the reset letter
         for (i=0; i<word_size; i++){
           enc_newLetter(grid, xinit+i, yinit, original_word[i]);
         }
         resetsent = 1;
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
       else if(grid[player->y-1][player->x].background->type == '&') {// "&" is now the hint symbol
         printHint=1;
+        Mix_PlayChannel( -1, d->zap, 0 );
       }
     }
     enc_updateWord(grid, yinit, xinit, shuffle_word);
