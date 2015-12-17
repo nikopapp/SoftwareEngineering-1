@@ -8,11 +8,8 @@ int encryption(Display *d)
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player, *door1, *door2;
-
-  printf("enc_linecount= %d\n", encLineCount());
   initGrid(grid);
   srand(time(NULL));
-
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
   word_size = strlen(rand_word);
@@ -39,8 +36,10 @@ int encryption(Display *d)
   fillGrid(grid);   /* layer of floortiles */
 
   encGameDraw(d, grid, printHint, hintWord, resetsent);
+
   /* MAIN LOOP */
   while(!d->finished){
+    printf("line = %d\n", hintNum);
 
     in=input(d);
     resetsent = 0;
@@ -74,9 +73,6 @@ int encryption(Display *d)
           enc_newLetter(grid, xinit+i, yinit, original_word[i]);
         }
         resetsent = 1;
-         // for (j=0; reset[j]!='\0'; j++){
-            // grid[2][j+5].background = newEntity(passable, reset[j], j+5, 2);
-         // }
       }
       else if(grid[player->y-1][player->x].background->type == '&') {// "&" is now the hint symbol
         printHint=1;
@@ -92,21 +88,18 @@ int encryption(Display *d)
     printGrid(grid);
     encGameDraw(d, grid, printHint, hintWord, resetsent);
     enc_print_ascii(grid[yinit][player->x].background->type);
-
-    if (grid[player->y][player->x].background == door1) {
-      freeEntityMem(grid);  /* free memory */
-      return 0;
-    }
-    if (grid[player->y][player->x].background == door2) {
+    if (grid[player->y][player->x].background == door1|| grid[player->y][player->x].background == door2) {
       freeEntityMem(grid);  /* free memory */
       return 0;
     }
     cnt++;
   }
-
   freeEntityMem(grid);  /* free memory */
   return 0;
 }
+
+
+
 void makeBoundariesEncryption(cell grid[H][W])
 {
   int i;
@@ -116,9 +109,9 @@ void makeBoundariesEncryption(cell grid[H][W])
     }
   }
 }
+
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
-
   drawBackground(d,3);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
@@ -181,7 +174,7 @@ int encLineCount(void){
   FILE *file=fopen("encWords.txt", "r");
   char str[LENGTH];
   int cnt=0;
-  while(fgets(str, 30, file)!=NULL){
+  while(fgets(str, LENGTH, file)!=NULL){
     printf("fgst\n");
     cnt++;
   }
