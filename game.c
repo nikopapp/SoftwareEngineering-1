@@ -85,7 +85,7 @@ void mediaLoad(Display *d)
 
   loadPhoto(d, "images/Red_Elf_Front.bmp", P_DOWN1);
   loadPhoto(d, "images/Red_Elf_Front2.bmp", P_DOWN2);
-  loadPhoto(d, "images/Red_Elf_Front3.bmp", p_DOWN3);
+  loadPhoto(d, "images/Red_Elf_Front3.bmp", P_DOWN3);
 
   loadPhoto(d, "images/Red_Elf_Back.bmp", P_UP1);
   loadPhoto(d, "images/Red_Elf_Back2.bmp", P_UP2);
@@ -102,7 +102,7 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/RArrow.bmp", RARROW);
   loadPhoto(d, "images/LArrow.bmp", LARROW);
   loadPhoto(d, "images/DArrow.bmp", DARROW);
-  loadPhoto(d, "images/UArrow.bmp", UPARROW);
+  loadPhoto(d, "images/UArrow.bmp", UARROW);
   
   loadPhoto(d, "images/chars/a.bmp", 'a');
   loadPhoto(d, "images/chars/b.bmp", 'b');

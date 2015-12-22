@@ -11,7 +11,7 @@ int bgame (Display *d)
 
   initGrid(grid);
   /* place player */
-  player = grid[8][1].foreground = newEntity(passable,P_RIGHT1,1,8);
+  player = grid[8][1].foreground = newEntity(passable,P_R1,1,8);
   /* 8 lightbytes and 8 switches */
   for (i = BYTE_L, j = (W / 2) - (BYTE_L / 2); i > 0; i--, j++) {
     byte[i-1] = newBulb(grid, j, 0);

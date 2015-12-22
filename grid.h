@@ -1,6 +1,6 @@
 #include "base.h"
 
-typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4, SPACE = 9 } direction;
+typedef enum direction { LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4 } direction;
 typedef enum layer { background, foreground } layer;
 
 struct cell {

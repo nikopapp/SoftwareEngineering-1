@@ -47,7 +47,7 @@ int Nikos_SDL_Events(Display *d, int *p)
             case SDLK_SPACE:
               *p=9;
               printf("input output%d\n",*p);
-              return(SPACE);
+              return(9);
               break;
             case SDLK_ESCAPE:
               d->finished = 1;
