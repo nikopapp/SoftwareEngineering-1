@@ -99,7 +99,7 @@ entity *newBulb(cell grid[H][W], int x, int y)
 {
   grid[y][x].background = newEntity(impassable, OFFLIGHT,x,y);
 
-  grid[y+7][x].background = newEntity(impassable,ONLIGHT,x,y+7);
+  grid[y+7][x].background = newEntity(impassable,OFFSWITCH,x,y+7);
   grid[y+7][x].background->pointsto = grid[y][x].background;
 
   return grid[y][x].background;
