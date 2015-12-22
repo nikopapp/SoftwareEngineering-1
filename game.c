@@ -5,7 +5,7 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int in, count=0, in_prev=0;
+  int in, count = 0, in_prev = 0;
   srand(time(NULL));
 
 
@@ -51,6 +51,7 @@ int main(void)
   printf("\n\n");
   return(0);
 }
+
 void makeBoundariesLobby(cell grid[H][W])
 {
   int i,j;
@@ -67,7 +68,11 @@ void makeBoundariesLobby(cell grid[H][W])
 }
 void mediaLoad(Display *d)
 {
-  loadPhoto(d, "files/board.png" , BG_LOBBY); /* use numbers for backgrounds.  these are unused ascii chars */
+/* the enum for the entity type values is in base.h 
+ * wall tiles and some types of door have no image, 
+ * but are displayed in terminal for debugging. */
+   
+  loadPhoto(d, "files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
   loadPhoto(d, "files/room0.png" , BG_BIN);
   loadPhoto(d, "files/room1.png" , BG_ENC);
 
