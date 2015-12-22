@@ -3,7 +3,7 @@
 #include "entity.h"
 
 #define MILLISECONDDELAY     20
-#define BULBHEIGHT           364
+#define BULBHEIGHT           364 //height of bulb images
 
 struct display {
     SDL_bool finished;
@@ -52,5 +52,3 @@ void fail(char *s);
 void myDelay(int ms);
 void closeDisplay(Display *d);
 
-//draws a tv screen
-void drawScreen(Display *d, int width, int height, int x, int y);

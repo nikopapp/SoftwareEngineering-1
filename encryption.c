@@ -19,19 +19,19 @@ int encryption(Display *d)
   strcpy(shuffle_word, rand_word);
   enc_shufle(shuffle_word, word_size);
   strcpy(original_word, shuffle_word);
-  player = grid[8][3].foreground = newEntity(passable,'R',3,8);
-  door1 = grid[7][W-4].background = newEntity(impassable,'*',W-4,7);
-  door2 = grid[7][3].background = newEntity(impassable,'*',3,7);
+  player = grid[8][3].foreground = newEntity(passable,P_R1,3,8);
+  door1 = grid[7][W-4].background = newEntity(impassable,DOORCLOSED,W-4,7);
+  door2 = grid[7][3].background = newEntity(impassable,DOORCLOSED,3,7);
 
   /* place the word in the grid */
   for (j=0; j<word_size; j++){
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
   }
   makeBoundariesEncryption(grid);
-  grid[yinit][xinit-1].background = newEntity(passable,'<',xinit-1,yinit);
-  grid[yinit][xinit + word_size].background = newEntity(passable,'>',xinit + word_size, yinit);
-  grid[7][1].background = newEntity(impassable,'E',7,1);
-  grid[7][16].background = newEntity(impassable,'&',7,16);
+  grid[yinit][xinit-1].background = newEntity(passable, LARROW ,xinit-1,yinit);
+  grid[yinit][xinit + word_size].background = newEntity(passable, RARROW ,xinit + word_size, yinit);
+  grid[7][1].background = newEntity(impassable, RESETBUTTON,7,1);
+  grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid);   /* layer of floortiles */
 
   encGameDraw(d, grid, printHint, hintWord, resetsent);
@@ -49,47 +49,47 @@ int encryption(Display *d)
       updatePlayerfacing(player,(direction)in, count);
     }
     if (in == 9) { /*checks for spacebar */
-      if(grid[player->y][player->x].background->type == '$') {// "$" is now the down arrow symbol
-          // enc_shiftLetter(grid, player->y, player->x);#
+      if(grid[player->y][player->x].background->type == DARROW) {// "$" is now the down arrow symbol
+          // enc_shiftLetter(grid, player->y, player->x);
         enc_updateLetter(grid, player->y, player->x);
         Mix_PlayChannel( -1, d->zap, 0 );
         }
-      else if(grid[player->y][player->x].background->type == '^') {
+      else if(grid[player->y][player->x].background->type == UARROW) {
         // enc_shiftLetter(grid, player->y, player->x);
         enc_updateLetter(grid, player->y, player->x);
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y][player->x].background->type == '>') {
+      else if(grid[player->y][player->x].background->type == RARROW) {
         enc_changeRow(shuffle_word, word_size, -1);
         for (j=0; j<word_size; j++){
           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
         }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y][player->x].background->type == '<') {
+      else if(grid[player->y][player->x].background->type == LARROW) {
         enc_changeRow(shuffle_word, word_size, 1);
         for (j=0; j<word_size; j++){
           enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
         }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == 'E') {// "E" is now the reset letter
+      else if(grid[player->y-1][player->x].background->type == RESETBUTTON) {// "E" is now the reset letter
         for (i=0; i<word_size; i++){
           enc_newLetter(grid, xinit+i, yinit, original_word[i]);
         }
         resetsent = 1;
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == '&') {// "&" is now the hint symbol
+      else if(grid[player->y-1][player->x].background->type == HINTBUTTON) {// "&" is now the hint symbol
         printHint=1;
         Mix_PlayChannel( -1, d->zap, 0 );
       }
     }
     enc_updateWord(grid, yinit, xinit, shuffle_word);
     if(strcmp(shuffle_word, rand_word)==0){
-      changeEntity(door1,'%');
+      changeEntity(door1, DOOROPEN);
       changePassable(door1,passable);
-      changeEntity(door2,'%');
+      changeEntity(door2, DOOROPEN);
       changePassable(door2,passable);
     }
     printGrid(grid);
@@ -160,7 +160,7 @@ int enc_getWord(char str[LENGTH]){
   for(cnt=0; cnt<=line; cnt++){
   fgets(str, LENGTH, file);
     }
-  str[strcspn(str, "\n")]='\0';
+  str[strcspn(str, "\n")]='\0'; //removes the newline
   return cnt;
 }
 
@@ -207,10 +207,10 @@ void enc_shiftLetter(cell grid[H][W], int y, int x){
 
 void enc_updateLetter(cell grid[H][W], int y, int x){
 
-   if (grid[y][x].background->type == '$') {// cause 'v' may be part of the word
+   if (grid[y][x].background->type == DARROW) {// cause 'v' may be part of the word
     enc_letterDown(grid[y][x].background->pointsto);
    }
-   if (grid[y][x].background->type == '^'){
+   if (grid[y][x].background->type == UARROW){
     enc_letterUp(grid[y][x].background->pointsto);
    }
 }
@@ -243,9 +243,9 @@ void enc_letterUp(entity *e){
 
 void enc_newLetter(cell grid[H][W], int x, int y, char c){
   grid[y][x].background = newEntity(passable, c, x, y);
-  grid[y-1][x].background = newEntity(passable,'^',x,y-1);
+  grid[y-1][x].background = newEntity(passable,UARROW ,x,y-1);
   grid[y-1][x].background->pointsto = grid[y][x].background;
-  grid[y+1][x].background = newEntity(passable,'$',x,y-1);
+  grid[y+1][x].background = newEntity(passable,DARROW ,x,y-1);
   grid[y+1][x].background->pointsto = grid[y][x].background;
 }
 

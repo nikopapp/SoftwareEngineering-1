@@ -7,41 +7,42 @@ Display *newDisplay()
   if (r < 0){
     fail("Unable to initialize SDL");
   }
-   /*Initialize SDL_mixer*/
-    r= Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
-    if(r < 0 ) {
-      printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n",
-      Mix_GetError() );
-      return(0);
-    }
+  
+  /*Initialize SDL_mixer*/
+  r= Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
+  if(r < 0 ) {
+    printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n",
+    Mix_GetError() );
+    return(0);
+  }
 
-    Neill_SDL_ReadFont(fontdata,FONTNAME);
-    d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
-                SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
-    if (d->win == NULL){
-      fail("Unable to initialize SDL Window");
-    }
-    d->renderer = SDL_CreateRenderer(d->win, -1, 0);
-    SDL_SetRenderDrawColor(d->renderer, 0, 0, 0, 0);
-    SDL_RenderClear(d->renderer);
+  Neill_SDL_ReadFont(fontdata,FONTNAME);
+  d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
+              SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
+  if (d->win == NULL){
+    fail("Unable to initialize SDL Window");
+  }
+  d->renderer = SDL_CreateRenderer(d->win, -1, 0);
+  SDL_SetRenderDrawColor(d->renderer, 0, 0, 0, 0);
+  SDL_RenderClear(d->renderer);
 
-    /*MIXER-START*/
-    d->zap = Mix_LoadWAV("files/click.wav");
-    Mix_VolumeChunk(d->zap, 15);
-    if (d->zap==NULL){
-      fail("music not good");
-    }
-    Mix_VolumeMusic(40);
-    d->music = Mix_LoadMUS("files/elevator.mp3");
-    if (d->music==NULL){
-      fail("music not good");
-    }
-     //If there is no music playing
-     if( Mix_PlayingMusic() == 0 ) {
-     //Play the music
-     Mix_PlayMusic( d->music, -1.0 ); }
-     /*MIXER-END*/
-      return d;
+  /*MIXER-START*/
+  d->zap = Mix_LoadWAV("files/click.wav");
+  Mix_VolumeChunk(d->zap, 15);
+  if (d->zap==NULL){
+    fail("music not good");
+  }
+  Mix_VolumeMusic(40);
+  d->music = Mix_LoadMUS("files/elevator.mp3");
+  if (d->music==NULL){
+    fail("music not good");
+  }
+  //If there is no music playing
+  if( Mix_PlayingMusic() == 0 ) {
+  //Play the music
+  Mix_PlayMusic( d->music, -1.0 ); }
+  /*MIXER-END*/
+  return d;
 }
 
 //Credit to Ian Holyer for the drawFrame and fail function
@@ -83,11 +84,13 @@ void myDelay(int ms)
 {
   SDL_Delay(ms);
 }
+
 //void drawText()
 void drawBackground(Display *d,char c)
 {
   SDL_RenderCopy(d->renderer, d->images[(int)c],NULL, NULL);
 }
+
 void drawEntities(Display *d, cell grid[H][W])
 {
   SDL_Rect tile,dest;
@@ -100,8 +103,8 @@ void drawEntities(Display *d, cell grid[H][W])
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       if (grid[HCnt][WCnt].background != NULL
-      && (grid[HCnt][WCnt].background->type == '0'
-      || grid[HCnt][WCnt].background->type == '1') ) {
+      && (grid[HCnt][WCnt].background->type == OFFLIGHT
+      || grid[HCnt][WCnt].background->type == ONLIGHT) ) {
         tile.h = dest.h = BULBHEIGHT;
       } /* custom rect for lightbulbs */
       else {
@@ -124,6 +127,7 @@ void drawEntities(Display *d, cell grid[H][W])
     }
   }
 }
+
 void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
   int i = 0, j=0 ,wrdcnt=0;
@@ -147,28 +151,6 @@ void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int
   }while(str[i]);
 
 
-}
-
-// tile.w = dest.w = FNTWIDTH * strlen(str) + 80;
-// tile.h = dest.h = FNTHEIGHT + 16;
-// tile.x = 0;
-// tile.y = 0;
-// dest.x = ox - 10;
-// dest.y = oy - 16;
-// this is for a screen around a string - currently unused
-
-void drawScreen(Display *d, int width, int height, int x, int y)
-{
-  SDL_Rect tile,dest;
-  tile.w = dest.w = width;
-  tile.h = dest.h = height;
-  tile.x = 0;
-  tile.y = 0;
-
-  dest.x = x;
-  dest.y = y;
-
-  SDL_RenderCopy(d->renderer, d->images[2], &tile, &dest);
 }
 
 //Credit to Neill Campbell for the .fnt file reading function
@@ -206,12 +188,14 @@ void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
    fclose(fp);
 
 }
+
 void setColour(Display *d, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
 
    SDL_SetRenderDrawColor(d->renderer, r, g, b, a);
 
 }
+
 void closeDisplay(Display *d)
 {
   //Stop the music

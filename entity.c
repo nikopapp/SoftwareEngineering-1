@@ -36,12 +36,12 @@ void updateEntities(cell grid[H][W])
       if (grid[HCnt][WCnt].background != NULL /*is there an object */
       &&  grid[HCnt][WCnt].background->pointsto != NULL) { /*is switch connected */
         /*is the object an on switch */
-        if (grid[HCnt][WCnt].background->type == '+') {
-          changeEntity(grid[HCnt][WCnt].background->pointsto,'1');
+        if (grid[HCnt][WCnt].background->type == ONSWITCH) {
+          changeEntity(grid[HCnt][WCnt].background->pointsto, ONLIGHT);
         }
         /*is the object an off switch */
-        if (grid[HCnt][WCnt].background->type == '-') {
-          changeEntity(grid[HCnt][WCnt].background->pointsto,'0');
+        if (grid[HCnt][WCnt].background->type == OFFSWITCH) {
+          changeEntity(grid[HCnt][WCnt].background->pointsto, OFFLIGHT);
         }
       }
     }
@@ -76,60 +76,60 @@ int isEdge(int x, int y, direction dir) {
 
   printf("x: %d y: %d", x, y);
   if ( x == (W - 1)&& dir == RIGHT ) {
-printf("x>edge\n");
+    printf("x>edge\n");
     return 1;
   }
   else if ( x == 0 && dir == LEFT) {
-printf("x<0\n");
+    printf("x<0\n");
     return 1;
   }
   else if ( y == (H - 1) && dir == DOWN) {
     printf("y>h-1\n");
     return 1;
   }
-    else if ( y == 0 && dir == UP) {
-printf("y<0\n");
+  else if ( y == 0 && dir == UP) {
+    printf("y<0\n");
     return 1;
   }
   else{
-  return 0;
+    return 0;
   }
 }
 
 int next_movment(int count, int *in_prev, int in){
 
-   if( in == *in_prev){// same arrow key
-      count++;
-   }// we are going to use 'count' for moving animation inside the updatePlayerfacing function
-   else if( in != *in_prev ){// different arrow key
-      *in_prev = in;
-      count = 0;
-   }
-   return count;
+  if( in == *in_prev){// same arrow key
+    count++;
+  }// we are going to use 'count' for moving animation inside the updatePlayerfacing function
+  else if( in != *in_prev ){// different arrow key
+    *in_prev = in;
+    count = 0;
+  }
+  return count;
 }
 
 void updatePlayerfacing(entity *player, direction in, int count)
 {
   switch(in){
     case LEFT:
-       if (count % 3 == 0){  changeEntity(player,'L'); }
-       if (count % 3 == 1){  changeEntity(player,'{'); }
-       if (count % 3 == 2){  changeEntity(player,'('); }
+       if (count % 3 == 0){  changeEntity(player,P_L1); }
+       if (count % 3 == 1){  changeEntity(player,P_L2); }
+       if (count % 3 == 2){  changeEntity(player,P_L3); }
        break;
     case RIGHT:
-      if (count % 3 == 0){  changeEntity(player,'R'); }
-      if (count % 3 == 1){  changeEntity(player,'}'); }
-      if (count % 3 == 2){  changeEntity(player,')'); }
+      if (count % 3 == 0){  changeEntity(player,P_R1); }
+      if (count % 3 == 1){  changeEntity(player,P_R2); }
+      if (count % 3 == 2){  changeEntity(player,P_R3); }
       break;
     case UP:
-       if (count % 3 == 0){  changeEntity(player,'U'); }
-       if (count % 3 == 1){  changeEntity(player,';'); }
-       if (count % 3 == 2){  changeEntity(player,':'); }
+       if (count % 3 == 0){  changeEntity(player,P_UP1); }
+       if (count % 3 == 1){  changeEntity(player,P_UP2); }
+       if (count % 3 == 2){  changeEntity(player,P_UP3); }
        break;
     case DOWN:
-       if (count % 3 == 0){  changeEntity(player,'D'); }
-       if (count % 3 == 1){  changeEntity(player,'/'); }
-       if (count % 3 == 2){  changeEntity(player,'?'); }
+       if (count % 3 == 0){  changeEntity(player,P_DOWN1); }
+       if (count % 3 == 1){  changeEntity(player,P_DOWN1); }
+       if (count % 3 == 2){  changeEntity(player,P_DOWN1); }
        break;
   }
 }
@@ -157,7 +157,7 @@ void fillGrid(cell grid[H][W])
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       if (grid[HCnt][WCnt].background == NULL) {
-        grid[HCnt][WCnt].background = newEntity(0,'.',WCnt,HCnt);
+        grid[HCnt][WCnt].background = newEntity(passable,FLOOR ,WCnt,HCnt);
       }
     }
   }
@@ -181,33 +181,8 @@ void printGrid(cell grid[H][W])
   }
 }
 
-
-entity *newWall(cell grid[H][W], int x, int y)
-{
-  grid[y][x].background = newEntity(impassable,'#',x,y);
-  return grid[y][x].background;
-}
 entity *newLimit(cell grid[H][W], int x, int y)
 {
-  grid[y][x].background = newEntity(impassable,'.',x,y);
+  grid[y][x].background = newEntity(impassable,WALL,x,y);
   return grid[y][x].background;
-}
-
-
-void createBoundingWalls(cell grid[H][W])
-{
-  int i;
-  // Outside walls
-  for (i = 0; i < W; i++) {
-    newWall(grid, i, 0);
-  }
-  for (i = 0; i < W; i++) {
-    newWall(grid, i, H-1);
-  }
-  for (i = 1; i < H-1; i++) {
-    newWall(grid, 0, i);
-  }
-  for (i = 1; i < H-1; i++) {
-    newWall(grid, W-1, i);
-  }
 }

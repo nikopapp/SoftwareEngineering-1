@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "game.h"
 
 int main(void)
@@ -13,12 +12,12 @@ int main(void)
   mediaLoad(d);
   initGrid(grid);
    /* place player */
-  player = grid[10][2].foreground = newEntity(passable,'R',2,10);
+  player = grid[10][2].foreground = newEntity(passable,P_R1 ,2,10);
    // Creates the boundary walls
   makeBoundariesLobby(grid);
 
-  door1 = grid[4][W-6].background = newEntity(passable,'.',W-6,4);
-  door2 = grid[7][W-11].background = newEntity(passable,'.',W-11,7);
+  door1 = grid[4][W-6].background = newEntity(passable,DOORINVIS, W-6,4);
+  door2 = grid[7][W-11].background = newEntity(passable,DOORINVIS ,W-11,7);
 
   /* layer of floortiles -
   must be the last entity placement*/
@@ -30,14 +29,14 @@ int main(void)
     if (grid[player->y][player->x].background == door1) {
       bgame(d);
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D');
+      changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2) {
       encryption(d);
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
-      changeEntity(player,'D');
+      changeEntity(player, P_DOWN1);
     }
-    drawBackground(d,0);
+    drawBackground(d,BG_LOBBY);
     drawEntities(d, grid);
     drawFrame(d, REFRESH_RATE);
     in=input(d);
@@ -68,40 +67,43 @@ void makeBoundariesLobby(cell grid[H][W])
 }
 void mediaLoad(Display *d)
 {
-  loadPhoto(d, "files/board.png" , 0); /* use numbers for backgrounds.  these are unused ascii chars */
-  loadPhoto(d, "files/room0.png" , 1);
-  loadPhoto(d, "images/screen.png" , 2);
-  loadPhoto(d, "files/room1.png" , 3);
+  loadPhoto(d, "files/board.png" , BG_LOBBY); /* use numbers for backgrounds.  these are unused ascii chars */
+  loadPhoto(d, "files/room0.png" , BG_BIN);
+  loadPhoto(d, "files/room1.png" , BG_ENC);
 
-  loadPhoto(d, "images/floor.bmp", '.');
-  loadPhoto(d, "images/offlight.png", '0');
-  loadPhoto(d, "images/onlight.png", '1');
-  loadPhoto(d, "images/offswitch.bmp", '-');
-  loadPhoto(d, "images/onswitch.bmp", '+');
+  loadPhoto(d, "images/floor.bmp", FLOOR);
+  loadPhoto(d, "images/offlight.png", OFFLIGHT);
+  loadPhoto(d, "images/onlight.png", ONLIGHT);
+  loadPhoto(d, "images/offswitch.bmp", OFFSWITCH);
+  loadPhoto(d, "images/onswitch.bmp", ONSWITCH);
 
-  loadPhoto(d, "images/dooropen.bmp", '%');
-  loadPhoto(d, "images/doorclosed.bmp", '*');
+  loadPhoto(d, "images/dooropen.bmp", DOOROPEN);
+  loadPhoto(d, "images/doorclosed.bmp", DOORCLOSED);
 
-  loadPhoto(d, "images/blue_un.bmp", '&');
-  loadPhoto(d, "images/red_un.bmp", 'E');
-  loadPhoto(d, "images/wall.bmp", '#');
+  loadPhoto(d, "images/blue_un.bmp", HINTBUTTON);
+  loadPhoto(d, "images/red_un.bmp", RESETBUTTON);
 
-  loadPhoto(d, "images/Red_Elf_Front.bmp", 'D');
-  loadPhoto(d, "images/Red_Elf_Front2.bmp", '/');
-  loadPhoto(d, "images/Red_Elf_Front3.bmp", '?');
+  loadPhoto(d, "images/Red_Elf_Front.bmp", P_DOWN1);
+  loadPhoto(d, "images/Red_Elf_Front2.bmp", P_DOWN2);
+  loadPhoto(d, "images/Red_Elf_Front3.bmp", p_DOWN3);
 
-  loadPhoto(d, "images/Red_Elf_Back.bmp", 'U');
-  loadPhoto(d, "images/Red_Elf_Back2.bmp", ';');
-  loadPhoto(d, "images/Red_Elf_Back3.bmp", ':');
+  loadPhoto(d, "images/Red_Elf_Back.bmp", P_UP1);
+  loadPhoto(d, "images/Red_Elf_Back2.bmp", P_UP2);
+  loadPhoto(d, "images/Red_Elf_Back3.bmp", P_UP3);
 
-  loadPhoto(d, "images/Red_Elf_Left.bmp", 'L');
-  loadPhoto(d, "images/Red_Elf_Left2.bmp", '{');
-  loadPhoto(d, "images/Red_Elf_Left3.bmp", '(');
+  loadPhoto(d, "images/Red_Elf_Left.bmp", P_L1);
+  loadPhoto(d, "images/Red_Elf_Left2.bmp", P_L2);
+  loadPhoto(d, "images/Red_Elf_Left3.bmp", P_L3);
 
-  loadPhoto(d, "images/Red_Elf_Right.bmp", 'R');
-  loadPhoto(d, "images/Red_Elf_Right2.bmp", '}');
-  loadPhoto(d, "images/Red_Elf_Right3.bmp", ')');
+  loadPhoto(d, "images/Red_Elf_Right.bmp", P_R1);
+  loadPhoto(d, "images/Red_Elf_Right2.bmp", P_R2);
+  loadPhoto(d, "images/Red_Elf_Right3.bmp", P_R3);
 
+  loadPhoto(d, "images/RArrow.bmp", RARROW);
+  loadPhoto(d, "images/LArrow.bmp", LARROW);
+  loadPhoto(d, "images/DArrow.bmp", DARROW);
+  loadPhoto(d, "images/UArrow.bmp", UPARROW);
+  
   loadPhoto(d, "images/chars/a.bmp", 'a');
   loadPhoto(d, "images/chars/b.bmp", 'b');
   loadPhoto(d, "images/chars/c.bmp", 'c');
@@ -128,9 +130,6 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/chars/x.bmp", 'x');
   loadPhoto(d, "images/chars/y.bmp", 'y');
   loadPhoto(d, "images/chars/z.bmp", 'z');
-  loadPhoto(d, "images/RArrow.bmp", '>');
-  loadPhoto(d, "images/LArrow.bmp", '<');
-  loadPhoto(d, "images/DArrow.bmp", '$');
-  loadPhoto(d, "images/UArrow.bmp", '^');
+
 
 }
