@@ -97,7 +97,9 @@ void mediaLoad(Display *d)
 
   loadPhoto(d, "images/blue_un.png", HINTBUTTON);
   loadPhoto(d, "images/red_un.png", RESETBUTTON);
-
+  loadPhoto(d, "images/blue_pr.png", HBUTTON_PR);
+  loadPhoto(d, "images/red_pr.png", RBUTTON_PR);
+  
   loadPhoto(d, "images/Red_Elf_Front.bmp", P_DOWN1);
   loadPhoto(d, "images/Red_Elf_Front2.bmp", P_DOWN2);
   loadPhoto(d, "images/Red_Elf_Front3.bmp", P_DOWN3);

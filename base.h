@@ -33,6 +33,8 @@ typedef enum etype {
   DOORINVIS   = 'X',
   RESETBUTTON = 'E',
   HINTBUTTON  = '&',
+  RBUTTON_PR  = '@',
+  HBUTTON_PR  = 'H',
   WALL        = '#',
   RARROW      = '>',
   LARROW      = '<',

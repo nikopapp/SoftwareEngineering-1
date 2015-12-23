@@ -7,7 +7,7 @@ int encryption(Display *d)
   int i, word_size, j, yinit = 9, xinit, cnt=0, in, printHint=0, resetsent = 0;
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
-  entity *player, *door1, *door2;
+  entity *player, *door1, *door2, *rbutton, *hbutton;
   
   initGrid(grid);
   hintNum=enc_getWord(rand_word);
@@ -31,8 +31,9 @@ int encryption(Display *d)
   makeBoundariesEncryption(grid);
   grid[yinit][xinit-1].background = newEntity(passable, LARROW ,xinit-1,yinit);
   grid[yinit][xinit + word_size].background = newEntity(passable, RARROW ,xinit + word_size, yinit);
-  grid[7][1].background = newEntity(impassable, RESETBUTTON,7,1);
-  grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
+  
+  rbutton = grid[7][1].background = newEntity(impassable, RESETBUTTON,7,1);
+  hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid);   /* layer of floortiles */
 
   encGameDraw(d, grid, printHint, hintWord, resetsent);
@@ -48,6 +49,7 @@ int encryption(Display *d)
       return 0;
     }
     resetsent = 0;
+    changeEntity(rbutton, RESETBUTTON);
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
@@ -84,10 +86,17 @@ int encryption(Display *d)
           enc_newLetter(grid, xinit+i, yinit, original_word[i]);
         }
         resetsent = 1;
+        changeEntity(rbutton, RBUTTON_PR);
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == HINTBUTTON) {
-        printHint=1;
+      else if(grid[player->y-1][player->x].background == hbutton) {
+        printHint = !printHint;
+        if (hbutton->type == HINTBUTTON) {
+          changeEntity(hbutton, HBUTTON_PR);
+        }
+        else {
+          changeEntity(hbutton, HINTBUTTON);
+        }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
     }
@@ -132,7 +141,10 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
     line += drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line, normal);
   }
   if(printHint==1){
-    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line, normal);
+    line += drawString(d, fontdata, "\nHINT:", SCRNSTARTX,
+      SCRNSTARTY + line, normal);
+    drawString(d, fontdata, hintWord, SCRNSTARTX, 
+      SCRNSTARTY + line, normal);
   }
   drawString(d, fontdata, "EXIT", 175, 420, normal);
   drawString(d, fontdata, "EXIT", 875, 420, normal);

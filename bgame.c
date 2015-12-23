@@ -4,7 +4,7 @@
 int bgame (Display *d)
 {
   cell grid[H][W];
-  entity *player, *byte[BYTE_L],  *door1, *door2;
+  entity *player, *byte[BYTE_L],  *door1, *hbutton;
   int in, i, j, in_prev = 0, count = 0;
   int goal, res = 0, printHint = 0;
 
@@ -20,7 +20,7 @@ int bgame (Display *d)
   makeBoundariesBinary(grid);
   door1 = grid[7][3].background = newEntity(impassable,DOORCLOSED,7,3);
   // door2 = grid[7][3].background = newEntity(impassable,DOORCLOSED,0,8);
-  grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
+  hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid); /* layer of floortiles */
 
   goal = rand()%255;
@@ -61,8 +61,14 @@ int bgame (Display *d)
         printGrid(grid);
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == HINTBUTTON) {
+      else if(grid[player->y-1][player->x].background == hbutton) {
         printHint = !printHint;
+        if (hbutton->type == HINTBUTTON) {
+          changeEntity(hbutton, HBUTTON_PR);
+        }
+        else {
+          changeEntity(hbutton, HINTBUTTON);
+        }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
       res=binResult(byte);
