@@ -42,6 +42,11 @@ int encryption(Display *d)
     printf("line = %d\n", hintNum);
 
     in=input(d);
+    
+    if (grid[player->y][player->x].background == door1|| grid[player->y][player->x].background == door2) {
+      freeEntityMem(grid);  /* free memory */
+      return 0;
+    }
     resetsent = 0;
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
@@ -96,10 +101,7 @@ int encryption(Display *d)
     printGrid(grid);
     encGameDraw(d, grid, printHint, hintWord, resetsent);
     enc_print_ascii(grid[yinit][player->x].background->type);
-    if (grid[player->y][player->x].background == door1|| grid[player->y][player->x].background == door2) {
-      freeEntityMem(grid);  /* free memory */
-      return 0;
-    }
+
     cnt++;
   }
   freeEntityMem(grid);  /* free memory */
@@ -124,16 +126,16 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
   
-  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY);
+  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal);
   
   if(resetsent==1){
-    line += drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line);
+    line += drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line, normal);
   }
   if(printHint==1){
-    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
+    drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line, normal);
   }
-  drawString(d, fontdata, "EXIT", 175, 420);
-  drawString(d, fontdata, "EXIT", 875, 420);
+  drawString(d, fontdata, "EXIT", 175, 420, normal);
+  drawString(d, fontdata, "EXIT", 875, 420, normal);
   drawFrame(d, REFRESH_RATE);
 }
 

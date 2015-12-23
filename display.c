@@ -128,14 +128,20 @@ void drawEntities(Display *d, cell grid[H][W])
   }
 }
 
-int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, colourMode m)
 {
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
   unsigned char chr;
   struct colour c = { 0, 213, 72, 255};
+  struct colour r = { 250, 0, 0, 255};  
   
-  setColour(d, c.red, c.green, c.blue, c.alpha);
+  if (m == normal) {
+    setColour(d, c.red, c.green, c.blue, c.alpha);
+  }
+  else {
+    setColour(d, r.red, r.green, r.blue, r.alpha);
+  }
   do {
     chr = str[i];
 

@@ -5,6 +5,8 @@
 #define MILLISECONDDELAY     20
 #define BULBHEIGHT           364 //height of bulb images
 
+typedef enum colourMode { normal, warning} colourMode;
+
 struct display {
     SDL_bool finished;
     SDL_Window *win;
@@ -36,7 +38,7 @@ typedef unsigned short fntrow;
 fntrow fontdata[FNTCHARS][FNTHEIGHT];
 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy);
-int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy);
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, colourMode m);
 void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname);
 
 // Create a new display object.

@@ -70,8 +70,8 @@ void lobbyDraw(Display *d, cell grid[H][W])
 {
   drawBackground(d,BG_LOBBY);
   drawEntities(d, grid);
-  drawString(d, fontdata, "LEARN BINARY", 680, 244);
-  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406);
+  drawString(d, fontdata, "LEARN BINARY", 680, 244, normal);
+  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406, normal);
   
   drawFrame(d, REFRESH_RATE);
 }
@@ -83,7 +83,7 @@ void mediaLoad(Display *d)
  * but are displayed in terminal for debugging. */
    
   loadPhoto(d, "files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
-  loadPhoto(d, "files/room0.png" , BG_BIN);
+  loadPhoto(d, "files/room2.png" , BG_BIN);
   loadPhoto(d, "files/room1.png" , BG_ENC);
 
   loadPhoto(d, "images/floor.bmp", FLOOR);
