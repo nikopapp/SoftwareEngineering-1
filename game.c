@@ -95,8 +95,8 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/dooropen.bmp", DOOROPEN);
   loadPhoto(d, "images/doorclosed.bmp", DOORCLOSED);
 
-  loadPhoto(d, "images/blue_un.bmp", HINTBUTTON);
-  loadPhoto(d, "images/red_un.bmp", RESETBUTTON);
+  loadPhoto(d, "images/blue_un.png", HINTBUTTON);
+  loadPhoto(d, "images/red_un.png", RESETBUTTON);
 
   loadPhoto(d, "images/Red_Elf_Front.bmp", P_DOWN1);
   loadPhoto(d, "images/Red_Elf_Front2.bmp", P_DOWN2);
