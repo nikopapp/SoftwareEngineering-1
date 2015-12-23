@@ -22,8 +22,7 @@ int main(void)
   /* layer of floortiles -
   must be the last entity placement*/
   fillGrid(grid);
-  drawEntities(d, grid);
-  drawFrame(d, REFRESH_RATE);
+  lobbyDraw(d, grid);
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
@@ -36,14 +35,15 @@ int main(void)
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
-    drawBackground(d,BG_LOBBY);
-    drawEntities(d, grid);
-    drawFrame(d, REFRESH_RATE);
+    lobbyDraw(d, grid);
+    
     in=input(d);
-    move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
-    printGrid(grid);
-    count = next_movment(count, &in_prev, in);
-    updatePlayerfacing(player,(direction)in, count);
+    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
+      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+      printGrid(grid);
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player,(direction)in, count);
+    } //why does this chunk of code keep reverting? i've put it in 3 times now.  it is needed to stop it crashing when you press space in the lobby!
   }
 
   freeEntityMem(grid);  /* free memory */
@@ -56,16 +56,23 @@ void makeBoundariesLobby(cell grid[H][W])
 {
   int i,j;
   newLimit(grid, 7, H-5);
-  newLimit(grid, 12, H-9);
+  newLimit(grid, 12, H-8);
   for (i = 0; i < W; i++) {
-    for(j=5;j<H-1;j++){
-
+    for(j = 4; j < H-1; j++){
       if (i != W-6 && i != W-11) { /*ladder locations */
         newLimit(grid, i, j);
       }
     }
   }
 }
+
+void lobbyDraw(Display *d, cell grid[H][W])
+{
+  drawBackground(d,BG_LOBBY);
+  drawEntities(d, grid);
+  drawFrame(d, REFRESH_RATE);
+}
+   
 void mediaLoad(Display *d)
 {
 /* the enum for the entity type values is in base.h 
@@ -135,6 +142,4 @@ void mediaLoad(Display *d)
   loadPhoto(d, "images/chars/x.bmp", 'x');
   loadPhoto(d, "images/chars/y.bmp", 'y');
   loadPhoto(d, "images/chars/z.bmp", 'z');
-
-
 }

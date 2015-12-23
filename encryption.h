@@ -14,12 +14,11 @@
 #define CONSONANT 2
 #define ROW 3
 #define HINTLENGTH 200
-
+#define INTROSTRING "Can you unscramble the word?\nUse the arrow buttons on the floor to try!\n\nIf you get stuck, try the 'hint' or 'reset' buttons"
 #define SCRNSTARTY 66
 #define SCRNSTARTX 224
 
-int enc_shufle(char word[LENGTH], int size);
-int enc_isenc_vowel(char c);
+int enc_shuffle(char word[LENGTH], int size);
 char enc_vowel();
 char enc_constant();
 void enc_changeRow(char word[LENGTH], int size, int shift);

@@ -128,29 +128,33 @@ void drawEntities(Display *d, cell grid[H][W])
   }
 }
 
-void drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy)
 {
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
   unsigned char chr;
 
-  do{
+  do {
     chr = str[i];
-    x += (FNTWIDTH);
-    drawChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
-    if(str[i]==' '){
+
+    if (isprint(chr) && chr != '\n') {
+      x += (FNTWIDTH);
+      drawChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
+    }
+    if(str[i] == ' '){
       wrdcnt++;
     }
-    /*find a better way over x-mas*/
-    if(wrdcnt>6){
+
+    if( (wrdcnt > 6) || (chr == '\n') ){
       j++;
       wrdcnt=0;
-    x=ox;
+      x=ox;
     }
     i++;
-  }while(str[i]);
-
-
+  }
+  while(str[i]);
+  
+  return (j + 1) * FNTHEIGHT; //returns the number of newlines inserted
 }
 
 //Credit to Neill Campbell for the .fnt file reading function

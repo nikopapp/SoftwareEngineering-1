@@ -8,6 +8,7 @@ int encryption(Display *d)
   int hintNum=0, in_prev=0, count=0;
   cell grid[H][W];
   entity *player, *door1, *door2;
+  
   initGrid(grid);
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
@@ -17,7 +18,7 @@ int encryption(Display *d)
   // here we make sure the word always apears in the middle
   xinit = (W/2) - (word_size/2);
   strcpy(shuffle_word, rand_word);
-  enc_shufle(shuffle_word, word_size);
+  enc_shuffle(shuffle_word, word_size);
   strcpy(original_word, shuffle_word);
   player = grid[8][3].foreground = newEntity(passable,P_R1,3,8);
   door1 = grid[7][W-4].background = newEntity(impassable,DOORCLOSED,W-4,7);
@@ -73,14 +74,14 @@ int encryption(Display *d)
         }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == RESETBUTTON) {// "E" is now the reset letter
+      else if(grid[player->y-1][player->x].background->type == RESETBUTTON) {
         for (i=0; i<word_size; i++){
           enc_newLetter(grid, xinit+i, yinit, original_word[i]);
         }
         resetsent = 1;
         Mix_PlayChannel( -1, d->zap, 0 );
       }
-      else if(grid[player->y-1][player->x].background->type == HINTBUTTON) {// "&" is now the hint symbol
+      else if(grid[player->y-1][player->x].background->type == HINTBUTTON) {
         printHint=1;
         Mix_PlayChannel( -1, d->zap, 0 );
       }
@@ -119,12 +120,14 @@ void makeBoundariesEncryption(cell grid[H][W])
 
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
-  drawBackground(d,3);
+  drawBackground(d, BG_ENC);
   printf("hint word%s\n", hintWord);
   drawEntities(d, grid);
+  
+  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY);
+  
   if(resetsent==1){
-    drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY);
-    line+= FNTHEIGHT;
+    line += drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line);
   }
   if(printHint==1){
     drawString(d, fontdata, hintWord, SCRNSTARTX, SCRNSTARTY + line);
@@ -158,8 +161,8 @@ int enc_getWord(char str[LENGTH]){
   FILE *file=fopen("encWords.txt", "r");
   int line=rand()%encLineCount(), cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){
-  fgets(str, LENGTH, file);
-    }
+    fgets(str, LENGTH, file);
+  }
   str[strcspn(str, "\n")]='\0'; //removes the newline
   return cnt;
 }
@@ -170,7 +173,7 @@ void enc_getHint(char str[HINTLENGTH], int line){
   for(cnt=0; cnt<=line; cnt++){
     fgets(str, HINTLENGTH, file);
   }
-  str[strcspn(str, "\n")]='\0';
+  str[strcspn(str, "\n")]='\0'; //removes the newline
 }
 
 
@@ -180,13 +183,14 @@ int encLineCount(void){
   char str[LENGTH];
   int cnt=0;
   while(fgets(str, LENGTH, file)!=NULL){
-    printf("fgst\n");
+    printf("loaded string\n");
     cnt++;
   }
   return cnt;
 }
 
-// this is a new function that vowels change only to vowels and likewise with consonants
+// this is function ensures vowels change only to vowels and likewise with consonants.
+// currently unused.
 void enc_shiftLetter(cell grid[H][W], int y, int x){
    entity *e;
 
@@ -207,7 +211,7 @@ void enc_shiftLetter(cell grid[H][W], int y, int x){
 
 void enc_updateLetter(cell grid[H][W], int y, int x){
 
-   if (grid[y][x].background->type == DARROW) {// cause 'v' may be part of the word
+   if (grid[y][x].background->type == DARROW) {
     enc_letterDown(grid[y][x].background->pointsto);
    }
    if (grid[y][x].background->type == UARROW){
@@ -249,7 +253,7 @@ void enc_newLetter(cell grid[H][W], int x, int y, char c){
   grid[y+1][x].background->pointsto = grid[y][x].background;
 }
 
-int enc_shufle(char word[LENGTH], int size){
+int enc_shuffle(char word[LENGTH], int size){
   int game ;
 
   game = rand()%3;
@@ -294,7 +298,7 @@ void enc_change(char word[LENGTH], int size, int game){
   do {
     if (game == 0){
       letter = rand()%size; /* pick random letter*/
-      if(enc_isenc_vowel(word[letter])){ /* see if the letter is a enc_vowel*/
+      if(isvowel(word[letter])){ /* see if the letter is a enc_vowel*/
         if((c=enc_vowel()) != word[letter]){ /* see if the enc_vowel is different of the on I had */
           for (i=0; i<size; i++){
             if (word[i] == word[letter]){ /* I want to check if there are more */
@@ -307,7 +311,7 @@ void enc_change(char word[LENGTH], int size, int game){
     }
     else if (game == 1 ){
       letter = rand()%size; /* same here  */
-      if(enc_isenc_vowel(word[letter]) == 0){
+      if(isvowel(word[letter]) == 0){
         if((c=enc_constant()) != word[letter]){
           for (i=0; i<size; i++){
             if (word[i] == word[letter]){
@@ -319,16 +323,6 @@ void enc_change(char word[LENGTH], int size, int game){
       }
     }
   } while (condition);
-}
-
-int enc_isenc_vowel(char c){
-  c=tolower(c);
-  if ((c=='a') || (c=='e') || (c=='u') || (c=='o') || (c=='i')){
-	return 1;
-  }
-  else{
-    return 0;
-  }
 }
 
 char enc_vowel(){

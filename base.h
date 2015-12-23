@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <assert.h>
+#include <ctype.h>
 // #include <CUnit/Basic.h>
 
 /*uses sdl libraries from srcfolder*/

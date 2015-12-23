@@ -127,7 +127,7 @@ void bgameDraw(Display *d, cell grid[H][W], char* instruction, int res )
 {
   char str[3];
 
-  drawBackground(d,1);
+  drawBackground(d,BG_BIN);
   drawEntities(d, grid);
 
   sprintf(str, "%d%c",res,'\0');
