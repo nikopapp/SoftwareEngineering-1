@@ -70,6 +70,9 @@ void lobbyDraw(Display *d, cell grid[H][W])
 {
   drawBackground(d,BG_LOBBY);
   drawEntities(d, grid);
+  drawString(d, fontdata, "LEARN BINARY", 680, 244);
+  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406);
+  
   drawFrame(d, REFRESH_RATE);
 }
    

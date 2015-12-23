@@ -19,6 +19,13 @@ struct display {
     Mix_Chunk *zap;
 };
 
+struct colour {
+  Uint8 red;
+  Uint8 green;
+  Uint8 blue;
+  Uint8 alpha;
+};
+
 /* Font stuff */
 typedef unsigned short fntrow;
 #define FNTWIDTH (sizeof(fntrow)*8)

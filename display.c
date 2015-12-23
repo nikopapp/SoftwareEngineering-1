@@ -133,7 +133,9 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
   unsigned char chr;
-
+  struct colour c = { 0, 213, 72, 255};
+  
+  setColour(d, c.red, c.green, c.blue, c.alpha);
   do {
     chr = str[i];
 
@@ -161,18 +163,14 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
 {
 
-   unsigned x, y;
-   for(y = 0; y < FNTHEIGHT; y++){
-      for(x = 0; x < FNTWIDTH; x++){
-         if(fontdata[chr-FNT1STCHAR][y] >> (FNTWIDTH - 1 - x) & 1){
-            /*printf("*");*/
-            /* White Ink */
-            setColour(d, 255, 255, 200 ,0);
-            SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
-         }
+  unsigned x, y;
+  for(y = 0; y < FNTHEIGHT; y++){
+    for(x = 0; x < FNTWIDTH; x++){
+      if(fontdata[chr-FNT1STCHAR][y] >> (FNTWIDTH - 1 - x) & 1){
+        SDL_RenderDrawPoint(d->renderer, x + ox, y+oy);
       }
-   }
-
+    }
+  }
 }
 
 void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
