@@ -133,9 +133,10 @@ void makeBoundariesBinary(cell grid[H][W])
   newLimit(grid,W-1, 9);
 
 }
-void bgameDraw(Display *d, cell grid[H][W], int goal, int res , int printHint)
+void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
+  int printHint)
 {
-  char str[16], instruction[16];
+  char str[16], instruction[16], binaryNumber[BINNUMLEN];
   int line = 0;
 
   drawBackground(d,BG_BIN);
@@ -145,15 +146,31 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res , int printHint)
   sprintf(str, "CURRENT: %3d%c",res,'\0');
   assert(str!=NULL);
   
-  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY + line, normal);
-  line += drawString(d, fontdata, instruction, SCRNSTARTX, SCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, 
+    SCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, instruction, SCRNSTARTX,
+    SCRNSTARTY + line, normal);
   
   if (res <= goal) {
     line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, normal);
   }
   else {
     line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, warning); 
-    line += drawString(d, fontdata, "(Too many switches!)", SCRNSTARTX, SCRNSTARTY + line, warning); 
+    if (countOnBits(res) > countOnBits(goal) ) {
+      line += drawString(d, fontdata, "(Too many switches!)", SCRNSTARTX,
+        SCRNSTARTY + line, warning); 
+    }
+    else {
+      line += drawString(d, fontdata, "(Wrong switch!)", SCRNSTARTX,
+        SCRNSTARTY + line, warning);    
+    }
+  }
+  if (res == goal) {
+      line += drawString(d, fontdata, VICTORYSTRING, SCRNSTARTX,
+        SCRNSTARTY + line, normal);   
+      calcBinaryNumber(goal, binaryNumber);
+      line += drawString(d, fontdata, binaryNumber, SCRNSTARTX,
+        SCRNSTARTY + line, normal);  
   }
   drawString(d, fontdata, "EXIT", 175, 420, normal);
   // drawString(d, fontdata, "EXIT", 875, 420);
@@ -169,4 +186,30 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res , int printHint)
     drawString(d, fontdata, "1", 774 + 128, 420, normal);
   }
   drawFrame(d, REFRESH_RATE);
+}
+
+int countOnBits(Uint8 byte)
+{
+  int cnt = 0;
+  
+  while (byte > 0) {
+    if (byte & 1) {
+      cnt++;
+    }
+    byte = byte >> 1;
+  }
+  return cnt;
+}
+
+void calcBinaryNumber(Uint8 byte, char *binaryNumber)
+{ 
+  sprintf(binaryNumber,"%d%d%d%d%d%d%d%d", 
+    (byte >> 7) & 1, 
+    (byte >> 6) & 1, 
+    (byte >> 5) & 1, 
+    (byte >> 4) & 1, 
+    (byte >> 3) & 1, 
+    (byte >> 2) & 1, 
+    (byte >> 1) & 1, 
+    (byte) & 1);
 }
