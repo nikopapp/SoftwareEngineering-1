@@ -133,14 +133,18 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
   unsigned char chr;
-  struct colour c = { 0, 213, 72, 255};
+  struct colour g = { 0, 213, 72, 255};
   struct colour r = { 250, 0, 0, 255};  
+  struct colour y = {  255,255,200, 255};
   
   if (m == normal) {
-    setColour(d, c.red, c.green, c.blue, c.alpha);
+    setColour(d, g.red, g.green, g.blue, g.alpha);
   }
-  else {
+  else if (m == warning) {
     setColour(d, r.red, r.green, r.blue, r.alpha);
+  }
+  else if (m == yellow) {
+    setColour(d, y.red, y.green, y.blue, y.alpha);
   }
   do {
     chr = str[i];

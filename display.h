@@ -5,7 +5,7 @@
 #define MILLISECONDDELAY     20
 #define BULBHEIGHT           364 //height of bulb images
 
-typedef enum colourMode { normal, warning} colourMode;
+typedef enum colourMode { normal, warning, yellow} colourMode;
 
 struct display {
     SDL_bool finished;

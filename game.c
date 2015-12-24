@@ -5,7 +5,7 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int in, count = 0, in_prev = 0;
+  int in;
   srand(time(NULL));
 
 
@@ -41,9 +41,7 @@ int main(void)
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
-      count = next_movment(count, &in_prev, in);
-      updatePlayerfacing(player,(direction)in, count);
-    } //why does this chunk of code keep reverting? i've put it in 3 times now.  it is needed to stop it crashing when you press space in the lobby!
+    } //why does this chunk of code keep reverting? probably a github issue.
   }
 
   freeEntityMem(grid);  /* free memory */
@@ -70,8 +68,8 @@ void lobbyDraw(Display *d, cell grid[H][W])
 {
   drawBackground(d,BG_LOBBY);
   drawEntities(d, grid);
-  drawString(d, fontdata, "LEARN BINARY", 680, 244, normal);
-  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406, normal);
+  drawString(d, fontdata, "LEARN BINARY", 680, 244, yellow);
+  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406, yellow);
   
   drawFrame(d, REFRESH_RATE);
 }
@@ -86,7 +84,7 @@ void mediaLoad(Display *d)
   loadPhoto(d, "files/room2.png" , BG_BIN);
   loadPhoto(d, "files/room1.png" , BG_ENC);
 
-  loadPhoto(d, "images/floor.bmp", FLOOR);
+  // loadPhoto(d, "images/floor.bmp", FLOOR);
   loadPhoto(d, "images/offlight.png", OFFLIGHT);
   loadPhoto(d, "images/onlight.png", ONLIGHT);
   loadPhoto(d, "images/offswitch.bmp", OFFSWITCH);

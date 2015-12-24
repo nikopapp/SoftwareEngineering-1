@@ -50,6 +50,9 @@ void updateEntities(cell grid[H][W])
 
 void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
+  static int count = 0;
+  unsigned int dir_prev = 0;
+  
   if (isEdge(x,y,dir)) {
     return;
   }
@@ -64,7 +67,10 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
   py = y;
 
   directionsTrans(dir,&px,&py);
-
+  
+  count = next_movement(count, &dir_prev, dir);
+  updatePlayerfacing(c->foreground, dir, count);
+  
   c->foreground->x = px;
   c->foreground->y = py;
 
@@ -96,21 +102,22 @@ int isEdge(int x, int y, direction dir) {
   }
 }
 
-int next_movment(int count, int *in_prev, int in){
+int next_movement(int count, unsigned int *dir_prev, direction dir)
+{
 
-  if( in == *in_prev){// same arrow key
+  if( dir == *dir_prev){// same arrow key
     count++;
   }// we are going to use 'count' for moving animation inside the updatePlayerfacing function
-  else if( in != *in_prev ){// different arrow key
-    *in_prev = in;
+  else if( dir != *dir_prev ){// different arrow key
+    *dir_prev = dir;
     count = 0;
   }
   return count;
 }
 
-void updatePlayerfacing(entity *player, direction in, int count)
+void updatePlayerfacing(entity *player, direction dir, int count)
 {
-  switch(in){
+  switch(dir){
     case LEFT:
        if (count % 3 == 0){  changeEntity(player,P_L1); }
        if (count % 3 == 1){  changeEntity(player,P_L2); }

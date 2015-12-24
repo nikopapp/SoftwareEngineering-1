@@ -5,8 +5,8 @@
 #define SCRNSTARTY 60
 #define SCRNSTARTX 76
 #define INTROSTRING "Try and reach the\ntarget! Each switch\nhas a different\nvalue, with the high\nnumbers on the left.\n"
-#define BINNUMLEN 9 /*str size for string to hold binary number */
-#define VICTORYSTRING "OUTPUT: "
+#define STRLEN 64 /*str size for string to hold binary number */
+#define VICTORYSTRING "OUTPUT"
 
 // Calculates the base10 value of the 8-digit binary number
 int binResult(entity *byte[BYTE_L]);

@@ -5,7 +5,7 @@ int encryption(Display *d)
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
   char hintWord[HINTLENGTH];
   int i, word_size, j, yinit = 9, xinit, cnt=0, in, printHint=0, resetsent = 0;
-  int hintNum=0, in_prev=0, count=0;
+  int hintNum=0;
   cell grid[H][W];
   entity *player, *door1, *door2, *rbutton, *hbutton;
   
@@ -53,8 +53,6 @@ int encryption(Display *d)
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
-      count = next_movment(count, &in_prev, in);
-      updatePlayerfacing(player,(direction)in, count);
     }
     if (in == 9) { /*checks for spacebar */
       if(grid[player->y][player->x].background->type == DARROW) {// "$" is now the down arrow symbol
@@ -138,7 +136,8 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal);
   
   if(resetsent==1){
-    line += drawString(d, fontdata, "RESET", SCRNSTARTX, SCRNSTARTY + line, normal);
+    line += drawString(d, fontdata, "RESET SIGNAL SENT", SCRNSTARTX,
+      SCRNSTARTY + line, warning);
   }
   if(printHint==1){
     line += drawString(d, fontdata, "\nHINT:", SCRNSTARTX,
@@ -146,8 +145,8 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
     drawString(d, fontdata, hintWord, SCRNSTARTX, 
       SCRNSTARTY + line, normal);
   }
-  drawString(d, fontdata, "EXIT", 175, 420, normal);
-  drawString(d, fontdata, "EXIT", 875, 420, normal);
+  drawString(d, fontdata, "EXIT", 175, 420, yellow);
+  drawString(d, fontdata, "EXIT", 875, 420, yellow);
   drawFrame(d, REFRESH_RATE);
 }
 
