@@ -26,27 +26,27 @@ int Nikos_SDL_Events(Display *d, int *p)
           switch( event.key.keysym.sym ){
             case SDLK_LEFT:
               *p=1;
-              printf("input output%d\n",*p);
+              fprintf(OUTPUT, "input output%d\n",*p);
               return(LEFT);
               break;
             case SDLK_RIGHT:
               *p=2;
-              printf("input output%d\n",*p);
+              fprintf(OUTPUT, "input output%d\n",*p);
               return(RIGHT);
               break;
             case SDLK_UP:
               *p=3;
-              printf("input output%d\n",*p);
+              fprintf(OUTPUT, "input output%d\n",*p);
               return(UP);
               break;
             case SDLK_DOWN:
               *p=4;
-              printf("input output%d\n",*p);
+              fprintf(OUTPUT, "input output%d\n",*p);
               return(DOWN);
               break;
             case SDLK_SPACE:
               *p=9;
-              printf("input output%d\n",*p);
+              fprintf(OUTPUT, "input output%d\n",*p);
               return(9);
               break;
             case SDLK_ESCAPE:

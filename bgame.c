@@ -25,8 +25,8 @@ int bgame (Display *d)
 
   goal = rand()%255;
   
-  printf("try summing %d\n", goal );
-  printf("result: %d\n", binResult(byte) );
+  fprintf(OUTPUT, "try summing %d\n", goal );
+  fprintf(OUTPUT, "result: %d\n", binResult(byte) );
   bgameDraw(d, grid, goal, res, printHint);
 
   /* MAIN LOOP */
@@ -77,7 +77,7 @@ int bgame (Display *d)
       changePassable(door1,passable);
       // changeEntity(door2,DOOROPEN);
       // changePassable(door2,passable);
-      printf("you win\n");
+      fprintf(OUTPUT, "you win\n");
     }
     bgameDraw(d, grid, goal, res, printHint);
 
