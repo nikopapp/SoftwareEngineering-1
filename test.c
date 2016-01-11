@@ -29,6 +29,7 @@ int test(void)
   cnt[i++]=TEST_getNeighbour();
   printf("%d. ",i+1 );
   cnt[i++]=TEST_directionsTrans();
+  printf("malakaaaaa\n" );
   for(i=0;i<totTests;i++){
     totErrors+=cnt[i];
   }
