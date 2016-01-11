@@ -1,4 +1,5 @@
 #include "input.h"
+#include <time.h>
 
 int binaryGame(void);
 int encryption(Display *sw);

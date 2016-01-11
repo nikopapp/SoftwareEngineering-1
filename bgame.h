@@ -1,4 +1,5 @@
 #include "game.h"
+#include <assert.h>
 
 #define BYTE_L 8
 #define HINTLENGTH 200
