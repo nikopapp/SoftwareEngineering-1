@@ -20,7 +20,7 @@ int bgame (Display *d)
   makeBoundariesBinary(grid);
   door1 = grid[7][3].background = newEntity(impassable,DOORCLOSED,7,3);
   // door2 = grid[7][3].background = newEntity(impassable,DOORCLOSED,0,8);
-  hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
+  hbutton = grid[7][16].background = newEntity(impassable, BHINTBUTTON,7,16);
   fillGrid(grid); /* layer of floortiles */
 
   goal = rand()%255;
@@ -62,11 +62,11 @@ int bgame (Display *d)
       }
       else if(grid[player->y-1][player->x].background == hbutton) {
         printHint = !printHint;
-        if (hbutton->type == HINTBUTTON) {
+        if (hbutton->type == BHINTBUTTON) {
           changeEntity(hbutton, HBUTTON_PR);
         }
         else {
-          changeEntity(hbutton, HINTBUTTON);
+          changeEntity(hbutton, BHINTBUTTON);
         }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
@@ -145,29 +145,29 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
   sprintf(str, "CURRENT: %3d%c",res,'\0');
   assert(str!=NULL);
   
-  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, 
-    SCRNSTARTY + line, normal);
-  line += drawString(d, fontdata, instruction, SCRNSTARTX,
-    SCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, BINTROSTRING, BSCRNSTARTX, 
+    BSCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, instruction, BSCRNSTARTX,
+    BSCRNSTARTY + line, normal);
   
   if (res <= goal) {
-    line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, normal);
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, normal);
   }
   else {
-    line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, warning); 
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning); 
     if (countOnBits(res) > countOnBits(goal) ) {
-      line += drawString(d, fontdata, "(Too many switches!)", SCRNSTARTX,
-        SCRNSTARTY + line, warning); 
+      line += drawString(d, fontdata, "(Too many switches!)", BSCRNSTARTX,
+        BSCRNSTARTY + line, warning); 
     }
     else {
-      line += drawString(d, fontdata, "(Wrong switch!)", SCRNSTARTX,
-        SCRNSTARTY + line, warning);    
+      line += drawString(d, fontdata, "(Wrong switch!)", BSCRNSTARTX,
+        BSCRNSTARTY + line, warning);    
     }
   }
   if (res == goal) {
       calcBinaryNumber(goal, binaryNumber);
-      line += drawString(d, fontdata, binaryNumber, SCRNSTARTX,
-        SCRNSTARTY + line, normal);  
+      line += drawString(d, fontdata, binaryNumber, BSCRNSTARTX,
+        BSCRNSTARTY + line, normal);  
   }
   drawString(d, fontdata, "EXIT", 175, 420, yellow);
   // drawString(d, fontdata, "EXIT", 875, 420);

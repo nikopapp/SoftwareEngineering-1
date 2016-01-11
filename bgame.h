@@ -2,10 +2,10 @@
 #include <assert.h>
 
 #define BYTE_L 8
-#define HINTLENGTH 200
-#define SCRNSTARTY 60
-#define SCRNSTARTX 76
-#define INTROSTRING "Try and reach the\ntarget! Each switch\nhas a different\nvalue, with the high\nnumbers on the left.\n"
+#define BHINTLENGTH 200
+#define BSCRNSTARTY 60
+#define BSCRNSTARTX 76
+#define BINTROSTRING "Try and reach the\ntarget! Each switch\nhas a different\nvalue, with the high\nnumbers on the left.\n"
 #define STRLEN 64 /*str size for string to hold binary number */
 #define VICTORYSTRING "OUTPUT"
 
