@@ -7,7 +7,7 @@ Display *newDisplay()
   if (r < 0){
     fail("Unable to initialize SDL");
   }
-  
+
   /*Initialize SDL_mixer*/
   r= Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
   if(r < 0 ) {
@@ -134,9 +134,9 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   int x=ox;
   unsigned char chr;
   struct colour g = { 0, 213, 72, 255};
-  struct colour r = { 250, 0, 0, 255};  
+  struct colour r = { 250, 0, 0, 255};
   struct colour y = {  255,255,200, 255};
-  
+
   if (m == normal) {
     setColour(d, g.red, g.green, g.blue, g.alpha);
   }
@@ -165,7 +165,7 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
     i++;
   }
   while(str[i]);
-  
+
   return (j + 1) * FNTHEIGHT; //returns the number of newlines inserted
 }
 
@@ -218,4 +218,5 @@ void closeDisplay(Display *d)
   SDL_DestroyWindow(d->win);
   SDL_DestroyRenderer(d->renderer);
   SDL_Quit();
+  d=NULL;
 }
