@@ -149,6 +149,7 @@ int TEST_directionsTrans()
   int x,y;
   cell grid[H][W];
   initGrid(grid);
+  fillGrid(grid);
   x=grid[5][1].background->x;
   y=grid[5][0].background->y;
   directionsTrans(LEFT, &x, &y);
