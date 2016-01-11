@@ -8,9 +8,9 @@ int main(void)
   test();
   return SUCCESS;
 }
-int test(void) 
+int test(void)
 {
-  int i=0, cnt[20], totErrors=0,totTests=5;
+  int i=0, cnt[20], totErrors=0,totTests=8;
   char format[35]="---------------------------------\n";
   printf("\n\nTESTING\n%s",format );
   printf("%d. ",i+1 );
@@ -25,7 +25,10 @@ int test(void)
   cnt[i++]=TEST_fillGrid();
   printf("%d. ",i+1 );
   cnt[i++]=TEST_input();
-
+  printf("%d. ",i+1 );
+  cnt[i++]=TEST_getNeighbour();
+  printf("%d. ",i+1 );
+  cnt[i++]=TEST_directionsTrans();
   for(i=0;i<totTests;i++){
     totErrors+=cnt[i];
   }
@@ -86,9 +89,14 @@ int TEST_input()
   Display *d;
   d=newDisplay();
   value = input(d);
-  printf("%23s %s\n",__func__, PASS );
-  printf("%d\n",value );
-  return SUCCESS;
+  if(value!=0){
+    printf("%23s %s\n",__func__, FAIL );
+    return ERROR;
+  }
+  else{
+    printf("%23s %s\n",__func__, PASS );
+    return SUCCESS;
+  }
 }
 int TEST_closeDisplay()
 {
@@ -118,16 +126,15 @@ int TEST_initGrid()
     return SUCCESS;
   }
 }
-/*
 int TEST_getNeighbour()
 {
   int x=5, y=5;
   direction dir=LEFT;
-  cell grid[H][W], testCell;
+  cell grid[H][W], *testCell;
   initGrid(grid);
   fillGrid(grid);
   testCell=getNeighbour(x, y, dir, grid);
-  if(testCell!=grid[y][x-1]){
+  if(testCell->background!=grid[y][x-1].background){
     printf("%23s %s\n",__func__, FAIL );
     return ERROR;
   }
@@ -139,11 +146,13 @@ int TEST_getNeighbour()
 
 int TEST_directionsTrans()
 {
-  direction dir=LEFT;
-  grid[H][W];
-  int *x=grid[5][1], *y=grid[5][0];
-  directionsTrans(LEFT, x, y);
-  if(x!=grid[5][0]){
+  int x,y;
+  cell grid[H][W];
+  initGrid(grid);
+  x=grid[5][1].background->x;
+  y=grid[5][0].background->y;
+  directionsTrans(LEFT, &x, &y);
+  if(x!=grid[5][0].background->x){
     printf("%23s %s\n",__func__, FAIL );
     return ERROR;
   }
@@ -152,6 +161,7 @@ int TEST_directionsTrans()
     return SUCCESS;
   }
 }
+/*
 
 int TEST_newBulb(){
   entity bulb;
