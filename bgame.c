@@ -5,7 +5,7 @@ int bgame (Display *d)
 {
   cell grid[H][W];
   entity *player, *byte[BYTE_L],  *door1, *hbutton;
-  int in, i, j;
+  int in, i, j, in_prev = 0, count = 0;
   int goal, res = 0, printHint = 0;
 
   initGrid(grid);
@@ -25,8 +25,8 @@ int bgame (Display *d)
 
   goal = rand()%255;
   
-  printf("try summing %d\n", goal );
-  printf("result: %d\n", binResult(byte) );
+  fprintf("try summing %d\n", goal );
+  fprintf("result: %d\n", binResult(byte) );
   bgameDraw(d, grid, goal, res, printHint);
 
   /* MAIN LOOP */
@@ -43,7 +43,8 @@ int bgame (Display *d)
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
       printGrid(grid);
-
+      count = next_movment(count, &in_prev, in);
+      updatePlayerfacing(player, (direction)in, count);
     }
     if (in == 9) { /*checks for spacebar */
       if( grid[player->y-1][player->x].background != NULL
@@ -119,8 +120,8 @@ void makeBoundariesBinary(cell grid[H][W])
   newLimit(grid,1, 7);
   newLimit(grid,2, 7);
   newLimit(grid,4, 7);
-  newLimit(grid,5, 7);
-  newLimit(grid,6, 7);
+    newLimit(grid,5, 7);
+      newLimit(grid,6, 7);
   newLimit(grid,W-1, 7);
   newLimit(grid,W-2, 7);
   newLimit(grid,W-3, 7);
@@ -135,7 +136,7 @@ void makeBoundariesBinary(cell grid[H][W])
 void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
   int printHint)
 {
-  char str[STRLEN], instruction[STRLEN], binaryNumber[STRLEN];
+  char str[16], instruction[16], binaryNumber[BINNUMLEN];
   int line = 0;
 
   drawBackground(d,BG_BIN);
@@ -145,42 +146,44 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
   sprintf(str, "CURRENT: %3d%c",res,'\0');
   assert(str!=NULL);
   
-  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, 
-    SCRNSTARTY + line, normal);
-  line += drawString(d, fontdata, instruction, SCRNSTARTX,
-    SCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, BINTROSTRING, BSCRNSTARTX, 
+    BSCRNSTARTY + line, normal);
+  line += drawString(d, fontdata, instruction, BSCRNSTARTX,
+    BSCRNSTARTY + line, normal);
   
   if (res <= goal) {
-    line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, normal);
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, normal);
   }
   else {
-    line += drawString(d, fontdata, str, SCRNSTARTX, SCRNSTARTY + line, warning); 
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning); 
     if (countOnBits(res) > countOnBits(goal) ) {
-      line += drawString(d, fontdata, "(Too many switches!)", SCRNSTARTX,
-        SCRNSTARTY + line, warning); 
+      line += drawString(d, fontdata, "(Too many switches!)", BSCRNSTARTX,
+        BSCRNSTARTY + line, warning); 
     }
     else {
-      line += drawString(d, fontdata, "(Wrong switch!)", SCRNSTARTX,
-        SCRNSTARTY + line, warning);    
+      line += drawString(d, fontdata, "(Wrong switch!)", BSCRNSTARTX,
+        BSCRNSTARTY + line, warning);    
     }
   }
   if (res == goal) {
+      line += drawString(d, fontdata, VICTORYSTRING, BSCRNSTARTX,
+        BSCRNSTARTY + line, normal);   
       calcBinaryNumber(goal, binaryNumber);
-      line += drawString(d, fontdata, binaryNumber, SCRNSTARTX,
-        SCRNSTARTY + line, normal);  
+      line += drawString(d, fontdata, binaryNumber, BSCRNSTARTX,
+        BSCRNSTARTY + line, normal);  
   }
-  drawString(d, fontdata, "EXIT", 175, 420, yellow);
+  drawString(d, fontdata, "EXIT", 175, 420, normal);
   // drawString(d, fontdata, "EXIT", 875, 420);
   
   if(printHint==1){
-    drawString(d, fontdata, "128", 310 + 128, 420, yellow);
-    drawString(d, fontdata, "64", 390 + 128, 420, yellow);
-    drawString(d, fontdata, "32", 450 + 128, 420, yellow);
-    drawString(d, fontdata, "16", 510 + 128, 420, yellow);
-    drawString(d, fontdata, "8", 585 + 128, 420, yellow);
-    drawString(d, fontdata, "4", 645 + 128, 420, yellow);
-    drawString(d, fontdata, "2", 708 + 128, 420, yellow);
-    drawString(d, fontdata, "1", 774 + 128, 420, yellow);
+    drawString(d, fontdata, "128", 310 + 128, 420, normal);
+    drawString(d, fontdata, "64", 390 + 128, 420, normal);
+    drawString(d, fontdata, "32", 450 + 128, 420, normal);
+    drawString(d, fontdata, "16", 510 + 128, 420, normal);
+    drawString(d, fontdata, "8", 585 + 128, 420, normal);
+    drawString(d, fontdata, "4", 645 + 128, 420, normal);
+    drawString(d, fontdata, "2", 708 + 128, 420, normal);
+    drawString(d, fontdata, "1", 774 + 128, 420, normal);
   }
   drawFrame(d, REFRESH_RATE);
 }
@@ -200,7 +203,7 @@ int countOnBits(Uint8 byte)
 
 void calcBinaryNumber(Uint8 byte, char *binaryNumber)
 { 
-  sprintf(binaryNumber,"%s:  %d%d%d%d%d%d%d%d", VICTORYSTRING,
+  sprintf(binaryNumber,"%d%d%d%d%d%d%d%d", 
     (byte >> 7) & 1, 
     (byte >> 6) & 1, 
     (byte >> 5) & 1, 
