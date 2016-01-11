@@ -1,9 +1,6 @@
 #ifndef GAMEH
 #define GAMEH
 
-#define OUTPUT stdout
-#define OUTPUTERR stderr
-
 #include "input.h"
 
 int binaryGame(void);
