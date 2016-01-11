@@ -11,7 +11,7 @@ Display *newDisplay()
   /*Initialize SDL_mixer*/
   r= Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
   if(r < 0 ) {
-    printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n",
+    fprintf(OUTPUTERR,  "SDL_mixer could not initialize! SDL_mixer Error: %s\n",
     Mix_GetError() );
     return(0);
   }
@@ -47,7 +47,7 @@ Display *newDisplay()
 
 //Credit to Ian Holyer for the drawFrame and fail function
 void fail(char *s) {
-    fprintf(stderr, "%s: %s\n", s, SDL_GetError());
+    fprintf(OUTPUTERR, "%s: %s\n", s, SDL_GetError());
     SDL_Quit();
     exit(1);
 }
@@ -189,12 +189,12 @@ void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
     FILE *fp = fopen(fname, "rb");
     size_t itms;
     if(!fp){
-       fprintf(stderr, "Can't open Font file %s\n", fname);
+       fprintf(OUTPUTERR, "Can't open Font file %s\n", fname);
        exit(1);
    }
    itms = fread(fontdata, sizeof(fntrow), FNTCHARS*FNTHEIGHT, fp);
    if(itms != FNTCHARS*FNTHEIGHT){
-       fprintf(stderr, "Can't read all Font file %s (%d) \n", fname, (int)itms);
+       fprintf(OUTPUTERR, "Can't read all Font file %s (%d) \n", fname, (int)itms);
        exit(1);
    }
    fclose(fp);

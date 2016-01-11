@@ -46,7 +46,7 @@ int main(void)
 
   freeEntityMem(grid);  /* free memory */
   closeDisplay(d);
-  printf("\n\n");
+  fprintf(OUTPUT, "\n\n");
   return(0);
 }
 

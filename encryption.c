@@ -40,7 +40,7 @@ int encryption(Display *d)
 
   /* MAIN LOOP */
   while(!d->finished){
-    printf("line = %d\n", hintNum);
+    fprintf(OUTPUT, "line = %d\n", hintNum);
 
     in=input(d);
     
@@ -130,7 +130,7 @@ void makeBoundariesEncryption(cell grid[H][W])
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
   drawBackground(d, BG_ENC);
-  printf("hint word%s\n", hintWord);
+  fprintf(OUTPUT, "hint word%s\n", hintWord);
   drawEntities(d, grid);
   
   line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal);
@@ -154,10 +154,10 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
 
 void enc_print_ascii(char letter){
    if ((letter < 'a') || (letter > 'z')){
-      printf("ascii code: %c\n",' ' );
+      fprintf(OUTPUT, "ascii code: %c\n",' ' );
    }
    else{
-   printf("ascii code: %d\n", letter);
+   fprintf(OUTPUT, "ascii code: %d\n", letter);
    }
 }
 
@@ -196,7 +196,7 @@ int encLineCount(void){
   char str[LENGTH];
   int cnt=0;
   while(fgets(str, LENGTH, file)!=NULL){
-    printf("loaded string\n");
+    fprintf(OUTPUT, "loaded string\n");
     cnt++;
   }
   return cnt;

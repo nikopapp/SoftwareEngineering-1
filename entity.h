@@ -40,8 +40,6 @@ void delEntity(entity *e);
 
 void changePassable(entity *e, int ispassable);
 
-int next_movement(int count, unsigned int *dir_prev, direction dir);
-
 void updatePlayerfacing(entity *player, direction dir, int count);
 
 //checks if off edge

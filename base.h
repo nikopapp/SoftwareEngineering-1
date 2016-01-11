@@ -1,7 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <assert.h>
 #include <ctype.h>
 // #include <CUnit/Basic.h>
 
@@ -17,6 +13,9 @@
 
 #define H WHEIGHT / TILESIZE
 #define W WWIDTH / TILESIZE
+
+#define OUTPUT stdout
+#define OUTPUTERR stderr
 
 /* used to give the entity types more descriptive names */
 typedef enum etype {

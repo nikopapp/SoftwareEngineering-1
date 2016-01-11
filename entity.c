@@ -51,7 +51,12 @@ void updateEntities(cell grid[H][W])
 void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
   static int count = 0;
-  unsigned int dir_prev = 0;
+  
+  updatePlayerfacing(c->foreground, dir, count);
+  count++;
+  if (count > 2) {
+    count = 0;
+  }
   
   if (isEdge(x,y,dir)) {
     return;
@@ -68,9 +73,6 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
   directionsTrans(dir,&px,&py);
   
-  count = next_movement(count, &dir_prev, dir);
-  updatePlayerfacing(c->foreground, dir, count);
-  
   c->foreground->x = px;
   c->foreground->y = py;
 
@@ -80,39 +82,22 @@ void move(cell *c, int x, int y, direction dir, cell grid[H][W]) {
 
 int isEdge(int x, int y, direction dir) {
 
-  printf("x: %d y: %d", x, y);
+  fprintf(OUTPUT, "x: %d y: %d", x, y);
   if ( x == (W - 1)&& dir == RIGHT ) {
-    printf("x>edge\n");
     return 1;
   }
   else if ( x == 0 && dir == LEFT) {
-    printf("x<0\n");
     return 1;
   }
   else if ( y == (H - 1) && dir == DOWN) {
-    printf("y>h-1\n");
     return 1;
   }
   else if ( y == 0 && dir == UP) {
-    printf("y<0\n");
     return 1;
   }
   else{
     return 0;
   }
-}
-
-int next_movement(int count, unsigned int *dir_prev, direction dir)
-{
-
-  if( dir == *dir_prev){// same arrow key
-    count++;
-  }// we are going to use 'count' for moving animation inside the updatePlayerfacing function
-  else if( dir != *dir_prev ){// different arrow key
-    *dir_prev = dir;
-    count = 0;
-  }
-  return count;
 }
 
 void updatePlayerfacing(entity *player, direction dir, int count)
@@ -174,17 +159,17 @@ void printGrid(cell grid[H][W])
 {
   int HCnt, WCnt;
 
-  printf("\n");
+ fprintf(OUTPUT, "\n");
   for(HCnt=0; HCnt<H; HCnt++){
     for(WCnt=0; WCnt<W; WCnt++){
       if (grid[HCnt][WCnt].foreground != NULL) {
-        printf("%c ", grid[HCnt][WCnt].foreground->type);
+        fprintf(OUTPUT, "%c ", grid[HCnt][WCnt].foreground->type);
       }
       else if (grid[HCnt][WCnt].background != NULL) {
-        printf("%c ", grid[HCnt][WCnt].background->type);
+        fprintf(OUTPUT, "%c ", grid[HCnt][WCnt].background->type);
       }
     }
-    printf("\n");
+    fprintf(OUTPUT, "\n");
   }
 }
 
