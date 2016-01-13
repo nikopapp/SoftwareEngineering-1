@@ -1,4 +1,6 @@
 #include "game.h"
+#include "bgame.h"
+#include "encryption.h"
 
 
 #define SUCCESS 0

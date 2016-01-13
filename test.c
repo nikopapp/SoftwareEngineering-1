@@ -10,7 +10,7 @@ int main(void)
 }
 int test(void)
 {
-  int i=0, cnt[20], totErrors=0,totTests=8;
+  int i=0, cnt[20], totErrors=0,totTests=9;
   char format[35]="---------------------------------\n";
   printf("\n\nTESTING\n%s",format );
   printf("%d. ",i+1 );
@@ -24,11 +24,16 @@ int test(void)
   printf("%d. ",i+1 );
   cnt[i++]=TEST_fillGrid();
   printf("%d. ",i+1 );
-  cnt[i++]=TEST_input();
-  printf("%d. ",i+1 );
+  // cnt[i++]=TEST_input();
+  // printf("%d. ",i+1 );
   cnt[i++]=TEST_getNeighbour();
   printf("%d. ",i+1 );
   cnt[i++]=TEST_directionsTrans();
+  printf("%d. ",i+1 );
+  cnt[i++]=TEST_newBulb();
+  printf("%d. ",i+1 );
+  cnt[i++]=TEST_makeBoundariesBinary();
+  printf("%d. ",i+1 );
   for(i=0;i<totTests;i++){
     totErrors+=cnt[i];
   }
@@ -162,16 +167,17 @@ int TEST_directionsTrans()
     return SUCCESS;
   }
 }
-/*
+
+
+
 
 int TEST_newBulb(){
-  entity bulb;
   cell grid[H][W];
   int x=0, y=0;
+  entity *bulb=newBulb(grid, x, y);
   initGrid(grid);
   fillGrid(grid);
-  bulb=newBulb(grid[y][x]);
-  if(entity.ispassable!=1 || entity.offlight!='0' || enity.x!=x || entity.y !=y){
+  if(bulb->ispassable!=1 || bulb->x!=x || bulb->y !=y){
     printf("%23s %s\n",__func__, FAIL );
     return ERROR;
   }
@@ -184,9 +190,9 @@ int TEST_newBulb(){
 int TEST_makeBoundariesBinary()
 {
   cell grid[H][W];
-  initGrid(grid);
+  // initGrid(grid);
   makeBoundariesBinary(grid);
-  if(grid[0][7].ispassable!=1){
+  if(grid[0][7].background->ispassable!=0){
     printf("%23s %s\n",__func__, FAIL );
     return ERROR;
   }
@@ -195,5 +201,5 @@ int TEST_makeBoundariesBinary()
     return SUCCESS;
   }
 }
-*/
+
 // encryption, game binary game, grid.c
