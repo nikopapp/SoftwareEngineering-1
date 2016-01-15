@@ -26,7 +26,7 @@ struct colour {
   Uint8 green;
   Uint8 blue;
   Uint8 alpha;
-}; 
+};
 
 /* Font stuff */
 typedef unsigned short fntrow;
@@ -38,7 +38,7 @@ typedef unsigned short fntrow;
 fntrow fontdata[FNTCHARS][FNTHEIGHT];
 
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy);
-int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, colourMode m);
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, int m);
 void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname);
 
 // Create a new display object.

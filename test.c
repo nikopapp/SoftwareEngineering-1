@@ -10,7 +10,7 @@ int main(void)
 }
 int test(void)
 {
-  int i=0, cnt[20], totErrors=0,totTests=9;
+  int i=0,j, cnt[20], totErrors=0;
   char format[40]="------------------------------------\n";
 
   printf("\n\nTESTING\n%s",format );
@@ -41,11 +41,16 @@ int test(void)
   cnt[i++]=TEST_newBulb();
   printf("%2d. ",i+1 );
   cnt[i++]=TEST_makeBoundariesBinary();
-  for(i=0;i<totTests;i++){
-    totErrors+=cnt[i];
+  printf("\nencryption.c\n%s",format );
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_enc_getHint();
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_enc_updateWord();
+  for(j=0;j<i;j++){
+    totErrors+=cnt[j];
   }
 
-    printf("%s%d of %d %s %s\n\n",format,totTests-totErrors, totTests,"tests", "PASSED" );
+    printf("%s%d of %d %s %s\n\n",format,i-totErrors, i,"tests", "PASSED" );
   if(totErrors==0){
     return SUCCESS;
   }
@@ -226,4 +231,78 @@ int TEST_updateEntities()
 
 
 }
-// encryption, game binary game, grid.c
+
+// Testing encryption.c
+
+int TEST_enc_updateWord()
+{
+   /*test if the word "elves" will be updated
+     from the grid to a string variable*/
+  cell grid[H][W];
+  /* need to give an init word cause enc_updateWord
+     uses strlen */
+  char word[LENGTH]={"tests"};
+  int i;
+  word[5] = '\0';//to mark the end of string
+
+  for (i=0; i<5; i++){
+     grid[0][i].background = (entity *)malloc(sizeof(entity));
+ }
+ // pass the word on the grid
+  grid[0][0].background->type = 'e';
+  grid[0][1].background->type = 'l';
+  grid[0][2].background->type = 'v';
+  grid[0][3].background->type = 'e';
+  grid[0][4].background->type = 's';
+  enc_updateWord(grid, 0, 0, word);
+  if(strcmp(word, "elves") == 0){
+    printf("%25s %s\n",__func__, PASS );
+    return SUCCESS;
+  }
+  else{
+     printf("%25s %s\n",__func__, FAIL );
+    return ERROR;
+  }
+}
+
+int TEST_enc_getHint()
+{
+   char hint[HINTLENGTH];
+   int found_letter = ERROR, i, errors=0;
+   // set all hint chars to NULL
+   for (i=0; i<HINTLENGTH; i++){
+      hint[i] = '\0';
+   }
+   enc_getHint(hint, 0);
+   // search if hint is still empty
+   for (i=0; i<HINTLENGTH; i++){
+      if( hint[i] != '\0'){
+         found_letter = SUCCESS;
+         break;
+      }
+   }
+   /* now I will also check some random lines
+      to see if I get the right hints*/
+   if(strcmp(hint, "Handles memory between Hard Disk and CPU") != 0){
+      errors++;
+   }
+   enc_getHint(hint, 8);
+   if(strcmp(hint, "Think of it as a computer in your hand.") != 0){
+      errors++;
+   }
+   enc_getHint(hint, 19);
+   if(strcmp(hint, "Legolas, Erwin, Tauriel.. You know them!") != 0){
+      errors++;
+   }
+   if ((errors == 0) && (found_letter == SUCCESS)){
+     printf("%25s %s\n",__func__, PASS );
+     return SUCCESS;
+   }
+   else{
+      printf("%25s %s\n",__func__, FAIL );
+     return ERROR;
+   }
+}
+
+
+//  game binary game, grid.c

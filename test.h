@@ -17,4 +17,6 @@ int TEST_getNeighbour();
 int TEST_directionsTrans();
 int TEST_newBulb();
 int TEST_makeBoundariesBinary();
-int TEST_updateEntities(); 
+int TEST_updateEntities();
+int TEST_enc_updateWord();
+int TEST_enc_getHint();

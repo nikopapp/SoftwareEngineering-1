@@ -9,7 +9,7 @@ int bgame (Display *d)
   int goal, res = 0, printHint = 0;
 
   initGrid(grid);
-  
+
   /* place player */
   player = grid[8][1].foreground = newEntity(passable,P_R1,1,8);
   /* 8 lightbytes and 8 switches */
@@ -24,7 +24,7 @@ int bgame (Display *d)
   fillGrid(grid); /* layer of floortiles */
 
   goal = rand()%255;
-  
+
   fprintf(OUTPUT, "try summing %d\n", goal );
   fprintf(OUTPUT, "result: %d\n", binResult(byte) );
   bgameDraw(d, grid, goal, res, printHint);
@@ -83,7 +83,7 @@ int bgame (Display *d)
 
   }
   freeEntityMem(grid);
-  return 0;
+  return 1;
 }
 
 int binResult(entity *byte[BYTE_L])
@@ -140,38 +140,38 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
 
   drawBackground(d,BG_BIN);
   drawEntities(d, grid);
-  
+
   sprintf(instruction,"TARGET:  %3d", goal);
   sprintf(str, "CURRENT: %3d%c",res,'\0');
   assert(str!=NULL);
-  
-  line += drawString(d, fontdata, BINTROSTRING, BSCRNSTARTX, 
+
+  line += drawString(d, fontdata, BINTROSTRING, BSCRNSTARTX,
     BSCRNSTARTY + line, normal);
   line += drawString(d, fontdata, instruction, BSCRNSTARTX,
     BSCRNSTARTY + line, normal);
-  
+
   if (res <= goal) {
     line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, normal);
   }
   else {
-    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning); 
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning);
     if (countOnBits(res) > countOnBits(goal) ) {
       line += drawString(d, fontdata, "(Too many switches!)", BSCRNSTARTX,
-        BSCRNSTARTY + line, warning); 
+        BSCRNSTARTY + line, warning);
     }
     else {
       line += drawString(d, fontdata, "(Wrong switch!)", BSCRNSTARTX,
-        BSCRNSTARTY + line, warning);    
+        BSCRNSTARTY + line, warning);
     }
   }
   if (res == goal) {
       calcBinaryNumber(goal, binaryNumber);
       line += drawString(d, fontdata, binaryNumber, BSCRNSTARTX,
-        BSCRNSTARTY + line, normal);  
+        BSCRNSTARTY + line, normal);
   }
   drawString(d, fontdata, "EXIT", 175, 420, yellow);
   // drawString(d, fontdata, "EXIT", 875, 420);
-  
+
   if(printHint==1){
     drawString(d, fontdata, "128", 310 + 128, 420, yellow);
     drawString(d, fontdata, "64", 390 + 128, 420, yellow);
@@ -188,7 +188,7 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
 int countOnBits(Uint8 byte)
 {
   int cnt = 0;
-  
+
   while (byte > 0) {
     if (byte & 1) {
       cnt++;
@@ -199,14 +199,14 @@ int countOnBits(Uint8 byte)
 }
 
 void calcBinaryNumber(Uint8 byte, char *binaryNumber)
-{ 
+{
   sprintf(binaryNumber,"%s:  %d%d%d%d%d%d%d%d", VICTORYSTRING,
-    (byte >> 7) & 1, 
-    (byte >> 6) & 1, 
-    (byte >> 5) & 1, 
-    (byte >> 4) & 1, 
-    (byte >> 3) & 1, 
-    (byte >> 2) & 1, 
-    (byte >> 1) & 1, 
+    (byte >> 7) & 1,
+    (byte >> 6) & 1,
+    (byte >> 5) & 1,
+    (byte >> 4) & 1,
+    (byte >> 3) & 1,
+    (byte >> 2) & 1,
+    (byte >> 1) & 1,
     (byte) & 1);
 }

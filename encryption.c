@@ -8,7 +8,7 @@ int encryption(Display *d)
   int hintNum=0;
   cell grid[H][W];
   entity *player, *door1, *door2, *rbutton, *hbutton;
-  
+
   initGrid(grid);
   hintNum=enc_getWord(rand_word);
   enc_getHint(hintWord, hintNum-1);
@@ -31,7 +31,7 @@ int encryption(Display *d)
   makeBoundariesEncryption(grid);
   grid[yinit][xinit-1].background = newEntity(passable, LARROW ,xinit-1,yinit);
   grid[yinit][xinit + word_size].background = newEntity(passable, RARROW ,xinit + word_size, yinit);
-  
+
   rbutton = grid[7][1].background = newEntity(impassable, RESETBUTTON,7,1);
   hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid);   /* layer of floortiles */
@@ -43,7 +43,7 @@ int encryption(Display *d)
     fprintf(OUTPUT, "line = %d\n", hintNum);
 
     in=input(d);
-    
+
     if (grid[player->y][player->x].background == door1|| grid[player->y][player->x].background == door2) {
       freeEntityMem(grid);  /* free memory */
       return 0;
@@ -132,9 +132,9 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   drawBackground(d, BG_ENC);
   fprintf(OUTPUT, "hint word%s\n", hintWord);
   drawEntities(d, grid);
-  
+
   line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal);
-  
+
   if(resetsent==1){
     line += drawString(d, fontdata, "RESET SIGNAL SENT", SCRNSTARTX,
       SCRNSTARTY + line, warning);
@@ -142,11 +142,11 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   if(printHint==1){
     line += drawString(d, fontdata, "\nHINT:", SCRNSTARTX,
       SCRNSTARTY + line, normal);
-    drawString(d, fontdata, hintWord, SCRNSTARTX, 
+    drawString(d, fontdata, hintWord, SCRNSTARTX,
       SCRNSTARTY + line, normal);
   }
-  drawString(d, fontdata, "EXIT", 175, 420, yellow);
-  drawString(d, fontdata, "EXIT", 875, 420, yellow);
+  drawString(d, fontdata, (char*)"EXIT", 175, 420, yellow);
+  drawString(d, fontdata, (char*)"EXIT", 875, 420, yellow);
   drawFrame(d, REFRESH_RATE);
 }
 

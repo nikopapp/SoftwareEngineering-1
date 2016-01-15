@@ -12,4 +12,4 @@
   void mediaLoad(Display *d);
   void makeBoundariesLobby(cell grid[H][W]);
   void lobbyDraw(Display *d, cell grid[H][W]);
-#endif
+#endif 

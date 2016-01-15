@@ -5,7 +5,7 @@ int main(void)
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int in;
+  int in,games[2];
   srand(time(NULL));
 
 
@@ -26,7 +26,7 @@ int main(void)
 
   while(!d->finished){
     if (grid[player->y][player->x].background == door1) {
-      bgame(d);
+      games[0]+=bgame(d);
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
@@ -36,7 +36,7 @@ int main(void)
       changeEntity(player, P_DOWN1);
     }
     lobbyDraw(d, grid);
-    
+
     in=input(d);
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
@@ -68,81 +68,80 @@ void lobbyDraw(Display *d, cell grid[H][W])
 {
   drawBackground(d,BG_LOBBY);
   drawEntities(d, grid);
-  drawString(d, fontdata, "LEARN BINARY", 680, 244, yellow);
-  drawString(d, fontdata, "COMPUTER QUIZ", 360, 406, yellow);
-  
+  drawString(d, fontdata, (char*)"LEARN BINARY", 680, 244, yellow);
+  drawString(d, fontdata, (char*)"COMPUTER QUIZ", 360, 406, yellow);
+
   drawFrame(d, REFRESH_RATE);
 }
-   
+
 void mediaLoad(Display *d)
 {
-/* the enum for the entity type values is in base.h 
- * wall tiles and some types of door have no image, 
+/* the enum for the entity type values is in base.h
+ * wall tiles and some types of door have no image,
  * but are displayed in terminal for debugging. */
-   
-  loadPhoto(d, "files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
-  loadPhoto(d, "files/room2.png" , BG_BIN);
-  loadPhoto(d, "files/room1.png" , BG_ENC);
 
-  // loadPhoto(d, "images/floor.bmp", FLOOR);
-  loadPhoto(d, "images/offlight.png", OFFLIGHT);
-  loadPhoto(d, "images/onlight.png", ONLIGHT);
-  loadPhoto(d, "images/offswitch.bmp", OFFSWITCH);
-  loadPhoto(d, "images/onswitch.bmp", ONSWITCH);
+  loadPhoto(d, (char*)"files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
+  loadPhoto(d, (char*)"files/room2.png" , BG_BIN);
+  loadPhoto(d, (char*)"files/room1.png" , BG_ENC);
 
-  loadPhoto(d, "images/dooropen.bmp", DOOROPEN);
-  loadPhoto(d, "images/doorclosed.bmp", DOORCLOSED);
+  loadPhoto(d, (char*)"images/offlight.png", OFFLIGHT);
+  loadPhoto(d, (char*)"images/onlight.png", ONLIGHT);
+  loadPhoto(d, (char*)"images/offswitch.bmp", OFFSWITCH);
+  loadPhoto(d, (char*)"images/onswitch.bmp", ONSWITCH);
 
-  loadPhoto(d, "images/blue_un.png", HINTBUTTON);
-  loadPhoto(d, "images/red_un.png", RESETBUTTON);
-  loadPhoto(d, "images/blue_pr.png", HBUTTON_PR);
-  loadPhoto(d, "images/red_pr.png", RBUTTON_PR);
-  
-  loadPhoto(d, "images/Red_Elf_Front.bmp", P_DOWN1);
-  loadPhoto(d, "images/Red_Elf_Front2.bmp", P_DOWN2);
-  loadPhoto(d, "images/Red_Elf_Front3.bmp", P_DOWN3);
+  loadPhoto(d, (char*)"images/dooropen.bmp", DOOROPEN);
+  loadPhoto(d, (char*)"images/doorclosed.bmp", DOORCLOSED);
 
-  loadPhoto(d, "images/Red_Elf_Back.bmp", P_UP1);
-  loadPhoto(d, "images/Red_Elf_Back2.bmp", P_UP2);
-  loadPhoto(d, "images/Red_Elf_Back3.bmp", P_UP3);
+  loadPhoto(d, (char*)"images/blue_un.png", HINTBUTTON);
+  loadPhoto(d, (char*)"images/red_un.png", RESETBUTTON);
+  loadPhoto(d, (char*)"images/blue_pr.png", HBUTTON_PR);
+  loadPhoto(d, (char*)"images/red_pr.png", RBUTTON_PR);
 
-  loadPhoto(d, "images/Red_Elf_Left.bmp", P_L1);
-  loadPhoto(d, "images/Red_Elf_Left2.bmp", P_L2);
-  loadPhoto(d, "images/Red_Elf_Left3.bmp", P_L3);
+  loadPhoto(d, (char*)"images/Red_Elf_Front.bmp", P_DOWN1);
+  loadPhoto(d, (char*)"images/Red_Elf_Front2.bmp", P_DOWN2);
+  loadPhoto(d, (char*)"images/Red_Elf_Front3.bmp", P_DOWN3);
 
-  loadPhoto(d, "images/Red_Elf_Right.bmp", P_R1);
-  loadPhoto(d, "images/Red_Elf_Right2.bmp", P_R2);
-  loadPhoto(d, "images/Red_Elf_Right3.bmp", P_R3);
+  loadPhoto(d, (char*)"images/Red_Elf_Back.bmp", P_UP1);
+  loadPhoto(d, (char*)"images/Red_Elf_Back2.bmp", P_UP2);
+  loadPhoto(d, (char*)"images/Red_Elf_Back3.bmp", P_UP3);
 
-  loadPhoto(d, "images/RArrow.bmp", RARROW);
-  loadPhoto(d, "images/LArrow.bmp", LARROW);
-  loadPhoto(d, "images/DArrow.bmp", DARROW);
-  loadPhoto(d, "images/UArrow.bmp", UARROW);
-  
-  loadPhoto(d, "images/chars/a.bmp", 'a');
-  loadPhoto(d, "images/chars/b.bmp", 'b');
-  loadPhoto(d, "images/chars/c.bmp", 'c');
-  loadPhoto(d, "images/chars/d.bmp", 'd');
-  loadPhoto(d, "images/chars/e.bmp", 'e');
-  loadPhoto(d, "images/chars/f.bmp", 'f');
-  loadPhoto(d, "images/chars/g.bmp", 'g');
-  loadPhoto(d, "images/chars/h.bmp", 'h');
-  loadPhoto(d, "images/chars/i.bmp", 'i');
-  loadPhoto(d, "images/chars/j.bmp", 'j');
-  loadPhoto(d, "images/chars/k.bmp", 'k');
-  loadPhoto(d, "images/chars/l.bmp", 'l');
-  loadPhoto(d, "images/chars/m.bmp", 'm');
-  loadPhoto(d, "images/chars/n.bmp", 'n');
-  loadPhoto(d, "images/chars/o.bmp", 'o');
-  loadPhoto(d, "images/chars/p.bmp", 'p');
-  loadPhoto(d, "images/chars/q.bmp", 'q');
-  loadPhoto(d, "images/chars/r.bmp", 'r');
-  loadPhoto(d, "images/chars/s.bmp", 's');
-  loadPhoto(d, "images/chars/t.bmp", 't');
-  loadPhoto(d, "images/chars/v.bmp", 'v');
-  loadPhoto(d, "images/chars/u.bmp", 'u');
-  loadPhoto(d, "images/chars/w.bmp", 'w');
-  loadPhoto(d, "images/chars/x.bmp", 'x');
-  loadPhoto(d, "images/chars/y.bmp", 'y');
-  loadPhoto(d, "images/chars/z.bmp", 'z');
+  loadPhoto(d, (char*)"images/Red_Elf_Left.bmp", P_L1);
+  loadPhoto(d, (char*)"images/Red_Elf_Left2.bmp", P_L2);
+  loadPhoto(d, (char*)"images/Red_Elf_Left3.bmp", P_L3);
+
+  loadPhoto(d, (char*)"images/Red_Elf_Right.bmp", P_R1);
+  loadPhoto(d, (char*)"images/Red_Elf_Right2.bmp", P_R2);
+  loadPhoto(d, (char*)"images/Red_Elf_Right3.bmp", P_R3);
+
+  loadPhoto(d, (char*)"images/RArrow.bmp", RARROW);
+  loadPhoto(d, (char*)"images/LArrow.bmp", LARROW);
+  loadPhoto(d, (char*)"images/DArrow.bmp", DARROW);
+  loadPhoto(d, (char*)"images/UArrow.bmp", UARROW);
+
+  loadPhoto(d, (char*)"images/chars/a.bmp", 'a');
+  loadPhoto(d, (char*)"images/chars/b.bmp", 'b');
+  loadPhoto(d, (char*)"images/chars/c.bmp", 'c');
+  loadPhoto(d, (char*)"images/chars/d.bmp", 'd');
+  loadPhoto(d, (char*)"images/chars/e.bmp", 'e');
+  loadPhoto(d, (char*)"images/chars/f.bmp", 'f');
+  loadPhoto(d, (char*)"images/chars/g.bmp", 'g');
+  loadPhoto(d, (char*)"images/chars/h.bmp", 'h');
+  loadPhoto(d, (char*)"images/chars/i.bmp", 'i');
+  loadPhoto(d, (char*)"images/chars/j.bmp", 'j');
+  loadPhoto(d, (char*)"images/chars/k.bmp", 'k');
+  loadPhoto(d, (char*)"images/chars/l.bmp", 'l');
+  loadPhoto(d, (char*)"images/chars/m.bmp", 'm');
+  loadPhoto(d, (char*)"images/chars/n.bmp", 'n');
+  loadPhoto(d, (char*)"images/chars/o.bmp", 'o');
+  loadPhoto(d, (char*)"images/chars/p.bmp", 'p');
+  loadPhoto(d, (char*)"images/chars/q.bmp", 'q');
+  loadPhoto(d, (char*)"images/chars/r.bmp", 'r');
+  loadPhoto(d, (char*)"images/chars/s.bmp", 's');
+  loadPhoto(d, (char*)"images/chars/t.bmp", 't');
+  loadPhoto(d, (char*)"images/chars/v.bmp", 'v');
+  loadPhoto(d, (char*)"images/chars/u.bmp", 'u');
+  loadPhoto(d, (char*)"images/chars/w.bmp", 'w');
+  loadPhoto(d, (char*)"images/chars/x.bmp", 'x');
+  loadPhoto(d, (char*)"images/chars/y.bmp", 'y');
+  loadPhoto(d, (char*)"images/chars/z.bmp", 'z');
 }
