@@ -26,7 +26,7 @@ struct colour {
   Uint8 green;
   Uint8 blue;
   Uint8 alpha;
-};
+}; 
 
 /* Font stuff */
 typedef unsigned short fntrow;
@@ -60,4 +60,3 @@ void fail(char *s);
 /*My own delay function*/
 void myDelay(int ms);
 void closeDisplay(Display *d);
-

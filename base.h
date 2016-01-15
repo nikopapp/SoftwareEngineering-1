@@ -15,7 +15,7 @@
 #define W WWIDTH / TILESIZE
 
 #define OUTPUT stdout
-#define OUTPUTERR stderr
+#define OUTPUTERR stderr 
 
 /* used to give the entity types more descriptive names */
 typedef enum etype {
@@ -38,9 +38,9 @@ typedef enum etype {
   RARROW      = '>',
   LARROW      = '<',
   DARROW      = '$',
-  UARROW      = '^', 
+  UARROW      = '^',
   P_UP1       = 'D', /* player directional sprites and animation */
-  P_UP2       = '/',  
+  P_UP2       = '/',
   P_UP3       = '?',
   P_DOWN1     = 'U',
   P_DOWN2     = ';',
@@ -50,7 +50,7 @@ typedef enum etype {
   P_L3        = '(',
   P_R1        = 'R',
   P_R2        = '}',
-  P_R3        = ')' 
+  P_R3        = ')'
 } etype;
 
 /* FORWARD DEDCLARATIONS */

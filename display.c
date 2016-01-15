@@ -5,7 +5,7 @@ Display *newDisplay()
   Display *d =(Display *) malloc(sizeof(Display));
   int r = SDL_Init(SDL_INIT_EVERYTHING);
   if (r < 0){
-    fail("Unable to initialize SDL");
+    fail((char*)"Unable to initialize SDL");
   }
 
   /*Initialize SDL_mixer*/
@@ -16,11 +16,11 @@ Display *newDisplay()
     return(0);
   }
 
-  Neill_SDL_ReadFont(fontdata,FONTNAME);
+  Neill_SDL_ReadFont(fontdata,(char*)FONTNAME);
   d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
               SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
   if (d->win == NULL){
-    fail("Unable to initialize SDL Window");
+    fail((char*)"Unable to initialize SDL Window");
   }
   d->renderer = SDL_CreateRenderer(d->win, -1, 0);
   SDL_SetRenderDrawColor(d->renderer, 0, 0, 0, 0);
@@ -30,12 +30,12 @@ Display *newDisplay()
   d->zap = Mix_LoadWAV("files/click.wav");
   Mix_VolumeChunk(d->zap, 15);
   if (d->zap==NULL){
-    fail("music not good");
+    fail((char*)"cannot load music file");
   }
   Mix_VolumeMusic(40);
   d->music = Mix_LoadMUS("files/elevator.mp3");
   if (d->music==NULL){
-    fail("music not good");
+    fail((char*)"cannot load music file");
   }
   //If there is no music playing
   if( Mix_PlayingMusic() == 0 ) {
@@ -65,7 +65,7 @@ void loadPhoto(Display *d, char *s, int i)
 {
   d->temp = IMG_Load(s);
   if (d->temp == NULL){
-    fail("bad photo");
+    fail((char*)"Cannot load photo");
   }
   d->images[i] = SDL_CreateTextureFromSurface(d->renderer, d->temp);
   SDL_SetTextureAlphaMod(d->images[i] , 255);
@@ -128,7 +128,7 @@ void drawEntities(Display *d, cell grid[H][W])
   }
 }
 
-int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, colourMode m)
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, int m)
 {
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
