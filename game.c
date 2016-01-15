@@ -51,14 +51,12 @@ int main(void)
     if (grid[player->y][player->x].background == door1&&gamesPlayed[0]<MAXPLAYTIMES) {
       bgame(d);
       gamesPlayed[0]++;
-      printf("%d\n",gamesPlayed[0] );
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
       encryption(d);
       gamesPlayed[1]++;
-      printf("%d\n",gamesPlayed[1] );
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
@@ -87,8 +85,8 @@ void lobbyDraw(Display *d, cell grid[H][W])
 {
   drawBackground(d,BG_LOBBY);
   drawEntities(d, grid);
-  drawString(d, fontdata, (char*)"LEARN BINARY", 680, 244, yellow);
-  drawString(d, fontdata, (char*)"COMPUTER QUIZ", 360, 406, yellow);
+  drawString(d, fontdata, (char*)"LEARN BINARY", 680, 240, yellow,1);
+  drawString(d, fontdata, (char*)"COMPUTER QUIZ", 360, 400, yellow,1);
 
   drawFrame(d, REFRESH_RATE);
 }

@@ -133,20 +133,20 @@ void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTL
   fprintf(OUTPUT, "hint word%s\n", hintWord);
   drawEntities(d, grid);
 
-  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal);
+  line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal,0);
 
   if(resetsent==1){
     line += drawString(d, fontdata, "RESET SIGNAL SENT", SCRNSTARTX,
-      SCRNSTARTY + line, warning);
+      SCRNSTARTY + line, warning,0);
   }
   if(printHint==1){
     line += drawString(d, fontdata, "\nHINT:", SCRNSTARTX,
-      SCRNSTARTY + line, normal);
+      SCRNSTARTY + line, normal,0);
     drawString(d, fontdata, hintWord, SCRNSTARTX,
-      SCRNSTARTY + line, normal);
+      SCRNSTARTY + line, normal,0);
   }
-  drawString(d, fontdata, (char*)"EXIT", 175, 420, yellow);
-  drawString(d, fontdata, (char*)"EXIT", 875, 420, yellow);
+  drawString(d, fontdata, (char*)"EXIT", 177, 410, yellow,1);
+  drawString(d, fontdata, (char*)"EXIT", 879, 410, yellow,1);
   drawFrame(d, REFRESH_RATE);
 }
 

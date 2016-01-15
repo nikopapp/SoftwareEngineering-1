@@ -16,7 +16,7 @@ Display *newDisplay()
     return(0);
   }
 
-  Neill_SDL_ReadFont(fontdata,(char*)FONTNAME);
+  readFont(fontdata,(char*)FONTNAME);
   d->win = SDL_CreateWindow("Project Elves", SDL_WINDOWPOS_UNDEFINED,
               SDL_WINDOWPOS_UNDEFINED, WWIDTH, WHEIGHT, SDL_WINDOW_SHOWN);
   if (d->win == NULL){
@@ -129,7 +129,7 @@ void drawEntities(Display *d, cell grid[H][W])
   }
 }
 
-int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, int m)
+int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int ox, int oy, int m,int height)
 {
   int i = 0, j=0 ,wrdcnt=0;
   int x=ox;
@@ -152,7 +152,12 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
 
     if (isprint(chr) && chr != '\n') {
       x += (FNTWIDTH);
-      drawChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
+      if(height==0){
+        drawChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
+      }
+      else{
+        drawDoubleHeightChar(d, fontdata, chr, x, oy+j*FNTHEIGHT);
+      }
     }
     if(str[i] == ' '){
       wrdcnt++;
@@ -170,7 +175,7 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   return (j + 1) * FNTHEIGHT; //returns the number of newlines inserted
 }
 
-//Credit to Neill Campbell for the .fnt file reading function
+//Credit to Neill Campbell for the .fnt file interpretation function
 void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
 {
 
@@ -183,8 +188,21 @@ void drawChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char ch
     }
   }
 }
+void drawDoubleHeightChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsigned char chr, int ox, int oy)
+{
 
-void Neill_SDL_ReadFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
+  unsigned x, y;
+  for(y = 0; y < FNTHEIGHT; y++){
+    for(x = 0; x < FNTWIDTH; x++){
+      if(fontdata[chr-FNT1STCHAR][y] >> (FNTWIDTH - 1 - x) & 1){
+        SDL_RenderDrawPoint(d->renderer, x + ox, 2*y+oy);
+        SDL_RenderDrawPoint(d->renderer, x + ox, 2*y+oy+1);
+      }
+    }
+  }
+}
+
+void readFont(fntrow fontdata[FNTCHARS][FNTHEIGHT], char *fname)
 {
 
     FILE *fp = fopen(fname, "rb");

@@ -1,8 +1,8 @@
 #include "game.h"
 #include <assert.h>
 
- 
-#define BYTE_L 8
+
+#define BYTE_L 8 
 #define BHINTLENGTH 200
 #define BSCRNSTARTY 60
 #define BSCRNSTARTX 76

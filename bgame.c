@@ -146,41 +146,41 @@ void bgameDraw(Display *d, cell grid[H][W], int goal, int res ,
   assert(str!=NULL);
 
   line += drawString(d, fontdata, BINTROSTRING, BSCRNSTARTX,
-    BSCRNSTARTY + line, normal);
+    BSCRNSTARTY + line, normal,0);
   line += drawString(d, fontdata, instruction, BSCRNSTARTX,
-    BSCRNSTARTY + line, normal);
+    BSCRNSTARTY + line, normal,0);
 
   if (res <= goal) {
-    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, normal);
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, normal,0);
   }
   else {
-    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning);
+    line += drawString(d, fontdata, str, BSCRNSTARTX, BSCRNSTARTY + line, warning,0);
     if (countOnBits(res) > countOnBits(goal) ) {
       line += drawString(d, fontdata, "(Too many switches!)", BSCRNSTARTX,
-        BSCRNSTARTY + line, warning);
+        BSCRNSTARTY + line, warning,0);
     }
     else {
       line += drawString(d, fontdata, "(Wrong switch!)", BSCRNSTARTX,
-        BSCRNSTARTY + line, warning);
+        BSCRNSTARTY + line, warning,0);
     }
   }
   if (res == goal) {
       calcBinaryNumber(goal, binaryNumber);
       line += drawString(d, fontdata, binaryNumber, BSCRNSTARTX,
-        BSCRNSTARTY + line, normal);
+        BSCRNSTARTY + line, normal,0);
   }
-  drawString(d, fontdata, "EXIT", 175, 420, yellow);
+  drawString(d, fontdata,(char*) "EXIT", 175, 410, yellow,1);
   // drawString(d, fontdata, "EXIT", 875, 420);
 
   if(printHint==1){
-    drawString(d, fontdata, "128", 310 + 128, 420, yellow);
-    drawString(d, fontdata, "64", 390 + 128, 420, yellow);
-    drawString(d, fontdata, "32", 450 + 128, 420, yellow);
-    drawString(d, fontdata, "16", 510 + 128, 420, yellow);
-    drawString(d, fontdata, "8", 585 + 128, 420, yellow);
-    drawString(d, fontdata, "4", 645 + 128, 420, yellow);
-    drawString(d, fontdata, "2", 708 + 128, 420, yellow);
-    drawString(d, fontdata, "1", 774 + 128, 420, yellow);
+    drawString(d, fontdata, "128", 310 + 128, 420, yellow,0);
+    drawString(d, fontdata, "64", 390 + 128, 420, yellow,0);
+    drawString(d, fontdata, "32", 450 + 128, 420, yellow,0);
+    drawString(d, fontdata, "16", 510 + 128, 420, yellow,0);
+    drawString(d, fontdata, "8", 585 + 128, 420, yellow,0);
+    drawString(d, fontdata, "4", 645 + 128, 420, yellow,0);
+    drawString(d, fontdata, "2", 708 + 128, 420, yellow,0);
+    drawString(d, fontdata, "1", 774 + 128, 420, yellow,0);
   }
   drawFrame(d, REFRESH_RATE);
 }
