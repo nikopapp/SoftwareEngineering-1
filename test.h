@@ -1,3 +1,4 @@
+#include "game.h"
 #include "bgame.h"
 #include "encryption.h"
 
