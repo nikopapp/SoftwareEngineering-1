@@ -11,29 +11,36 @@ int main(void)
 int test(void)
 {
   int i=0, cnt[20], totErrors=0,totTests=9;
-  char format[35]="---------------------------------\n";
+  char format[40]="------------------------------------\n";
+
   printf("\n\nTESTING\n%s",format );
-  printf("%d. ",i+1 );
+  printf("\ndisplay.c\n%s",format );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_newDisplay();
-  printf("%d. ",i+1 );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_closeDisplay();
-  printf("%d. ",i+1 );
+  printf("\ngrid.c\n%s",format );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_initGrid();
-  printf("%d. ",i+1 );
-  cnt[i++]=TEST_updatePlayerfacing();
-  printf("%d. ",i+1 );
-  cnt[i++]=TEST_fillGrid();
-  printf("%d. ",i+1 );
-  // cnt[i++]=TEST_input();
-  // printf("%d. ",i+1 );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_getNeighbour();
-  printf("%d. ",i+1 );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_directionsTrans();
-  printf("%d. ",i+1 );
+  printf("\ninput.c\n%s",format );
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_input();
+  printf("\nentity.c\n%s",format );
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_fillGrid();
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_updateEntities();
+  printf("%2d. ",i+1 );
+  cnt[i++]=TEST_updatePlayerfacing();
+  printf("\nbgame.c\n%s",format );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_newBulb();
-  printf("%d. ",i+1 );
+  printf("%2d. ",i+1 );
   cnt[i++]=TEST_makeBoundariesBinary();
-  printf("%d. ",i+1 );
   for(i=0;i<totTests;i++){
     totErrors+=cnt[i];
   }
@@ -46,17 +53,46 @@ int test(void)
     return ERROR;
   }
 }
+// Testing display.c
+int TEST_newDisplay()
+{
+  Display *d;
+  d=newDisplay();
+  if(d==NULL){
+    printf("%25s %s\n",__func__, FAIL );
+    return ERROR;
+  }
+  else{
+    printf("%25s %s\n",__func__, PASS );
+    return SUCCESS;
+  }
+}
+int TEST_closeDisplay()
+{
+  Display *d;
+  d=newDisplay();
+  closeDisplay(d);
+  if(d!=NULL){
+    printf("%25s %s\n",__func__, FAIL );
+    return ERROR;
+  }
+  else{
+    printf("%25s %s\n",__func__, PASS);
+    return SUCCESS;
+  }
+}
+// Testing grid.c
 int TEST_fillGrid()
 {
   cell grid[H][W];
   initGrid(grid);
   fillGrid(grid);
   if(grid[rand()%H][rand()%W].background->ispassable!=passable){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -67,24 +103,11 @@ int TEST_updatePlayerfacing()
   direction direct=LEFT;
   updatePlayerfacing(e,direct,DOWN);
   if(e->x!=10){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
-    return SUCCESS;
-  }
-}
-int TEST_newDisplay()
-{
-  Display *d;
-  d=newDisplay();
-  if(d==NULL){
-    printf("%23s %s\n",__func__, FAIL );
-    return ERROR;
-  }
-  else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -95,25 +118,11 @@ int TEST_input()
   d=newDisplay();
   value = input(d);
   if(value!=0){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
-    return SUCCESS;
-  }
-}
-int TEST_closeDisplay()
-{
-  Display *d;
-  d=newDisplay();
-  closeDisplay(d);
-  if(d!=NULL){
-    printf("%23s %s\n",__func__, FAIL );
-    return ERROR;
-  }
-  else{
-    printf("%23s %s\n",__func__, PASS);
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -123,11 +132,11 @@ int TEST_initGrid()
   cell grid[H][W];
   initGrid(grid);
   if(grid[5][5].foreground!=NULL||grid[5][5].background!=NULL){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -140,11 +149,11 @@ int TEST_getNeighbour()
   fillGrid(grid);
   testCell=getNeighbour(x, y, dir, grid);
   if(testCell->background!=grid[y][x-1].background){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -159,16 +168,14 @@ int TEST_directionsTrans()
   y=grid[5][0].background->y;
   directionsTrans(LEFT, &x, &y);
   if(x!=grid[5][0].background->x){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
-
-
 
 
 int TEST_newBulb(){
@@ -178,11 +185,11 @@ int TEST_newBulb(){
   initGrid(grid);
   fillGrid(grid);
   if(bulb->ispassable!=1 || bulb->x!=x || bulb->y !=y){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
@@ -193,13 +200,30 @@ int TEST_makeBoundariesBinary()
   // initGrid(grid);
   makeBoundariesBinary(grid);
   if(grid[0][7].background->ispassable!=0){
-    printf("%23s %s\n",__func__, FAIL );
+    printf("%25s %s\n",__func__, FAIL );
     return ERROR;
   }
   else{
-    printf("%23s %s\n",__func__, PASS );
+    printf("%25s %s\n",__func__, PASS );
     return SUCCESS;
   }
 }
+int TEST_updateEntities()
+{
+  cell grid[H][W];
+  initGrid(grid);
+  newBulb(grid,1,1);
+  assert(grid[8][1].background->type==OFFSWITCH);
+  updateEntities(grid);
+  if(grid[8][1].background->type==ONSWITCH){
+    printf("%25s %s\n",__func__, FAIL );
+    return ERROR;
+  }
+  else{
+    printf("%25s %s\n",__func__, PASS );
+    return SUCCESS;
+  }
 
+
+}
 // encryption, game binary game, grid.c

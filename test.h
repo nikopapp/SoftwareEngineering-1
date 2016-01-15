@@ -17,3 +17,4 @@ int TEST_getNeighbour();
 int TEST_directionsTrans();
 int TEST_newBulb();
 int TEST_makeBoundariesBinary();
+int TEST_updateEntities(); 
