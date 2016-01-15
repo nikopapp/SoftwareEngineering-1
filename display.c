@@ -135,7 +135,7 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   unsigned char chr;
   struct colour g = { 0, 213, 72, 255};
   struct colour r = { 250, 0, 0, 255};
-  struct colour y = {  255,255,200, 255};
+  struct colour y = {  255,255,50, 255};
 
   if (m == normal) {
     setColour(d, g.red, g.green, g.blue, g.alpha);
