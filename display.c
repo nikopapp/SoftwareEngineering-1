@@ -77,6 +77,7 @@ void splashPhoto(Display *d, int i)
 {
 
   SDL_RenderCopy(d->renderer, d->images[i], NULL, NULL);
+  SDL_RenderPresent(d->renderer);
 }
 
 /*My own delay function*/

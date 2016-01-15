@@ -1,17 +1,19 @@
 #include "game.h"
-
+#define MAXPLAYTIMES 1
 int main(void)
 {
   Display *d = newDisplay();
   cell grid[H][W];
   entity *player, *door1, *door2;
-  int in,games[2];
+  int in,gamesPlayed[2];
   srand(time(NULL));
-
+  gamesPlayed[0]=gamesPlayed[1]=0;
 
   mediaLoad(d);
+  splashPhoto(d,BG_ENC);
+  SDL_Delay(3000);
   initGrid(grid);
-   /* place player */
+   // place player
   player = grid[10][2].foreground = newEntity(passable,P_R1 ,2,10);
    // Creates the boundary walls
   makeBoundariesLobby(grid);
@@ -22,28 +24,45 @@ int main(void)
   /* layer of floortiles -
   must be the last entity placement*/
   fillGrid(grid);
-  lobbyDraw(d, grid);
+
 
   while(!d->finished){
-    if (grid[player->y][player->x].background == door1) {
-      games[0]+=bgame(d);
+    if(gamesPlayed[0]!=MAXPLAYTIMES||gamesPlayed[1]!=MAXPLAYTIMES){
+      lobbyDraw(d, grid);
+      in=input(d);
+      if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
+        move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
+        printGrid(grid);
+      } //why does this chunk of code keep reverting? probably a github issue.
+    }
+    else{
+      do{
+        splashPhoto(d,BG_ENC);
+        SDL_Delay(20);
+        in=input(d);
+      }while(in==0);
+        if(in==9){
+          gamesPlayed[0]=gamesPlayed[1]=0;
+        }
+        else{
+          d->finished=(SDL_bool)true;
+        }
+    }
+    if (grid[player->y][player->x].background == door1&&gamesPlayed[0]<MAXPLAYTIMES) {
+      bgame(d);
+      gamesPlayed[0]++;
+      printf("%d\n",gamesPlayed[0] );
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
-    if (grid[player->y][player->x].background == door2) {
+    if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
       encryption(d);
+      gamesPlayed[1]++;
+      printf("%d\n",gamesPlayed[1] );
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
     }
-    lobbyDraw(d, grid);
-
-    in=input(d);
-    if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
-      move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
-      printGrid(grid);
-    } //why does this chunk of code keep reverting? probably a github issue.
   }
-
   freeEntityMem(grid);  /* free memory */
   closeDisplay(d);
   fprintf(OUTPUT, "\n\n");

@@ -33,12 +33,12 @@ int bgame (Display *d)
 	while(!d->finished){
 
 
-    in=input(d);
 
     if (grid[player->y][player->x].background == door1) {
       freeEntityMem(grid);  /* free memory */
       return 0;
     }
+    in=input(d);
 
     if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
       move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);

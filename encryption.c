@@ -112,7 +112,7 @@ int encryption(Display *d)
     cnt++;
   }
   freeEntityMem(grid);  /* free memory */
-  return 0;
+  return 1;
 }
 
 
