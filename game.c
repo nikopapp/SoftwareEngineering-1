@@ -12,9 +12,8 @@ int main(void)
   mediaLoad(d);
   do{
     splashPhoto(d,INTRO_SCREEN);
-    drawString(d, fontdata, (char*)"PRESS SPACE", 170, 120, white,2);
-    SDL_RenderPresent(d->renderer);
-    SDL_Delay(20);
+    drawString(d, fontdata, (char*)"PRESS SPACE", 170, 120, white,1);
+    drawFrame(d,REFRESH_RATE);
     in=input(d);
   }while(in==0||in==10);
   initGrid(grid);
@@ -43,7 +42,9 @@ int main(void)
     else{
       do{
         splashPhoto(d,GOVER_SCREEN);
-        SDL_Delay(20);
+        drawString(d, fontdata, (char*)"PRESS SPACE TO PLAY AGAIN", 350, 540, white,1);
+        drawString(d, fontdata, (char*)"OR ESC TO QUIT", 350, 580, warning,0);
+        drawFrame(d,REFRESH_RATE);
         in=input(d);
       }while(in==0);
         if(in!=10){

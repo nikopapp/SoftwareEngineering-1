@@ -19,10 +19,10 @@
 
 /* used to give the entity types more descriptive names */
 typedef enum etype {
-  BG_LOBBY     = 0,  /* bgs */
+  BG_LOBBY     = 0,  // bgs
   BG_BIN       = 1,
   BG_ENC       = 3,
-  INTRO_SCREEN = 4,
+  INTRO_SCREEN = 4,  // Flash Screens
   GOVER_SCREEN = 5,
   FLOOR       = '.',
   OFFLIGHT    = '0',

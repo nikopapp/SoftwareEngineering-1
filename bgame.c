@@ -30,7 +30,7 @@ int bgame (Display *d)
   bgameDraw(d, grid, goal, res, printHint);
 
   /* MAIN LOOP */
-	while(!d->finished){
+	while(in!=10){
 
 
 

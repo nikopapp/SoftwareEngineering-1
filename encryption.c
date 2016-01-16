@@ -39,7 +39,7 @@ int encryption(Display *d)
   encGameDraw(d, grid, printHint, hintWord, resetsent);
 
   /* MAIN LOOP */
-  while(!d->finished){
+  while(in!=10){
     fprintf(OUTPUT, "line = %d\n", hintNum);
 
     in=input(d);
@@ -130,7 +130,7 @@ void makeBoundariesEncryption(cell grid[H][W])
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
   drawBackground(d, BG_ENC);
-  fprintf(OUTPUT, "hint word%s\n", hintWord);
+  fprintf(OUTPUT, "hint word%s\n", hintWord); 
   drawEntities(d, grid);
 
   line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal,0);

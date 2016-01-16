@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
- 
+
 #define FALSE 0
 #define TRUE 1
 #define LENGTH 30
 #define LIST_SIZE 7
-#define ALPHABET 26
+#define ALPHABET 26 
 #define VOWEL 1
 #define CONSONANT 2
 #define ROW 3
