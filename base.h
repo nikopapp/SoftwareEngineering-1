@@ -15,13 +15,15 @@
 #define W WWIDTH / TILESIZE
 
 #define OUTPUT stdout
-#define OUTPUTERR stderr 
+#define OUTPUTERR stderr
 
 /* used to give the entity types more descriptive names */
 typedef enum etype {
-  BG_LOBBY    = 0,  /* bgs */
-  BG_BIN      = 1,
-  BG_ENC      = 3,
+  BG_LOBBY     = 0,  /* bgs */
+  BG_BIN       = 1,
+  BG_ENC       = 3,
+  INTRO_SCREEN = 4,
+  GOVER_SCREEN = 5,
   FLOOR       = '.',
   OFFLIGHT    = '0',
   ONLIGHT     = '1',

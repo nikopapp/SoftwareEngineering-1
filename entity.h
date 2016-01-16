@@ -9,7 +9,7 @@ struct entity {
   struct entity *pointsto; /* this allows for connections between entities -
   such as from a switch to a lightbulb */
 };
-
+ 
 /* changes the type of an entity (a char).  this type is used to check in
 the action loop what actions to take*/
 void changeEntity(entity *e, char newtype);

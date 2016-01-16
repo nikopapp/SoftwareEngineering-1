@@ -3,10 +3,10 @@
 int input(Display *d)
 {
   int input_value=0;
-  int *input_pointer;
+  int *input_pointer; 
   input_pointer=&input_value;
   while(!d->finished){
-      if(E_SDL_Event_Handling(d,input_pointer)!=0){
+      if(E_SDL_Event_Handling(input_pointer)!=0){
         return(input_value);
         printf("SHOUDLN'T HAPPEN :%d\n",input_value );
       }
@@ -14,7 +14,7 @@ int input(Display *d)
   return(input_value);
 }
 
-int E_SDL_Event_Handling(Display *d, int *p)
+int E_SDL_Event_Handling(int *p)
 {
    SDL_Event event;
    while(SDL_PollEvent(&event))
@@ -50,12 +50,14 @@ int E_SDL_Event_Handling(Display *d, int *p)
               return(9);
               break;
             case SDLK_ESCAPE:
-              d->finished = 1;
+              *p=10;
+              return 10;
               break;
           }
         break;
         case SDL_QUIT:
-          d->finished = 1;
+          *p=10;
+          return 10;
           break;
       }
       return(0);

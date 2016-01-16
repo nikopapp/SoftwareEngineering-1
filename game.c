@@ -10,8 +10,13 @@ int main(void)
   gamesPlayed[0]=gamesPlayed[1]=0;
 
   mediaLoad(d);
-  splashPhoto(d,BG_ENC);
-  SDL_Delay(3000);
+  do{
+    splashPhoto(d,INTRO_SCREEN);
+    drawString(d, fontdata, (char*)"PRESS SPACE", 170, 120, white,2);
+    SDL_RenderPresent(d->renderer);
+    SDL_Delay(20);
+    in=input(d);
+  }while(in==0||in==10);
   initGrid(grid);
    // place player
   player = grid[10][2].foreground = newEntity(passable,P_R1 ,2,10);
@@ -26,7 +31,7 @@ int main(void)
   fillGrid(grid);
 
 
-  while(!d->finished){
+  while(in!=10){
     if(gamesPlayed[0]!=MAXPLAYTIMES||gamesPlayed[1]!=MAXPLAYTIMES){
       lobbyDraw(d, grid);
       in=input(d);
@@ -37,14 +42,16 @@ int main(void)
     }
     else{
       do{
-        splashPhoto(d,BG_ENC);
+        splashPhoto(d,GOVER_SCREEN);
         SDL_Delay(20);
         in=input(d);
       }while(in==0);
-        if(in==9){
+        if(in!=10){
           gamesPlayed[0]=gamesPlayed[1]=0;
         }
         else{
+          /*in==10 the same as d->finished=true;*/
+          in=10;
           d->finished=(SDL_bool)true;
         }
     }
@@ -63,6 +70,7 @@ int main(void)
   }
   freeEntityMem(grid);  /* free memory */
   closeDisplay(d);
+  d->finished=(SDL_bool)true;
   fprintf(OUTPUT, "\n\n");
   return(0);
 }
@@ -100,6 +108,8 @@ void mediaLoad(Display *d)
   loadPhoto(d, (char*)"files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
   loadPhoto(d, (char*)"files/room2.png" , BG_BIN);
   loadPhoto(d, (char*)"files/room1.png" , BG_ENC);
+  loadPhoto(d, (char*)"images/gameOver.png", GOVER_SCREEN);
+  loadPhoto(d, (char*)"images/Intro.png", INTRO_SCREEN);
 
   loadPhoto(d, (char*)"images/offlight.png", OFFLIGHT);
   loadPhoto(d, (char*)"images/onlight.png", ONLIGHT);

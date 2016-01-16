@@ -137,6 +137,7 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   struct colour g = { 0, 213, 72, 255};
   struct colour r = { 250, 0, 0, 255};
   struct colour y = {  255,255,50, 255};
+  struct colour w = { 255,255,255,255};
 
   if (m == normal) {
     setColour(d, g.red, g.green, g.blue, g.alpha);
@@ -146,6 +147,9 @@ int drawString(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], char *str, int 
   }
   else if (m == yellow) {
     setColour(d, y.red, y.green, y.blue, y.alpha);
+  }
+  else if (m == white) {
+    setColour(d, w.red, w.green, w.blue, w.alpha);
   }
   do {
     chr = str[i];
@@ -195,6 +199,8 @@ void drawDoubleHeightChar(Display *d, fntrow fontdata[FNTCHARS][FNTHEIGHT], unsi
   for(y = 0; y < FNTHEIGHT; y++){
     for(x = 0; x < FNTWIDTH; x++){
       if(fontdata[chr-FNT1STCHAR][y] >> (FNTWIDTH - 1 - x) & 1){
+        SDL_SetRenderDrawBlendMode(d->renderer, SDL_BLENDMODE_BLEND);
+
         SDL_RenderDrawPoint(d->renderer, x + ox, 2*y+oy);
         SDL_RenderDrawPoint(d->renderer, x + ox, 2*y+oy+1);
       }

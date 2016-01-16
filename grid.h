@@ -18,3 +18,4 @@ void initGrid(cell grid[H][W]);
 
 /* returns a pointer to the neighbouring cell in direction dir */
 cell *getNeighbour(int x, int y, direction dir,  cell grid[H][W]);
+ 
