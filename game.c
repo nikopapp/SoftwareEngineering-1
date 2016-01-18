@@ -12,7 +12,7 @@ int main(void)
   mediaLoad(d);
   do{
     splashPhoto(d,INTRO_SCREEN);
-    drawString(d, fontdata, (char*)"PRESS SPACE", 170, 120, white,1);
+    drawString(d, fontdata, (char*)"PRESS SPACE", 270, 520, white,1);
     drawFrame(d,REFRESH_RATE);
     in=input(d);
   }while(in==0||in==10);
