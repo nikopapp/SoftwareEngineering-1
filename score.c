@@ -1,6 +1,6 @@
 /* We didn't have any scoring system in our game eventualy, because we ran out of time
-   but this is template of the scoring system we were going to use */
-    
+   but this is the template of the scoring system we were going to use */
+
 /*Basic Score system*/
 
 #include <stdio.h>
