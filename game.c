@@ -113,11 +113,11 @@ void intro(Display *d)
       // }
       // if(in!=0)
       // break;
+    drawFrame(d,REFRESH_RATE);
     }
     //SDL_Delay(40);
 
     //in=input(d);
-    drawFrame(d,REFRESH_RATE);
 
   }while(in==0||in==10);
 
