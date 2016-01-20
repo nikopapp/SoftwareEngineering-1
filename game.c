@@ -82,7 +82,7 @@ void intro(Display *d)
 {
   FILE *fp;
   int in=0,i=0,j=0;
-  Scenario story[30];
+  Scenario story[NUMLINES];
   do{
     splashPhoto(d,INTRO_SCREEN);
     drawString(d, fontdata, (char*)"PRESS SPACE", 30, 490, white,1);
@@ -92,23 +92,23 @@ void intro(Display *d)
 
   in=0;
   fp=fopen("files/scenario2.txt","r");
-  for(i=0;i<26;i++){
+  for(i=0;i<NUMLINES;i++){
     fgets(story[i].line,100,fp);
     story[i].print_line = i+14;
     printf("%s\n",story[i].line );
   }
 
   do{
-     
+
     splashPhoto(d,BG_ENC);
-    for(i=0; i<26 ;i++){
+    for(i=0; i<NUMLINES ;i++){
       if ((story[i].print_line <=14) && (story[i].print_line >=0)){// only print what is in the TV screen
         drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
       }
       story[i].print_line--;// move the line upwards
     }
     drawFrame(d,15*REFRESH_RATE);
-    in=input(d);
+   //  in=input(d);
 
 }while((in != 10) && (story[25].print_line >0));
 

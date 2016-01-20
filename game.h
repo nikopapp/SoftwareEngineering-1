@@ -15,6 +15,8 @@
   void GameOver(Display *d);
 #endif
 
+#define NUMLINES 38
+
 typedef struct  scenario {
   char line[100];
   int print_line;
