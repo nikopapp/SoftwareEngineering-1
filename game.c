@@ -1,5 +1,7 @@
 #include "game.h"
 #define MAXPLAYTIMES 1
+#include <assert.h>
+
 int main(void)
 {
   Display *d = newDisplay();
@@ -10,12 +12,7 @@ int main(void)
   gamesPlayed[0]=gamesPlayed[1]=0;
 
   mediaLoad(d);
-  do{
-    splashPhoto(d,INTRO_SCREEN);
-    drawString(d, fontdata, (char*)"PRESS SPACE", 30, 490, white,1);
-    drawFrame(d,REFRESH_RATE);
-    in=input(d);
-  }while(in==0||in==10);
+  intro(d);
   initGrid(grid);
    // place player
   player = grid[10][2].foreground = newEntity(passable,P_R1 ,2,10);
@@ -40,14 +37,8 @@ int main(void)
       }
     }
     else{
-      do{
-        splashPhoto(d,GOVER_SCREEN);
-        drawString(d, fontdata, (char*)"PRESS SPACE TO PLAY AGAIN", 350, 540, white,1);
-        drawString(d, fontdata, (char*)"OR ESC TO QUIT", 350, 580, warning,0);
-        drawFrame(d,REFRESH_RATE);
-        in=input(d);
-      }while(in==0);
-        if(in!=10){
+          GameOver(d);
+          if(in!=10){
           gamesPlayed[0]=gamesPlayed[1]=0;
         }
         else{
@@ -63,7 +54,7 @@ int main(void)
       changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
-      quizGame(d); 
+      quizGame(d);
       gamesPlayed[1]++;
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
@@ -74,6 +65,63 @@ int main(void)
   d->finished=(SDL_bool)true;
   fprintf(OUTPUT, "\n\n");
   return(0);
+}
+void GameOver(Display *d)
+{
+  int in=0;
+  do{
+    splashPhoto(d,GOVER_SCREEN);
+    drawString(d, fontdata, (char*)"PRESS SPACE TO PLAY AGAIN", 350, 540, white,1);
+    drawString(d, fontdata, (char*)"OR ESC TO QUIT", 350, 580, warning,0);
+    drawFrame(d,REFRESH_RATE);
+    in=input(d);
+  }while(in==0);
+
+}
+void intro(Display *d)
+{
+  FILE *fp;
+  int in=0,i=0,j=0;
+  Scenario story[30];
+  do{
+    splashPhoto(d,INTRO_SCREEN);
+    drawString(d, fontdata, (char*)"PRESS SPACE", 30, 490, white,1);
+    drawFrame(d,REFRESH_RATE);
+    in=input(d);
+  }while(in==0||in==10);
+  in=0;
+  fp=fopen("files/scenario2.txt","r");
+  for(i=0;i<26;i++){
+    fgets(story[i].line,100,fp);
+    story[i].print_line = i+14;
+    printf("%s\n",story[i].line );
+  }
+  //fread(scenario,1,500, fp);
+  do{
+    j++;
+    splashPhoto(d,BG_ENC);
+    for(i=0; i<26 ;i++){
+    in=input(d);
+      printf("%s\n","allakse" );
+
+      if ((story[i].print_line <=14) && (story[i].print_line >=0)){
+        drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
+        // SDL_RenderPresent(d->renderer);
+      }
+      if(j%50==0)
+      story[i].print_line--;
+      // while(j<26){
+      // }
+      // if(in!=0)
+      // break;
+    }
+    //SDL_Delay(40);
+
+    drawFrame(d,REFRESH_RATE);
+
+  }while(in==0||in==10);
+
+
 }
 
 void makeBoundariesLobby(cell grid[H][W])

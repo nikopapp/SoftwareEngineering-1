@@ -55,8 +55,8 @@ void fail(char *s) {
 // Update the window on screen, after delaying for the (rest of) the given time.
 void drawFrame(Display *d, int milliseconds) {
     int t = milliseconds - SDL_GetTicks() % milliseconds;
-    SDL_Delay(t);
     SDL_RenderPresent(d->renderer);
+    SDL_Delay(t);
     SDL_RenderClear(d->renderer);
 
 }
