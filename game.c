@@ -89,6 +89,7 @@ void intro(Display *d)
     drawFrame(d,REFRESH_RATE);
     in=input(d);
   }while(in==0||in==10);
+
   in=0;
   fp=fopen("files/scenario2.txt","r");
   for(i=0;i<26;i++){
@@ -96,31 +97,20 @@ void intro(Display *d)
     story[i].print_line = i+14;
     printf("%s\n",story[i].line );
   }
-  //fread(scenario,1,500, fp);
-  do{
 
+  do{
+     
     splashPhoto(d,BG_ENC);
     for(i=0; i<26 ;i++){
-      printf("%s\n","allakse" );
-
-      if ((story[i].print_line <=14) && (story[i].print_line >=0)){
+      if ((story[i].print_line <=14) && (story[i].print_line >=0)){// only print what is in the TV screen
         drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
-
-      //  SDL_RenderPresent(d->renderer);
       }
-      if(++j%50==0){
-      story[i].print_line--;
-      }
-
-
-      // while(j<26){
-      // }
+      story[i].print_line--;// move the line upwards
     }
-    drawFrame(d,REFRESH_RATE);
-    //SDL_Delay(40);
+    drawFrame(d,15*REFRESH_RATE);
+    in=input(d);
 
-
-  }while(in==0&&story[25].print_line >0);
+}while((in != 10) && (story[25].print_line >0));
 
 
 }
