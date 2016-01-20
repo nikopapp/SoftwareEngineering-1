@@ -37,7 +37,7 @@ int main(void)
       if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
         move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
         printGrid(grid);
-      } //why does this chunk of code keep reverting? probably a github issue.
+      }
     }
     else{
       do{

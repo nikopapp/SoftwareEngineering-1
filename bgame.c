@@ -19,7 +19,6 @@ int bgame (Display *d)
   }
   makeBoundariesBinary(grid);
   door1 = grid[7][3].background = newEntity(impassable,DOORCLOSED,7,3);
-  // door2 = grid[7][3].background = newEntity(impassable,DOORCLOSED,0,8);
   hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid); /* layer of floortiles */
 
@@ -75,8 +74,6 @@ int bgame (Display *d)
     if(res==goal){
       changeEntity(door1,DOOROPEN);
       changePassable(door1,passable);
-      // changeEntity(door2,DOOROPEN);
-      // changePassable(door2,passable);
       fprintf(OUTPUT, "you win\n");
     }
     bgameDraw(d, grid, goal, res, printHint);
