@@ -6,7 +6,7 @@
 
   int binaryGame(void);
   int quizGame(Display *sw);
-  int gridmain(Display *sw);
+  int gridmain(Display *sw); 
   int input(Display *sw);
   int bgame(Display *sw);
   void mediaLoad(Display *d);

@@ -63,7 +63,7 @@ int main(void)
       changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
-      quizGame(d);
+      quizGame(d); 
       gamesPlayed[1]++;
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
@@ -141,8 +141,6 @@ void mediaLoad(Display *d)
   loadPhoto(d, (char*)"images/Red_Elf_Right2.bmp", P_R2);
   loadPhoto(d, (char*)"images/Red_Elf_Right3.bmp", P_R3);
 
-  loadPhoto(d, (char*)"images/RArrow.bmp", RARROW);
-  loadPhoto(d, (char*)"images/LArrow.bmp", LARROW);
   loadPhoto(d, (char*)"images/DArrow.bmp", DARROW);
   loadPhoto(d, (char*)"images/UArrow.bmp", UARROW);
 

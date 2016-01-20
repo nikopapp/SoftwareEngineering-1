@@ -37,8 +37,6 @@ typedef enum etype {
   RBUTTON_PR  = '@',
   HBUTTON_PR  = 'H',
   WALL        = '#',
-  RARROW      = '>',
-  LARROW      = '<',
   DARROW      = '$',
   UARROW      = '^',
   P_UP1       = 'D', /* player directional sprites and animation */
