@@ -98,28 +98,29 @@ void intro(Display *d)
   }
   //fread(scenario,1,500, fp);
   do{
-    j++;
+
     splashPhoto(d,BG_ENC);
     for(i=0; i<26 ;i++){
       printf("%s\n","allakse" );
 
       if ((story[i].print_line <=14) && (story[i].print_line >=0)){
         drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
-        // SDL_RenderPresent(d->renderer);
+
+      //  SDL_RenderPresent(d->renderer);
       }
-      if(j%50==0)
+      if(++j%50==0){
       story[i].print_line--;
+      }
+
+
       // while(j<26){
       // }
-      // if(in!=0)
-      // break;
-    drawFrame(d,REFRESH_RATE);
     }
+    drawFrame(d,REFRESH_RATE);
     //SDL_Delay(40);
 
-    //in=input(d);
 
-  }while(in==0||in==10);
+  }while(in==0&&story[25].print_line >0);
 
 
 }
