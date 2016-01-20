@@ -2,8 +2,8 @@ CFLAGS = `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -
 INCS = $(TARGET).h input.h grid.h entity.h base.h bgame.h display.h
 TARGET = game
 TEST = test
-TSOURCES =  encryption.c grid.c input.c display.c entity.c bgame.c  $(TEST).c
-SOURCES =  encryption.c grid.c input.c display.c entity.c bgame.c  $(TARGET).c
+TSOURCES =  quizGame.c grid.c input.c display.c entity.c bgame.c  $(TEST).c
+SOURCES =  quizGame.c grid.c input.c display.c entity.c bgame.c  $(TARGET).c
 LIBS =  `sdl2-config --libs`
 CC = gcc
 
@@ -17,8 +17,8 @@ clean:
 
 run: all
 	./$(TARGET)
-test: encryption.c grid.c input.c display.c entity.c bgame.c  test.c
-	gcc encryption.c grid.c input.c display.c entity.c bgame.c  test.c -o test `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -lSDL2_image -lSDL2_mixer -lSDL2_ttf `sdl2-config --libs`
+test: quizGame.c grid.c input.c display.c entity.c bgame.c  test.c
+	gcc quizGame.c grid.c input.c display.c entity.c bgame.c  test.c -o test `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -lSDL2_image -lSDL2_mixer -lSDL2_ttf `sdl2-config --libs`
 	./$(TEST)
 
 push:

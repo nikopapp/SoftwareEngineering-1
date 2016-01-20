@@ -63,7 +63,7 @@ int main(void)
       changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
-      encryption(d);
+      quizGame(d);
       gamesPlayed[1]++;
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);
