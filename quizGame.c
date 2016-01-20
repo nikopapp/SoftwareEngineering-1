@@ -1,5 +1,4 @@
 #include "quizGame.h"
-// testarw tp git pali
 int quizGame(Display *d)
 {
   char rand_word[LENGTH], shuffle_word[LENGTH], original_word[LENGTH];
