@@ -29,9 +29,6 @@ int encryption(Display *d)
     enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
   }
   makeBoundariesEncryption(grid);
-  grid[yinit][xinit-1].background = newEntity(passable, LARROW ,xinit-1,yinit);
-  grid[yinit][xinit + word_size].background = newEntity(passable, RARROW ,xinit + word_size, yinit);
-
   rbutton = grid[7][1].background = newEntity(impassable, RESETBUTTON,7,1);
   hbutton = grid[7][16].background = newEntity(impassable, HINTBUTTON,7,16);
   fillGrid(grid);   /* layer of floortiles */
@@ -56,27 +53,11 @@ int encryption(Display *d)
     }
     if (in == 9) { /*checks for spacebar */
       if(grid[player->y][player->x].background->type == DARROW) {// "$" is now the down arrow symbol
-          // enc_shiftLetter(grid, player->y, player->x);
         enc_updateLetter(grid, player->y, player->x);
         Mix_PlayChannel( -1, d->zap, 0 );
         }
       else if(grid[player->y][player->x].background->type == UARROW) {
-        // enc_shiftLetter(grid, player->y, player->x);
         enc_updateLetter(grid, player->y, player->x);
-        Mix_PlayChannel( -1, d->zap, 0 );
-      }
-      else if(grid[player->y][player->x].background->type == RARROW) {
-        enc_changeRow(shuffle_word, word_size, -1);
-        for (j=0; j<word_size; j++){
-          enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
-        }
-        Mix_PlayChannel( -1, d->zap, 0 );
-      }
-      else if(grid[player->y][player->x].background->type == LARROW) {
-        enc_changeRow(shuffle_word, word_size, 1);
-        for (j=0; j<word_size; j++){
-          enc_newLetter(grid, xinit+j, yinit, shuffle_word[j]);
-        }
         Mix_PlayChannel( -1, d->zap, 0 );
       }
       else if(grid[player->y-1][player->x].background->type == RESETBUTTON) {
@@ -130,7 +111,7 @@ void makeBoundariesEncryption(cell grid[H][W])
 void encGameDraw(Display *d, cell grid[H][W], int printHint, char hintWord[HINTLENGTH], int resetsent) {
   int line = 0;
   drawBackground(d, BG_ENC);
-  fprintf(OUTPUT, "hint word%s\n", hintWord); 
+  fprintf(OUTPUT, "hint word%s\n", hintWord);
   drawEntities(d, grid);
 
   line += drawString(d, fontdata, INTROSTRING, SCRNSTARTX, SCRNSTARTY, normal,0);
@@ -269,39 +250,16 @@ void enc_newLetter(cell grid[H][W], int x, int y, char c){
 int enc_shuffle(char word[LENGTH], int size){
   int game ;
 
-  game = rand()%3;
+  game = rand()%2;
   switch (game){
     case 0:
-      // printf("we are going to change a vowel\n\n");
       enc_change(word, size, game);
       break;
     case 1 :
-      // printf("we are going to change a constant\n\n" );
       enc_change(word, size, game);
-      break;
-    case 2 :
-      // printf("we are going to switch the whole row\n\n" );
-      enc_changeRow(word, size, 0);
       break;
   }
   return game;
-}
-
-void enc_changeRow(char word[LENGTH], int size, int shift){
-  int i;
-  if(shift==0){
-  shift = rand()%(ALPHABET-1)+1;
-  // printf("shift = %d\n", shift);
- }
-  for (i=0; i<size; i++){
-    word[i] = word[i] - shift;
-    if ((int)word[i] > (int) 'z'){
-      word[i] = word[i] - ALPHABET;
-    }
-    else if ((int)word[i] < (int) 'a'){
-      word[i] = word[i] + ALPHABET;
-    }
-  }
 }
 
 void enc_change(char word[LENGTH], int size, int game){
