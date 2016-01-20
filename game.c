@@ -101,7 +101,6 @@ void intro(Display *d)
     j++;
     splashPhoto(d,BG_ENC);
     for(i=0; i<26 ;i++){
-    in=input(d);
       printf("%s\n","allakse" );
 
       if ((story[i].print_line <=14) && (story[i].print_line >=0)){
@@ -117,6 +116,7 @@ void intro(Display *d)
     }
     //SDL_Delay(40);
 
+    //in=input(d);
     drawFrame(d,REFRESH_RATE);
 
   }while(in==0||in==10);
