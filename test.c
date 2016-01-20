@@ -41,7 +41,7 @@ int test(void)
   cnt[i++]=TEST_newBulb();
   printf("%2d. ",i+1 );
   cnt[i++]=TEST_makeBoundariesBinary();
-  printf("\nencryption.c\n%s",format );
+  printf("\nquizGame.c\n%s",format );
   printf("%2d. ",i+1 );
   cnt[i++]=TEST_enc_getHint();
   printf("%2d. ",i+1 );
@@ -232,7 +232,7 @@ int TEST_updateEntities()
 
 }
 
-// Testing encryption.c
+// Testing quizGame.c
 
 int TEST_enc_updateWord()
 {

@@ -1,6 +1,6 @@
 #include "game.h"
 #include "bgame.h"
-#include "encryption.h"
+#include "quizGame.h"
 
 #define SUCCESS 0
 #define ERROR   1

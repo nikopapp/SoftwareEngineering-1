@@ -1,5 +1,7 @@
+/* We didn't have any scoring system in our game eventualy, because we ran out of time
+   but this is the template of the scoring system we were going to use */
+
 /*Basic Score system*/
-/*These codes will be the basics of other alterations, so NO TOUCHIE!!!!*/
 
 #include <stdio.h>
 #include <stdlib.h>

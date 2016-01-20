@@ -37,7 +37,7 @@ int main(void)
       if( (in > 0) && (in < 5) ){ /*checks for arrowkeys */
         move(&grid[player->y][player->x],player->x,player->y,(direction)in,grid);
         printGrid(grid);
-      } //why does this chunk of code keep reverting? probably a github issue.
+      }
     }
     else{
       do{
@@ -63,7 +63,7 @@ int main(void)
       changeEntity(player, P_DOWN1);
     }
     if (grid[player->y][player->x].background == door2&&gamesPlayed[1]<MAXPLAYTIMES) {
-      encryption(d);
+      quizGame(d);
       gamesPlayed[1]++;
       move(&grid[player->y][player->x],player->x,player->y,DOWN,grid);
       changeEntity(player, P_DOWN1);

@@ -3,9 +3,9 @@
 
   #include "input.h"
   #include <time.h>
-  
+
   int binaryGame(void);
-  int encryption(Display *sw);
+  int quizGame(Display *sw);
   int gridmain(Display *sw);
   int input(Display *sw);
   int bgame(Display *sw);
