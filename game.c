@@ -37,7 +37,7 @@ int main(void)
       }
     }
     else{
-          GameOver(d);
+          GameOver(d,&in);
           if(in!=10){
           gamesPlayed[0]=gamesPlayed[1]=0;
         }
@@ -66,15 +66,14 @@ int main(void)
   fprintf(OUTPUT, "\n\n");
   return(0);
 }
-void GameOver(Display *d)
+void GameOver(Display *d, int *in)
 {
-  int in=0;
   do{
     splashPhoto(d,GOVER_SCREEN);
     drawString(d, fontdata, (char*)"PRESS SPACE TO PLAY AGAIN", 350, 540, white,1);
     drawString(d, fontdata, (char*)"OR ESC TO QUIT", 350, 580, warning,0);
     drawFrame(d,REFRESH_RATE);
-    in=input(d);
+    *in=input(d);
   }while(in==0);
 
 }
@@ -102,15 +101,16 @@ void intro(Display *d)
 
     splashPhoto(d,BG_ENC);
     for(i=0; i<NUMLINES ;i++){
-      if ((story[i].print_line <=14) && (story[i].print_line >=0)){// only print what is in the TV screen
+      if ((story[i].print_line <14) && (story[i].print_line >=0)){// only print what is in the TV screen
         drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
       }
       story[i].print_line--;// move the line upwards
     }
-    drawFrame(d,15*REFRESH_RATE);
-   //  in=input(d);
+    SDL_Delay(40);
+    drawFrame(d,35*REFRESH_RATE);
+    E_SDL_Event_Handling(&in);
 
-}while((in != 10) && (story[25].print_line >0));
+}while((in == 0) && (story[NUMLINES-1].print_line >0));
 
 
 }

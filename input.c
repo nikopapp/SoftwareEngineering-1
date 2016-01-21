@@ -3,7 +3,7 @@
 int input(Display *d)
 {
   int input_value=0;
-  int *input_pointer; 
+  int *input_pointer;
   input_pointer=&input_value;
   while(!d->finished){
       if(E_SDL_Event_Handling(input_pointer)!=0){

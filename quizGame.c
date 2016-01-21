@@ -141,7 +141,7 @@ void enc_updateWord(cell grid[H][W], int y, int x, char shuffle[LENGTH]){
 }
 
 int enc_getWord(char str[LENGTH]){
-  FILE *file=fopen("encWords.txt", "r");
+  FILE *file=fopen("encWordsbak.txt", "r");
   int line=rand()%encLineCount(), cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){
     fgets(str, LENGTH, file);
@@ -151,7 +151,7 @@ int enc_getWord(char str[LENGTH]){
 }
 
 void enc_getHint(char str[HINTLENGTH], int line){
-  FILE *file=fopen("encHints.txt", "r");
+  FILE *file=fopen("encHintsBAK.txt", "r");
   int cnt=0; //find a random line
   for(cnt=0; cnt<=line; cnt++){
     fgets(str, HINTLENGTH, file);

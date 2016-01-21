@@ -12,10 +12,10 @@
   void mediaLoad(Display *d);
   void makeBoundariesLobby(cell grid[H][W]);
   void lobbyDraw(Display *d, cell grid[H][W]);
-  void GameOver(Display *d);
+  void GameOver(Display *d, int *in);
 #endif
 
-#define NUMLINES 38
+#define NUMLINES 42
 
 typedef struct  scenario {
   char line[100];
