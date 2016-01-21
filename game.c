@@ -102,7 +102,7 @@ void intro(Display *d)
     splashPhoto(d,BG_ENC);
     for(i=0; i<NUMLINES ;i++){
       if ((story[i].print_line <14) && (story[i].print_line >=0)){// only print what is in the TV screen
-        drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,white,0);
+        drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,normal,0);
       }
       story[i].print_line--;// move the line upwards
     }
