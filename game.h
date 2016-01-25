@@ -1,3 +1,4 @@
+#include <assert.h>
 #ifndef GAMEH
   #define GAMEH
 

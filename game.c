@@ -1,6 +1,6 @@
 #include "game.h"
 #define MAXPLAYTIMES 1
-#include <assert.h>
+
 
 int main(void)
 {
@@ -91,9 +91,9 @@ void intro(Display *d)
   }while(in==0||in==10);
 
   in=0;
-  fp=fopen("files/scenario2.txt","r");
+  fp=fopen("files/scenario.txt","r");
   for(i=0;i<NUMLINES;i++){
-    fgets(story[i].line,100,fp);
+    assert(fgets(story[i].line,100,fp));
     story[i].print_line = i+SCREENSIZE;
   }
 
