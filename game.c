@@ -145,9 +145,9 @@ void mediaLoad(Display *d)
  * wall tiles and some types of door have no image,
  * but are displayed in terminal for debugging. */
 
-  loadPhoto(d, (char*)"files/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
-  loadPhoto(d, (char*)"files/room2.png" , BG_BIN);
-  loadPhoto(d, (char*)"files/room1.png" , BG_ENC);
+  loadPhoto(d, (char*)"images/board.png" , BG_LOBBY);  /* use numbers for backgrounds.  these are unused ascii chars */
+  loadPhoto(d, (char*)"images/room2.png" , BG_BIN);
+  loadPhoto(d, (char*)"images/room1.png" , BG_ENC);
   loadPhoto(d, (char*)"images/gameOver.png", GOVER_SCREEN);
   loadPhoto(d, (char*)"images/Intro.png", INTRO_SCREEN);
 

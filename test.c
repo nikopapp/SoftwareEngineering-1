@@ -77,6 +77,7 @@ int TEST_closeDisplay()
   Display *d;
   d=newDisplay();
   closeDisplay(d);
+  d=NULL;
   if(d!=NULL){
     printf("%25s %s\n",__func__, FAIL );
     return ERROR;

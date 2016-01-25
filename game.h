@@ -14,7 +14,6 @@
   void makeBoundariesLobby(cell grid[H][W]);
   void lobbyDraw(Display *d, cell grid[H][W]);
   void GameOver(Display *d, int *in);
-#endif
 
 #define NUMLINES 42
 #define SCREENSIZE 14
@@ -23,3 +22,4 @@ typedef struct  scenario {
   char line[100];
   int print_line;
 } Scenario;
+#endif
