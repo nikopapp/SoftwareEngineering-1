@@ -16,6 +16,7 @@
 #endif
 
 #define NUMLINES 42
+#define SCREENSIZE 14
 
 typedef struct  scenario {
   char line[100];

@@ -66,6 +66,7 @@ int main(void)
   fprintf(OUTPUT, "\n\n");
   return(0);
 }
+
 void GameOver(Display *d, int *in)
 {
   do{
@@ -80,7 +81,7 @@ void GameOver(Display *d, int *in)
 void intro(Display *d)
 {
   FILE *fp;
-  int in=0,i=0,j=0;
+  int in=0,i=0;
   Scenario story[NUMLINES];
   do{
     splashPhoto(d,INTRO_SCREEN);
@@ -93,15 +94,14 @@ void intro(Display *d)
   fp=fopen("files/scenario2.txt","r");
   for(i=0;i<NUMLINES;i++){
     fgets(story[i].line,100,fp);
-    story[i].print_line = i+14;
-    printf("%s\n",story[i].line );
+    story[i].print_line = i+SCREENSIZE;
   }
 
   do{
 
     splashPhoto(d,BG_ENC);
     for(i=0; i<NUMLINES ;i++){
-      if ((story[i].print_line <14) && (story[i].print_line >=0)){// only print what is in the TV screen
+      if ((story[i].print_line <SCREENSIZE) && (story[i].print_line >=0)){// only print what is in the TV screen
         drawString(d, fontdata ,story[i].line,220,80+FNTHEIGHT*story[i].print_line,normal,0);
       }
       story[i].print_line--;// move the line upwards
