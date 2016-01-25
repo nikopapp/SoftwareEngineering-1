@@ -1,5 +1,5 @@
-CFLAGS = `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -lSDL2_image -lSDL2_mixer -lSDL2_ttf
-INCS = $(TARGET).h input.h grid.h entity.h base.h bgame.h display.h
+CFLAGS = `sdl2-config --cflags` -Wall -Wextra -Wfloat-equal -pedantic -std=c99 -lm -O4 -lSDL2_image -lSDL2_mixer
+INCS = $(TARGET).h input.h grid.h entity.h base.h bgame.h display.h quizGame.h
 TARGET = game
 TEST = test
 TSOURCES =  quizGame.c grid.c input.c display.c entity.c bgame.c  $(TEST).c
