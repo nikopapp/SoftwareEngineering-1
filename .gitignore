@@ -1,2 +1,6 @@
 Makefile~
 .gitignore~
+*.gch
+*.h~
+*.c~
+*.gch
